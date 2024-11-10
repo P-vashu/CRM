@@ -1,6 +1,6 @@
 import type { CardProps } from '@mui/material/Card';
 import type { ColorType } from '../../theme/core/palette';
-import type { ChartOptions } from '../../components/chart';
+import type { ChartOptions } from '../chart';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -12,7 +12,7 @@ import { varAlpha, bgGradient } from '../../theme/styles';
 
 import { Iconify } from '../iconify';
 import { SvgColor } from '../svg-color';
-import { Chart, useChart } from '../../components/chart';
+import { Chart, useChart } from '../chart';
 
 // ----------------------------------------------------------------------
 

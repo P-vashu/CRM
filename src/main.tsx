@@ -8,6 +8,7 @@ import OrdersPage from 'src/pages/OrdersView';
 // import ProductsPage from './pages/ProductsView';
 import ProductsView from './pages/ProductsView';
 import { OverviewAnalyticsView } from './pages/OverviewAnalyticsView';
+import { BlogView } from './pages/BlogView';
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
           {
             path: 'products',
             Component: ProductsView,
+          },
+          {
+            path: 'blogs',
+            Component: BlogView,
           },
         ],
       },

@@ -4,15 +4,15 @@ import Typography from '@mui/material/Typography';
 import { _tasks, _posts, _timeline } from '../_mock';
 // import { DashboardContent } from 'src/layouts/dashboard';
 
-import { AnalyticsNews } from '../components/analytics/analytics-news';
-import { AnalyticsTasks } from '../components/analytics/analytics-tasks';
-import { AnalyticsCurrentVisits } from '../components/analytics/analytics-current-visits';
-import { AnalyticsOrderTimeline } from '../components/analytics/analytics-order-timeline';
-import { AnalyticsWebsiteVisits } from '../components/analytics/analytics-website-visits';
-import { AnalyticsWidgetSummary } from '../components/analytics/analytics-widget-summary';
-import { AnalyticsTrafficBySite } from '../components/analytics/analytics-traffic-by-site';
-import { AnalyticsCurrentSubject } from '../components/analytics/analytics-current-subject';
-import { AnalyticsConversionRates } from '../components/analytics/analytics-conversion-rates';
+import { AnalyticsNews } from '../components/analytics/AnalyticsNews';
+import { AnalyticsTasks } from '../components/analytics/AnalyticsTasks';
+import { AnalyticsCurrentVisits } from '../components/analytics/AnalyticsCurrentVisits';
+import { AnalyticsOrderTimeline } from '../components/analytics/AnalyticsOrderTimeline';
+import { AnalyticsWebsiteVisits } from '../components/analytics/AnalyticsWebsiteVisits';
+import { AnalyticsWidgetSummary } from '../components/analytics/AnalyticsWidgetSummary';
+import { AnalyticsTrafficBySite } from '../components/analytics/AnalyticsTrafficBySite';
+import { AnalyticsCurrentSubject } from '../components/analytics/AnalyticsCurrentSubject';
+import { AnalyticsConversionRates } from '../components/analytics/AnalyticsConversionRates';
 
 
 // ----------------------------------------------------------------------

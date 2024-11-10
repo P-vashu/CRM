@@ -27,8 +27,8 @@ const NAVIGATION: Navigation = [
     icon: <ShoppingCartIcon />,
   },
   {
-    segment: 'products-view',
-    title: 'Products View',
+    segment: 'blogs',
+    title: 'Blogs',
     icon: <Inventory2Icon />,
   },
 ];

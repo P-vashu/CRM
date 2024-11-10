@@ -6,13 +6,14 @@ import Card from '@mui/material/Card';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 
-import { fDate } from 'src/utils/format-time';
-import { fShortenNumber } from 'src/utils/format-number';
+import { fDate } from '../../utils/format-time';
+import { fShortenNumber } from '../../utils/format-number';
 
-import { varAlpha } from 'src/theme/styles';
+import { varAlpha } from '../../theme/styles';
 
 import { Iconify } from '../iconify';
 import { SvgColor } from '../svg-color';
+import { lightPalette as palette } from '../../theme/core';
 
 // ----------------------------------------------------------------------
 
@@ -164,7 +165,8 @@ export function PostItem({
   return (
     <Card sx={sx} {...other}>
       <Box
-        sx={(theme) => ({
+        sx={(theme) => ({ 
+          px: 2,
           position: 'relative',
           pt: 'calc(100% * 3 / 4)',
           ...((latestPostLarge || latestPost) && {
@@ -175,7 +177,7 @@ export function PostItem({
               width: '100%',
               height: '100%',
               position: 'absolute',
-              bgcolor: varAlpha(theme.palette.grey['900Channel'], 0.72),
+              bgcolor: varAlpha(palette.grey['900Channel'], 0.72),
             },
           }),
           ...(latestPostLarge && {

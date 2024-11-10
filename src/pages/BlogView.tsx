@@ -6,14 +6,14 @@ import Grid from '@mui/material//Grid';
 import Typography from '@mui/material/Typography';
 import Pagination from '@mui/material/Pagination';
 
-import { _posts } from 'src/_mock';
-import { DashboardContent } from 'src/layouts/dashboard';
+import { _posts } from '../_mock';
+// import { DashboardContent } from 'src/layouts/dashboard';
 
-import { Iconify } from '../iconify';
+import { Iconify } from '../components/iconify';
 
-import { PostItem } from '../post-item';
-import { PostSort } from '../post-sort';
-import { PostSearch } from '../post-search';
+import { PostItem } from '../components/blog/PostItem';
+import { PostSort } from '../components/blog/PostSort';
+import { PostSearch } from '../components/blog/PostSearch';
 
 // ----------------------------------------------------------------------
 
@@ -25,7 +25,7 @@ export function BlogView() {
   }, []);
 
   return (
-    <DashboardContent>
+    <>
       <Box display="flex" alignItems="center" mb={5}>
         <Typography variant="h4" flexGrow={1}>
           Blog
@@ -66,6 +66,6 @@ export function BlogView() {
       </Grid>
 
       <Pagination count={10} color="primary" sx={{ mt: 8, mx: 'auto' }} />
-    </DashboardContent>
+    </>
   );
 }

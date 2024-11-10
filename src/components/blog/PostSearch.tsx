@@ -6,7 +6,7 @@ import Autocomplete, { autocompleteClasses } from '@mui/material/Autocomplete';
 
 import { Iconify } from '../iconify';
 
-import type { PostItemProps } from './post-item';
+import type { PostItemProps } from './PostItem';
 
 // ----------------------------------------------------------------------
 
