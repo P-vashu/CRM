@@ -1,6 +1,6 @@
 {
   "name": "storybook-react-vite-ts-template",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Boiler template to get up and running quickly with React, Storybook, Vite and TypeScript",
   "author": "Harry Ho <https://harryho.org/>",
   "type": "module",
