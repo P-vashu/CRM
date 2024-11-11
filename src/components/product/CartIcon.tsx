@@ -3,10 +3,12 @@ import { useTheme } from '@mui/material/styles';
 
 import Box from '@mui/material/Box';
 import Badge from '@mui/material/Badge';
+import InputLabel from '@mui/material/InputLabel';
 
-// import { RouterLink } from 'src/routes/components';
+import { RouterLink } from '../../routes/components';
 
 import { Iconify } from '../iconify';
+
 
 // ----------------------------------------------------------------------
 
@@ -14,12 +16,13 @@ type Props = BoxProps & {
   totalItems: number;
 };
 
-export function CartIcon({ totalItems, sx, ...other }: Props) {
+export function CartIcon({ totalItems, sx, ref, ...other }: Props) {
   const theme = useTheme();
   return (
     <Box
+    // <InputLabel
       // component={RouterLink}
-      // href="#"
+      href="#"
       sx={{
         right: 0,
         top: 112,

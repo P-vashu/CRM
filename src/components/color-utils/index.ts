@@ -1,5 +1,5 @@
 export type * from './types';
 
-export * from './color-picker';
+export * from './ColorPicker';
 
-export * from './color-preview';
+export * from './ColorPreview';

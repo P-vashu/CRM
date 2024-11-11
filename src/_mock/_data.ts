@@ -9,6 +9,9 @@ import {
   _postTitles,
   _description,
   _productNames,
+  _orderId,
+  _location,
+  _emails,
 } from './_mock';
 
 // ----------------------------------------------------------------------
@@ -41,6 +44,30 @@ export const _users = [...Array(24)].map((_, index) => ({
       'Front End Developer',
       'Full Stack Developer',
     ][index] || 'UI Designer',
+}));
+
+// ----------------------------------------------------------------------
+export const _customers = [...Array(12)].map((_, index) => ({
+  id: _id(index),
+  name: _fullName(index),
+  company: _company(index),
+  email: _emails(index),
+  location: _location(index),
+  avatarUrl: `/assets/images/customer/avatar-${index + 1}.png`,
+  status: index % 4 ? 'active' : 'banned',
+  // role:
+  //   [
+  //     'Leader',
+  //     'Hr Manager',
+  //     'UI Designer',
+  //     'UX Designer',
+  //     'UI/UX Designer',
+  //     'Project Manager',
+  //     'Backend Developer',
+  //     'Full Stack Designer',
+  //     'Front End Developer',
+  //     'Full Stack Developer',
+  //   ][index] || 'UI Designer',
 }));
 
 // ----------------------------------------------------------------------
@@ -93,6 +120,31 @@ export const _products = [...Array(24)].map((_, index) => {
       COLORS,
     status:
       ([1, 3, 5].includes(setIndex) && 'sale') || ([4, 8, 12].includes(setIndex) && 'new') || '',
+  };
+});
+
+export const _orders = [...Array(24)].map((_, index) => {
+  const setIndex = index + 1;
+
+  return {
+    id: _orderId(index),
+    amount: _price(index),
+    name: _productNames(index),
+    discount: setIndex % 3 ? setIndex: 0,
+    // coverUrl: `/assets/images/product/product-${setIndex}.webp`,
+    colors:
+      (setIndex === 1 && COLORS.slice(0, 2)) ||
+      (setIndex === 2 && COLORS.slice(1, 3)) ||
+      (setIndex === 3 && COLORS.slice(2, 4)) ||
+      (setIndex === 4 && COLORS.slice(3, 6)) ||
+      (setIndex === 23 && COLORS.slice(4, 6)) ||
+      (setIndex === 24 && COLORS.slice(5, 6)) ||
+      COLORS,
+    status:
+      ([1, 3, 5].includes(setIndex) && 'Pending') 
+      || ([2, 11, 14, 16, 21, 23].includes(setIndex) && 'Shipping') 
+      || ([4, 8, 12].includes(setIndex) && 'Delivered') 
+      || 'Pending',
   };
 });
 

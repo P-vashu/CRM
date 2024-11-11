@@ -1,5 +1,8 @@
 export const _id = (index: number) => `e99f09a7-dd88-49d5-b1c8-1daf80c2d7b${index}`;
 
+
+export const _orderId = (index: number) => `ORD-${index}`;
+
 export const _times = (index: number) =>
   // 'MM/DD/YYYY'
   [
@@ -57,6 +60,34 @@ export const _fullName = (index: number) =>
     'Willis Ankunding',
   ][index];
 
+  export const _emails = (index: number) =>
+    [
+    'Billy.Stoltenberg@test.com',
+    'Eloise.Ebert@test.com',
+    'Teresa.Luettgen@test.com',
+    'Salvador.Mayert@test.com',
+    'Dr..Guadalupe.Rath@test.com',
+    'Kelvin.Pouros@test.com',
+    'Thelma.Langworth@test.com',
+    'Kristen.Wunsch@test.com',
+    'Steve.Welch@test.com',
+    'Brian.Jacobs@test.com',
+    'Lillie.Schultz@test.com',
+    'Mr..Conrad.Spinka@test.com',
+    'Charlene.Krajcik@test.com',
+    'Kerry.Kuhlman@test.com',
+    'Betty.Hammes@test.com',
+    'Tony.Paucek.PhD@test.com',
+    'Sherri.Davis@test.com',
+    'Angel.Rolfson-Kulas@test.com',
+    'Dr..Lee.Doyle-Grant@test.com',
+    'Cheryl.Romaguera@test.com',
+    'Billy.Braun@test.com',
+    'Adam.Trantow@test.com',
+    'Brandon.Von@test.com',
+    'Willis.Ankunding@test.com',
+    ][index];
+
 export const _price = (index: number) =>
   [
     35.17, 57.22, 64.78, 50.79, 9.57, 61.46, 96.73, 63.04, 33.18, 36.3, 54.42, 20.52, 62.82, 19.96,
@@ -90,6 +121,35 @@ export const _company = (index: number) =>
     'Mitchell, Volkman and Prosacco',
     'Streich Group',
   ][index];
+
+
+  export const _location = (index: number) =>
+    [
+      'Murray, Utah, USA',
+      'Salt Lake City, Utah, USA',
+      'Madrid, Comunidad de Madrid, Spain',
+      'Melbourne, VIC, AU',
+      'North Canton, Ohio, USA',
+      'Sydney, NSW, AU',
+      'Queensland, NSW, AU',
+      'Carson City, Nevada, USA',
+      'Ottawa, Ontario, CA',
+      'Toronto, ON, CA',
+      'San Francisco, California, USA',
+      'Hong Kong, HK, CN',
+      'Perth, WA, AU',
+      'Paris, Paris, FR',
+      'Milan, Milan, IT',
+      'Frankfurt, Frankfurt, GE',
+      'Sydney, NSW, AU',
+      'Queensland, NSW, AU',
+      'Ottawa, Ontario, CA',
+      'North Canton, Ohio, USA',
+      'Sydney, NSW, AU',
+      'Queensland, NSW, AU',
+      'Carson City, Nevada, USA',
+      'Ottawa, Ontario, CA',
+    ][index];
 
 export const _boolean = (index: number) =>
   [

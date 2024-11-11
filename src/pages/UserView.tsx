@@ -9,29 +9,30 @@ import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 
-import { _orders } from '../_mock';
+import { _users } from '../_mock';
+// import { DashboardContent } from 'src/layouts/dashboard';
 
 import { Iconify } from '../components/iconify';
 import { Scrollbar } from '../components/scrollbar';
 
 import { TableNoData } from '../components/table/TableNoData';
-import { OrderTableRow } from '../components/order/OrderTableRow';
-import { OrderTableHead } from '../components/order/OrderableHead';
+import { UserTableRow } from '../components/user/UserTableRow';
+import { UserTableHead } from '../components/user/UserTableHead';
 import { TableEmptyRows } from '../components/table/TableEmptyRows';
-import { OrderTableToolbar } from '../components/order/OrderTableToolbar';
-import { emptyRows, applyFilter, getComparator } from '../components/order/utils';
+import { UserTableToolbar } from '../components/user/UserTableToolbar';
+import { emptyRows, applyFilter, getComparator } from '../components/user/utils';
 
-import type { OrderProps } from '../components/order/OrderTableRow';
+import type { UserProps } from '../components/user/UserTableRow';
 
 // ----------------------------------------------------------------------
 
-export default function OrdersView() {
+export function UserView() {
   const table = useTable();
 
   const [filterName, setFilterName] = useState('');
 
-  const dataFiltered: OrderProps[] = applyFilter({
-    inputData: _orders,
+  const dataFiltered: UserProps[] = applyFilter({
+    inputData: _users,
     comparator: getComparator(table.order, table.orderBy),
     filterName,
   });
@@ -43,19 +44,19 @@ export default function OrdersView() {
     <>
       <Box display="flex" alignItems="center" mb={5}>
         <Typography variant="h4" flexGrow={1}>
-          {/* Orders */}
+          Users
         </Typography>
         <Button
           variant="contained"
           color="inherit"
           startIcon={<Iconify icon="mingcute:add-line" />}
         >
-          New order
+          New user
         </Button>
       </Box>
 
       <Card>
-        <OrderTableToolbar
+        <UserTableToolbar
           numSelected={table.selected.length}
           filterName={filterName}
           onFilterName={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,23 +68,24 @@ export default function OrdersView() {
         <Scrollbar>
           <TableContainer sx={{ overflow: 'unset' }}>
             <Table sx={{ minWidth: 800 }}>
-              <OrderTableHead
+              <UserTableHead
                 order={table.order}
                 orderBy={table.orderBy}
-                rowCount={_orders.length}
+                rowCount={_users.length}
                 numSelected={table.selected.length}
                 onSort={table.onSort}
                 onSelectAllRows={(checked) =>
                   table.onSelectAllRows(
                     checked,
-                    _orders.map((order) => order.id)
+                    _users.map((user) => user.id)
                   )
                 }
                 headLabel={[
-                  { id: 'id', label: 'Order Number' },
                   { id: 'name', label: 'Name' },
-                  { id: 'amount', label: 'Total Amount', align: 'left' },
-                  { id: 'discount', label: 'Discount', align: 'left' },
+                  { id: 'company', label: 'Company' },
+                  { id: 'email', label: 'Email' },
+                  { id: 'location', label: 'Location' },
+                  { id: 'isVerified', label: 'Verified', align: 'center' },
                   { id: 'status', label: 'Status' },
                   { id: '' },
                 ]}
@@ -95,7 +97,7 @@ export default function OrdersView() {
                     table.page * table.rowsPerPage + table.rowsPerPage
                   )
                   .map((row) => (
-                    <OrderTableRow
+                    <UserTableRow
                       key={row.id}
                       row={row}
                       selected={table.selected.includes(row.id)}
@@ -105,7 +107,7 @@ export default function OrdersView() {
 
                 <TableEmptyRows
                   height={68}
-                  emptyRows={emptyRows(table.page, table.rowsPerPage, _orders.length)}
+                  emptyRows={emptyRows(table.page, table.rowsPerPage, _users.length)}
                 />
 
                 {notFound && <TableNoData searchQuery={filterName} />}
@@ -117,7 +119,7 @@ export default function OrdersView() {
         <TablePagination
           component="div"
           page={table.page}
-          count={_orders.length}
+          count={_users.length}
           rowsPerPage={table.rowsPerPage}
           onPageChange={table.onChangePage}
           rowsPerPageOptions={[5, 10, 25]}
