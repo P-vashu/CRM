@@ -5,7 +5,7 @@ import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import { useTheme, alpha as hexAlpha } from '@mui/material/styles';
 
-import { fNumber } from '../../utils/format-number';
+import { fnNumber } from '../../utils/format-number';
 
 import { Chart, useChart } from '../chart';
 
@@ -40,7 +40,7 @@ export function AnalyticsConversionRates({ title, subheader, chart, ...other }: 
       shared: true,
       intersect: false,
       y: {
-        formatter: (value: number) => fNumber(value),
+        formatter: (value: number) => fnNumber(value),
         title: { formatter: (seriesName: string) => `${seriesName}: ` },
       },
     },

@@ -6,8 +6,8 @@ import Card from '@mui/material/Card';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 
-import { fDate } from '../../utils/format-time';
-import { fShortenNumber } from '../../utils/format-number';
+import { fnDate } from '../../utils/format-time';
+import { fnShortenNumber } from '../../utils/format-number';
 
 import { varAlpha } from '../../theme/styles';
 
@@ -108,7 +108,7 @@ export function PostItem({
           }}
         >
           <Iconify width={16} icon={info.icon} sx={{ mr: 0.5 }} />
-          <Typography variant="caption">{fShortenNumber(info.number)}</Typography>
+          <Typography variant="caption">{fnShortenNumber(info.number)}</Typography>
         </Box>
       ))}
     </Box>
@@ -142,7 +142,7 @@ export function PostItem({
         }),
       }}
     >
-      {fDate(post.postedAt)}
+      {fnDate(post.postedAt)}
     </Typography>
   );
 

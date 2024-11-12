@@ -19,7 +19,7 @@ import { OrderTableRow } from '../components/order/OrderTableRow';
 import { OrderTableHead } from '../components/order/OrderableHead';
 import { TableEmptyRows } from '../components/table/TableEmptyRows';
 import { OrderTableToolbar } from '../components/order/OrderTableToolbar';
-import { emptyRows, applyFilter, getComparator } from '../components/order/utils';
+import { emptyRows, applyFilter, getComparator } from '../components/table/utils';
 
 import type { OrderProps } from '../components/order/OrderTableRow';
 

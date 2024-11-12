@@ -9,7 +9,7 @@ import ContactsIcon from '@mui/icons-material/Contacts';
 import { Outlet } from 'react-router-dom';
 import { AppProvider } from '@toolpad/core/react-router-dom';
 import { createTheme } from '@mui/material/styles';
-import logoSvg  from '../public/assets/icons/workspaces/it-logo.svg';
+import logoSvg from '../public/assets/icons/workspaces/it-logo.svg';
 import { type Navigation } from '@toolpad/core/AppProvider';
 
 
@@ -56,7 +56,7 @@ const NAVIGATION: Navigation = [
 
   },
   {
-    segment: 'header',
+    kind: 'header',
     title: 'Market & Sales',
     // icon: <StorefrontIcon />,
   },
@@ -86,34 +86,34 @@ const NAVIGATION: Navigation = [
   //   icon: <PeopleAltIcon />,
   // },
 ];
-const logo =   <img src={logoSvg} className="logo" alt="Vite logo" />
+const logo = <img src={logoSvg} className="logo" alt="Vite logo" />
 const BRANDING = {
   title: 'React Demo V3',
   logo
 };
 
 const theme = createTheme({
-    cssVariables: {
-      colorSchemeSelector: 'data-toolpad-color-scheme',
+  cssVariables: {
+    colorSchemeSelector: 'data-toolpad-color-scheme',
+  },
+  colorSchemes: { light: true, dark: true },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 600,
+      lg: 1408,
+      xl: 1530,
     },
-    colorSchemes: { light: true, dark: true },
-    breakpoints: {
-      values: {
-        xs: 0,
-        sm: 600,
-        md: 600,
-        lg: 1408,
-        xl: 1530,
-      },
-    },
+  },
 });
 
 export default function App() {
   return (
     <AppProvider theme={theme}
-     navigation={NAVIGATION}  
-     branding={BRANDING}
-     >
+      navigation={NAVIGATION}
+      branding={BRANDING}
+    >
       <Outlet />
     </AppProvider>
   );

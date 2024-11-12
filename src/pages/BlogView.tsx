@@ -7,7 +7,6 @@ import Typography from '@mui/material/Typography';
 import Pagination from '@mui/material/Pagination';
 
 import { _posts } from '../_mock';
-// import { DashboardContent } from 'src/layouts/dashboard';
 
 import { Iconify } from '../components/iconify';
 
@@ -28,7 +27,7 @@ export function BlogView() {
     <>
       <Box display="flex" alignItems="center" mb={5}>
         <Typography variant="h4" flexGrow={1}>
-          Blog
+          {/* Blog */}
         </Typography>
         <Button
           variant="contained"

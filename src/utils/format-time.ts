@@ -38,7 +38,7 @@ export function today(format?: string) {
 
 /** output: 17 Apr 2022 12:00 am
  */
-export function fDateTime(date: DatePickerFormat, format?: string) {
+export function fnDateTime(date: DatePickerFormat, format?: string) {
   if (!date) {
     return null;
   }
@@ -52,7 +52,7 @@ export function fDateTime(date: DatePickerFormat, format?: string) {
 
 /** output: 17 Apr 2022
  */
-export function fDate(date: DatePickerFormat, format?: string) {
+export function fnDate(date: DatePickerFormat, format?: string) {
   if (!date) {
     return null;
   }

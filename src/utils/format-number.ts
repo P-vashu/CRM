@@ -16,7 +16,7 @@ function processInput(inputValue: InputNumberValue): number | null {
 
 // ----------------------------------------------------------------------
 
-export function fNumber(inputValue: InputNumberValue, options?: Options) {
+export function fnNumber(inputValue: InputNumberValue, options?: Options) {
   const locale = DEFAULT_LOCALE;
 
   const number = processInput(inputValue);
@@ -52,7 +52,7 @@ export function fnCurrency(inputValue: InputNumberValue, options?: Options) {
 
 // ----------------------------------------------------------------------
 
-export function fPercent(inputValue: InputNumberValue, options?: Options) {
+export function fnPercent(inputValue: InputNumberValue, options?: Options) {
   const locale = DEFAULT_LOCALE;
 
   const number = processInput(inputValue);
@@ -70,7 +70,7 @@ export function fPercent(inputValue: InputNumberValue, options?: Options) {
 
 // ----------------------------------------------------------------------
 
-export function fShortenNumber(inputValue: InputNumberValue, options?: Options) {
+export function fnShortenNumber(inputValue: InputNumberValue, options?: Options) {
   const locale = DEFAULT_LOCALE;
 
   const number = processInput(inputValue);
@@ -87,7 +87,7 @@ export function fShortenNumber(inputValue: InputNumberValue, options?: Options) 
 
 // ----------------------------------------------------------------------
 
-export function fData(inputValue: InputNumberValue) {
+export function fnData(inputValue: InputNumberValue) {
   const number = processInput(inputValue);
   if (number === null || number === 0) return '0 bytes';
 

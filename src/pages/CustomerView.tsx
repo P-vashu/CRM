@@ -10,8 +10,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 
 import { _customers } from '../_mock';
-// import { DashboardContent } from 'src/layouts/dashboard';
-
 import { Iconify } from '../components/iconify';
 import { Scrollbar } from '../components/scrollbar';
 
@@ -20,7 +18,7 @@ import { CustomerTableRow } from '../components/customer/CustomerTableRow';
 import { CustomerTableHead } from '../components/customer/CustomerTableHead';
 import { TableEmptyRows } from '../components/table/TableEmptyRows';
 import { CustomerTableToolbar } from '../components/customer/CustomerTableToolbar';
-import { emptyRows, applyFilter, getComparator } from '../components/customer/utils';
+import { emptyRows, applyFilter, getComparator } from '../components/table/utils';
 
 import type { CustomerProps } from '../components/customer/CustomerTableRow';
 
@@ -44,7 +42,7 @@ export function CustomerView() {
     <>
       <Box display="flex" alignItems="center" mb={5}>
         <Typography variant="h4" flexGrow={1}>
-          Customers
+          {/* Customers */}
         </Typography>
         <Button
           variant="contained"
@@ -83,8 +81,9 @@ export function CustomerView() {
                 headLabel={[
                   { id: 'name', label: 'Name' },
                   { id: 'company', label: 'Company' },
-                  { id: 'role', label: 'Role' },
-                  { id: 'isVerified', label: 'Verified', align: 'center' },
+                  { id: 'email', label: 'Email' },
+                  { id: 'location', label: 'Location' },
+                  // { id: 'isVerified', label: 'Verified', align: 'center' },
                   { id: 'status', label: 'Status' },
                   { id: '' },
                 ]}

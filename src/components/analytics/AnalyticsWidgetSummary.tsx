@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import { useTheme } from '@mui/material/styles';
 
-import { fNumber, fPercent, fShortenNumber } from '../../utils/format-number';
+import { fnNumber, fnPercent, fnShortenNumber } from '../../utils/format-number';
 import { lightPalette as palette } from '../../theme/core/palette';
 import { varAlpha, bgGradient } from '../../theme/styles';
 
@@ -56,7 +56,7 @@ export function AnalyticsWidgetSummary({
       },
     },
     tooltip: {
-      y: { formatter: (value: number) => fNumber(value), title: { formatter: () => '' } },
+      y: { formatter: (value: number) => fnNumber(value), title: { formatter: () => '' } },
     },
     ...chart.options,
   });
@@ -75,7 +75,7 @@ export function AnalyticsWidgetSummary({
       <Iconify width={20} icon={percent < 0 ? 'eva:trending-down-fill' : 'eva:trending-up-fill'} />
       <Box component="span" sx={{ typography: 'subtitle2' }}>
         {percent > 0 && '+'}
-        {fPercent(percent)}
+        {fnPercent(percent)}
       </Box>
     </Box>
   );
@@ -109,7 +109,7 @@ export function AnalyticsWidgetSummary({
       >
         <Box sx={{ flexGrow: 1, minWidth: 112 }}>
           <Box sx={{ mb: 1, typography: 'subtitle2' }}>{title}</Box>
-          <Box sx={{ typography: 'h4' }}>{fShortenNumber(total)}</Box>
+          <Box sx={{ typography: 'h4' }}>{fnShortenNumber(total)}</Box>
         </Box>
 
         <Chart

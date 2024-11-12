@@ -3,7 +3,6 @@ import * as ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App';
 import Layout from './layouts/Dashboard';
-import OrdersPage from 'src/pages/OrdersView';
 import ProductsView from './pages/ProductsView';
 import OrdersView from './pages/OrdersView';
 import { OverviewAnalyticsView } from './pages/OverviewAnalyticsView';
@@ -12,6 +11,7 @@ import { NotFoundView } from './pages/NotFoundView';
 import { HelmetProvider } from 'react-helmet-async';
 import { UserView } from './pages/UserView';
 import { CustomerView } from './pages/CustomerView';
+import UserForm from './pages/UserForm';
 
 const router = createBrowserRouter([
   {
@@ -44,6 +44,10 @@ const router = createBrowserRouter([
           {
             path: 'users',
             Component: UserView,
+          },
+          {
+            path: 'user-form',
+            Component: UserForm,
           },
         ],
       },

@@ -5,7 +5,7 @@ import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import Typography from '@mui/material/Typography';
 
-import { fShortenNumber } from '../../utils/format-number';
+import { fnShortenNumber } from '../../utils/format-number';
 
 import { varAlpha } from '../../theme/styles';
 
@@ -49,7 +49,7 @@ export function AnalyticsTrafficBySite({ title, subheader, list, sx, ...other }:
             {site.value === 'twitter' && <Iconify icon="ri:twitter-x-fill" width={32} />}
 
             <Typography variant="h6" sx={{ mt: 1 }}>
-              {fShortenNumber(site.total)}
+              {fnShortenNumber(site.total)}
             </Typography>
 
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>

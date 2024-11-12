@@ -19,6 +19,7 @@
     "@iconify/react": "latest",
     "@mui/icons-material": "^6",
     "@mui/material": "^6",
+    "@mui/styles": "^6.1.6",
     "@reduxjs/toolkit": "^2.3.0",
     "@toolpad/core": "latest",
     "apexcharts": "^4.0.0",

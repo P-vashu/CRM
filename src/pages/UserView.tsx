@@ -10,7 +10,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 
 import { _users } from '../_mock';
-// import { DashboardContent } from 'src/layouts/dashboard';
 
 import { Iconify } from '../components/iconify';
 import { Scrollbar } from '../components/scrollbar';
@@ -20,9 +19,10 @@ import { UserTableRow } from '../components/user/UserTableRow';
 import { UserTableHead } from '../components/user/UserTableHead';
 import { TableEmptyRows } from '../components/table/TableEmptyRows';
 import { UserTableToolbar } from '../components/user/UserTableToolbar';
-import { emptyRows, applyFilter, getComparator } from '../components/user/utils';
+import { emptyRows, applyFilter, getComparator } from '../components/table/utils';
 
 import type { UserProps } from '../components/user/UserTableRow';
+import { RouterLink } from '../routes/components';
 
 // ----------------------------------------------------------------------
 
@@ -44,12 +44,13 @@ export function UserView() {
     <>
       <Box display="flex" alignItems="center" mb={5}>
         <Typography variant="h4" flexGrow={1}>
-          Users
+          {/* Users */}
         </Typography>
         <Button
           variant="contained"
           color="inherit"
           startIcon={<Iconify icon="mingcute:add-line" />}
+          component={RouterLink} href="/user-form"
         >
           New user
         </Button>
@@ -83,8 +84,8 @@ export function UserView() {
                 headLabel={[
                   { id: 'name', label: 'Name' },
                   { id: 'company', label: 'Company' },
-                  { id: 'email', label: 'Email' },
-                  { id: 'location', label: 'Location' },
+                  { id: 'role', label: 'Role' },
+                  // { id: 'location', label: 'Location' },
                   { id: 'isVerified', label: 'Verified', align: 'center' },
                   { id: 'status', label: 'Status' },
                   { id: '' },

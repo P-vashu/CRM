@@ -11,7 +11,7 @@ import TimelineSeparator from '@mui/lab/TimelineSeparator';
 import TimelineConnector from '@mui/lab/TimelineConnector';
 import TimelineItem, { timelineItemClasses } from '@mui/lab/TimelineItem';
 
-import { fDateTime } from '../../utils/format-time';
+import { fnDateTime } from '../../utils/format-time';
 
 // ----------------------------------------------------------------------
 
@@ -76,7 +76,7 @@ function Item({ item, lastItem, ...other }: ItemProps) {
         <Typography variant="subtitle2">{item.title}</Typography>
 
         <Typography variant="caption" sx={{ color: 'text.disabled' }}>
-          {fDateTime(item.time)}
+          {fnDateTime(item.time)}
         </Typography>
       </TimelineContent>
     </TimelineItem>

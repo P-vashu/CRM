@@ -61,13 +61,6 @@ export function CustomerTableRow({ row, selected, onSelectRow }: CustomerTableRo
 
         <TableCell>{row.email}</TableCell>
         <TableCell>{row.location}</TableCell>
-        <TableCell align="center">
-          {row.isVerified ? (
-            <Iconify width={22} icon="solar:check-circle-bold" sx={{ color: 'success.main' }} />
-          ) : (
-            '-'
-          )}
-        </TableCell>
 
         <TableCell>
           <Label color={(row.status === 'banned' && 'error') || 'success'}>{row.status}</Label>

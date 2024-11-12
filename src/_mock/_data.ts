@@ -35,15 +35,15 @@ export const _users = [...Array(24)].map((_, index) => ({
     [
       'Leader',
       'Hr Manager',
-      'UI Designer',
-      'UX Designer',
-      'UI/UX Designer',
+      'Sales Agent',
+      'Sales Operator',
+      'Sales Operator',
       'Project Manager',
-      'Backend Developer',
-      'Full Stack Designer',
-      'Front End Developer',
-      'Full Stack Developer',
-    ][index] || 'UI Designer',
+      'Business Analyst',
+      'Product Designer',
+      'Market Manager',
+      'General Manager',
+    ][index] || 'Sales Agent',
 }));
 
 // ----------------------------------------------------------------------
@@ -55,19 +55,6 @@ export const _customers = [...Array(12)].map((_, index) => ({
   location: _location(index),
   avatarUrl: `/assets/images/customer/avatar-${index + 1}.png`,
   status: index % 4 ? 'active' : 'banned',
-  // role:
-  //   [
-  //     'Leader',
-  //     'Hr Manager',
-  //     'UI Designer',
-  //     'UX Designer',
-  //     'UI/UX Designer',
-  //     'Project Manager',
-  //     'Backend Developer',
-  //     'Full Stack Designer',
-  //     'Front End Developer',
-  //     'Full Stack Developer',
-  //   ][index] || 'UI Designer',
 }));
 
 // ----------------------------------------------------------------------
@@ -144,7 +131,7 @@ export const _orders = [...Array(24)].map((_, index) => {
       ([1, 3, 5].includes(setIndex) && 'Pending') 
       || ([2, 11, 14, 16, 21, 23].includes(setIndex) && 'Shipping') 
       || ([4, 8, 12].includes(setIndex) && 'Delivered') 
-      || 'Pending',
+      || 'Refund',
   };
 });
 

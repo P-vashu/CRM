@@ -60,16 +60,11 @@ export function OrderTableRow({ row, selected, onSelectRow }: OrderTableRowProps
 
         <TableCell>$ {row.amount}</TableCell>
         <TableCell>$ {row.discount}</TableCell>
-        {/* <TableCell align="center">
-          {row.isVerified ? (
-            <Iconify width={22} icon="solar:check-circle-bold" sx={{ color: 'success.main' }} />
-          ) : (
-            '-'
-          )}
-        </TableCell> */}
 
         <TableCell>
-          <Label color={(row.status === 'banned' && 'error') || 'success'}>{row.status}</Label>
+          <Label color={(row.status === 'Refund' && 'error') 
+          || ( row.status === 'Pending' && 'warning')
+          || ( row.status === 'Shipping' && 'info')   || 'success'}>{row.status}</Label>
         </TableCell>
 
         <TableCell align="right">

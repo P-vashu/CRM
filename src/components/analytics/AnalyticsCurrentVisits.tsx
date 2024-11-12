@@ -6,7 +6,7 @@ import Divider from '@mui/material/Divider';
 import { useTheme } from '@mui/material/styles';
 import CardHeader from '@mui/material/CardHeader';
 
-import { fNumber } from '../../utils/format-number';
+import { fnNumber } from '../../utils/format-number';
 
 import { Chart, useChart, ChartLegends } from '../chart';
 
@@ -45,7 +45,7 @@ export function AnalyticsCurrentVisits({ title, subheader, chart, ...other }: Pr
     dataLabels: { enabled: true, dropShadow: { enabled: false } },
     tooltip: {
       y: {
-        formatter: (value: number) => fNumber(value),
+        formatter: (value: number) => fnNumber(value),
         title: { formatter: (seriesName: string) => `${seriesName}` },
       },
     },
