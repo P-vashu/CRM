@@ -1,18 +1,11 @@
 import React, { useState } from "react";
 import { makeStyles } from "@mui/styles";
 
-export function useForm(initialFieldValues) {
+export function useForm(initialFieldValues: TODO) {
   const [values, setValues] = useState(initialFieldValues);
   const [errors, setErrors] = useState({});
   const [currentField, setcurrentField] = useState("");
-  // const validateOnChange=(name,value)=>{
-  //   if(validateOnChangeFields.exists(name)){
-  //     if(name===""){}
-  //     else if(name===""){}
-  //     else if(name===""){}
-  //     else return
-  //   }
-  // }
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setValues({
@@ -48,12 +41,3 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-// export function Form(props) {
-//   const { children, ...other } = props;
-//   const classes = useStyles();
-//   return (
-//     <form className={classes.root} {...other}>
-//       {props.children}
-//     </form>
-//   );
-// }

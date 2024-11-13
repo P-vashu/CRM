@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import ButtonBase from '@mui/material/ButtonBase';
 import { alpha as hexAlpha } from '@mui/material/styles';
-
+import { lightPalette as palette } from '../../theme/core/palette';
 import { varAlpha } from '../../theme/styles';
 
 import { Iconify } from '../iconify';
@@ -75,7 +75,8 @@ export const ColorPicker = forwardRef<HTMLDivElement, BoxProps & ColorPickerProp
                     height: 20,
                     bgcolor: color,
                     borderRadius: '50%',
-                    border: `solid 1px ${varAlpha(theme.vars.palette.grey['500Channel'], 0.16)}`,
+                    // border: `solid 1px ${varAlpha(theme.vars.palette.grey['500Channel'], 0.16)}`,
+                    border: `solid 1px ${varAlpha(palette.grey['500Channel'], 0.16)}`,
                     ...(hasSelected && {
                       transform: 'scale(1.3)',
                       boxShadow: `4px 4px 8px 0 ${hexAlpha(color, 0.48)}`,

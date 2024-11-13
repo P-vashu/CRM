@@ -166,7 +166,7 @@ export function PostItem({
     <Card sx={sx} {...other}>
       <Box
         sx={(theme) => ({ 
-          px: 2,
+          px: 0,
           position: 'relative',
           pt: 'calc(100% * 3 / 4)',
           ...((latestPostLarge || latestPost) && {

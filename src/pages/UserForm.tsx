@@ -1,7 +1,7 @@
-import {
-    Grid,
-    Paper
-} from "@mui/material";
+// import {
+//     Grid,
+//     Paper
+// } from "@mui/material";
 import React from "react";
 import { useForm } from "../components/form/use-form";
 import Input from "../components/controls/Input";
@@ -11,16 +11,35 @@ import * as employeeServices from "../services/userServices";
 import CheckboxGenerator from "../components/controls/Checkbox";
 import ButtonGenerator from "../components/controls/Button";
 import { Form } from "react-router-dom";
+import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Grid2";
+import { FormControl, Typography } from "@mui/material";
 
-const initialFieldValues = {
+
+type User = {
+    id: number;
+    firstName: string;
+    lastName: string;
+    email: string;
+    mobile: string;
+    city: string;
+    state:string;
+    gender: "male",
+    departmentId: string;
+    isPermanent: false
+}
+
+const initialFieldValues: User = {
     id: 1,
-    fullName: "",
+    firstName: "",
+    lastName: "",
     email: "",
     mobile: "",
     city: "",
+    state: "",
     gender: "male",
     departmentId: "",
-    hireDate: new Date(),
+    // hireDate: new Date(),
     isPermanent: false
 };
 
@@ -47,98 +66,132 @@ export default function UserForm() {
 
     const validateOnSubmit = () => {
         let temp: TODO = {};
-        temp.fullName = values.fullName ? "" : "Mandatory Field";
+        temp.firstName = values.firstName ? "" : "Mandatory Field";
+        temp.lastName = values.lastName ? "" : "Mandatory Field";
         temp.email = /$^|.+@.+..+/.test(values.email) ? "" : "Email is not Valid";
         temp.mobile = values.mobile.length > 9 ? "" : "Min 10 numbers required";
+        temp.city = values.city ? "" : "Mandatory Field";
+        temp.state = values.state ? "" : "Mandatory Field";
         temp.departmentId =
             values.departmentId.length !== 0 ? "" : "Mandatory Field";
-        setErrors({
-            ...temp
-        });
+        setErrors(
+            temp
+        );
         return Object.values(temp).every((x) => x === "");
     };
 
     const handleSubmit = (e: React.SyntheticEvent) => {
+    // const handleSubmit = () => {
         e.preventDefault();
         if (validateOnSubmit()) {
             window.alert("Submitting...");
         }
         employeeServices.insertEmployee(values);
-        resetForm();
+
     };
 
     return (
-        <Paper>
+        <Paper sx={{ px: 5, py: 5 }}>
+            <Typography variant="h4" sx={{ mb: { xs: 3, md: 5 } }}>
+                User Form
+            </Typography>
             <Form onSubmit={handleSubmit}>
-                <Grid container spacing={3}>
-                    <Grid item columns={2} columnSpacing={3} xs={12} md={6}>
-                        <Input
-                            label="Full Name"
-                            name="fullName"
-                            value={values.fullName}
-                            onChange={handleInputChange}
-                            error={(errors as TODO).fullName}
-                        />
-                        <Input
-                            variant="outlined"
-                            label="e-mail"
-                            name="email"
-                            value={values.email}
-                            onChange={handleInputChange}
-                            error={(errors as TODO).email}
-                        />
-                        <Input
+                <Grid container spacing={3} rowSpacing={2} columnSpacing={2}>
+                    <Grid container spacing={4} size={{ xs: 12, md: 6 }}>
+                        <FormControl>
+                            <Input required
+                                label="First Name"
+                                name="firstName"
+                                value={values.firstName}
+                                onChange={handleInputChange}
+                                error={(errors as TODO).firstName}
+
+                            /></FormControl>
+                        <FormControl>
+                            <Input required
+                                variant="outlined"
+                                label="Last Name"
+                                name="lastName"
+                                value={values.lastName}
+                                onChange={handleInputChange}
+                                error={(errors as TODO).lastName}
+                            /></FormControl>
+
+                    </Grid>
+                    <Grid container spacing={4} size={{ xs: 12, md: 6 }}>
+                        <FormControl>
+                            <Input
+                                required
+                                variant="outlined"
+                                label="e-mail"
+                                name="email"
+                                value={values.email}
+                                type="email"
+                                onChange={handleInputChange}
+                                error={(errors as TODO).email}
+                            /></FormControl>
+                        <FormControl><Input
                             variant="outlined"
                             label="mobile"
                             name="mobile"
                             value={values.mobile}
                             onChange={handleInputChange}
                             error={(errors as TODO).mobile}
-                        />
-                        <Input
+                        /></FormControl>
+                    </Grid>
+                    <Grid container spacing={4} size={{ xs: 12, md: 6 }}>
+                        <FormControl><Input required
                             variant="outlined"
                             label="city"
                             name="city"
                             value={values.city}
                             onChange={handleInputChange}
-                        />
+                        /></FormControl>
+                        <FormControl><Input
+                            variant="outlined"
+                            label="State"
+                            name="state"
+                            value={values.state}
+                            onChange={handleInputChange}
+                        /></FormControl>
                     </Grid>
-                    <Grid item xs={6}>
-                        <RadioGroupGenerator
-                            name="gender"
-                            label="Gender"
-                            value={values.gender}
-                            onChange={handleInputChange}
-                            items={radioList}
-                        />
-                        <Select
-                            name="departmentId"
-                            label="Department"
-                            value={values.departmentId}
-                            onChange={handleInputChange}
-                            options={employeeServices.departmentArray()}
-                            error={(errors as TODO).departmentId}
-                        />
-                        {/* <DatePickerGenerator
-              name="hireDate"
-              label="Date"
-              value={values.hireDate}
-              onChange={handleInputChange}
-            /> */}
-                        <CheckboxGenerator
-                            name="isPermanent"
-                            label="Permanent Employee"
-                            value={values.isPermanent}
-                            onChange={handleInputChange}
-                            options={checkboxList}
-                        />
-                        <div>
-                            <ButtonGenerator text="Submit" type="submit" />
-                            <ButtonGenerator text="Reset" color="default" onClick={resetForm} />
-                        </div>
+                    <Grid container spacing={4} size={{ xs: 12, md: 6 }}>
+                        <FormControl>
+                            <RadioGroupGenerator
+                                name="gender"
+                                label="Gender"
+                                value={values.gender}
+                                onChange={handleInputChange}
+                                items={radioList}
+                            /></FormControl>
+                        <FormControl style={{ minWidth: '10em' }}>
+                            <Select
+                                name="departmentId"
+                                label="Department"
+                                value={values.departmentId}
+                                onChange={handleInputChange}
+                                options={employeeServices.departmentArray()}
+                                error={(errors as TODO).departmentId}
+
+                            /></FormControl>
                     </Grid>
+                    <Grid container spacing={4} size={{ xs: 12, md: 6 }}>
+
+                        <FormControl>
+                            <CheckboxGenerator
+                                name="isPermanent"
+                                label="Permanent Employee"
+                                value={values.isPermanent}
+                                onChange={handleInputChange}
+                                options={checkboxList}
+
+                            /></FormControl>
+                    </Grid>
+
+                    <ButtonGenerator text="Submit" type="submit" />
+                    <ButtonGenerator text="Reset" color="default" onClick={resetForm} />
                 </Grid>
-            </Form>
-        </Paper>
+            </Form >
+        </Paper >
     );
 }

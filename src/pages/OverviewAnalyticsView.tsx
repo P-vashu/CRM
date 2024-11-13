@@ -1,9 +1,6 @@
 import Grid from '@mui/material/Grid2';
 import Typography from '@mui/material/Typography';
-
 import { _tasks, _posts, _timeline } from '../_mock';
-// import { DashboardContent } from 'src/layouts/dashboard';
-
 import { AnalyticsNews } from '../components/analytics/AnalyticsNews';
 import { AnalyticsTasks } from '../components/analytics/AnalyticsTasks';
 import { AnalyticsCurrentVisits } from '../components/analytics/AnalyticsCurrentVisits';
@@ -21,7 +18,7 @@ export function OverviewAnalyticsView() {
   return (
       <>
       <Typography variant="h4" sx={{ mb: { xs: 3, md: 5 } }}>
-        Hi, Welcome back 👋
+        {/* Hi, Welcome back 👋 */}
       </Typography>
 
       <Grid container spacing={3}>
