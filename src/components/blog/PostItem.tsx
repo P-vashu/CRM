@@ -163,7 +163,7 @@ export function PostItem({
   );
 
   return (
-    <Card sx={sx} {...other}>
+    <Card sx={{borderRadius:'1.5em',...sx}} {...other}>
       <Box
         sx={(theme) => ({ 
           px: 0,

@@ -28,13 +28,13 @@ export function AnalyticsNews({ title, subheader, list, ...other }: Props) {
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} sx={{ mb: 1 }} />
 
-      <Scrollbar sx={{ minHeight: 405 }}>
+      {/* <Scrollbar sx={{ minHeight: 405 }}> */}
         <Box sx={{ minWidth: 640 }}>
           {list.map((post) => (
             <PostItem key={post.id} item={post} />
           ))}
         </Box>
-      </Scrollbar>
+      {/* </Scrollbar> */}
 
       <Box sx={{ p: 2, textAlign: 'right' }}>
         <Button

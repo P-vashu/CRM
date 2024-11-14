@@ -44,7 +44,7 @@ export function AnalyticsTasks({ title, subheader, list, ...other }: Props) {
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} sx={{ mb: 1 }} />
 
-      <Scrollbar sx={{ minHeight: 304 }}>
+      {/* <Scrollbar sx={{ minHeight: 304 }}> */}
         <Stack divider={<Divider sx={{ borderStyle: 'dashed' }} />} sx={{ minWidth: 560 }}>
           {list.map((item) => (
             <Item
@@ -55,7 +55,7 @@ export function AnalyticsTasks({ title, subheader, list, ...other }: Props) {
             />
           ))}
         </Stack>
-      </Scrollbar>
+      {/* </Scrollbar> */}
     </Card>
   );
 }
