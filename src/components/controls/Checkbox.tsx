@@ -7,7 +7,7 @@ import {
   } from "@mui/material";
   import React, { ReactEventHandler } from "react";
   
-  const checkedtoValue = (e: React.SyntheticEvent) => ({
+  const checkedtoValue = (e: React.SyntheticEvent & TODO) => ({
     target: {
       name: e.target.name,
       value: e.target.checked

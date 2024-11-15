@@ -6,7 +6,7 @@ export function useForm(initialFieldValues: TODO) {
   const [errors, setErrors] = useState({});
   const [currentField, setcurrentField] = useState("");
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e:TODO) => {
     const { name, value } = e.target;
     setValues({
       ...values,
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     "& .MuiFormControl-root": {
       width: "80%",
-      margin: theme.spacing(1)
+      margin: (theme as TODO).spacing(1)
     }
   }
 }));

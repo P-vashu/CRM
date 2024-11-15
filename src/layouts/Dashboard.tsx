@@ -11,7 +11,7 @@ export default function Layout() {
   return (
     <DashboardLayout sx={{backgroundColor: varAlpha(palette.grey['500Channel'], 0.08)}}
       slots={{
-        toolbarAccount: AccountPopover}}
+        toolbarAccount: AccountPopover} as TODO}
     >
       <PageContainer title="" breadcrumbs={[]} >
         <Outlet />

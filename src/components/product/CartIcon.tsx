@@ -22,7 +22,7 @@ export function CartIcon({ totalItems, sx, ref, ...other }: Props) {
     <Box
     // <InputLabel
       // component={RouterLink}
-      href="#"
+      // href="#"
       sx={{
         right: 0,
         top: 112,
@@ -34,9 +34,9 @@ export function CartIcon({ totalItems, sx, ref, ...other }: Props) {
         borderTopLeftRadius: 16,
         borderBottomLeftRadius: 16,
         bgcolor: 'background.paper',
-        padding: (theme) => theme.spacing(1, 3, 1, 2),
-        boxShadow: (theme) => theme.shadows['5'],
-        transition: (theme) => theme.transitions.create(['opacity']),
+        padding: (theme:TODO) => theme.spacing(1, 3, 1, 2),
+        boxShadow: (theme:TODO) => theme.shadows['5'],
+        transition: (theme:TODO) => theme.transitions.create(['opacity']),
         '&:hover': { opacity: 0.72 },
         ...sx,
       }}

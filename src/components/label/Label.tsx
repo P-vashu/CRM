@@ -31,7 +31,7 @@ export interface LabelProps extends BoxProps {
   startIcon?: React.ReactElement | null;
 }
 
-const labelStyle = (theme: Theme, onwerState: any) => {
+const labelStyle = (theme: TODO, onwerState: TODO) => {
 
   const {
     color,

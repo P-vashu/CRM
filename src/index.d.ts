@@ -3,6 +3,9 @@ declare module "*.svg" {
   export default content;
 };
 
+declare module "*.png";
+
+declare type TODO = any
 
 declare module "@emotion/styled" {
   import { CreateStyled } from '@emotion/styled/types/index';

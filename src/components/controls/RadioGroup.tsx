@@ -20,11 +20,11 @@ export default function RadioGroupGenerator(props:any) {
       <RadioGroup
         row
         name={name}
-        label={label}
+        // label={label}
         value={value}
         onChange={onChange}
       >
-        {items.map((item) => (
+        {items.map((item:TODO) => (
           <RadioItem key={item.id} value={item.title} label={item.title} />
         ))}
       </RadioGroup>

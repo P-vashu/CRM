@@ -67,8 +67,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    {/* <HelmetProvider > */}
+    <HelmetProvider >
       <RouterProvider router={router} />
-    {/* </HelmetProvider> */}
+    </HelmetProvider>
   </React.StrictMode>
 );

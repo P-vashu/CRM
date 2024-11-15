@@ -30,8 +30,8 @@ export default function OrdersView() {
 
   const [filterName, setFilterName] = useState('');
 
-  const dataFiltered: OrderProps[] = applyFilter({
-    inputData: _orders,
+  const dataFiltered: TODO = applyFilter({
+    inputData: _orders as TODO,
     comparator: getComparator(table.order, table.orderBy),
     filterName,
   });
@@ -94,7 +94,7 @@ export default function OrdersView() {
                     table.page * table.rowsPerPage,
                     table.page * table.rowsPerPage + table.rowsPerPage
                   )
-                  .map((row) => (
+                  .map((row: TODO) => (
                     <OrderTableRow
                       key={row.id}
                       row={row}

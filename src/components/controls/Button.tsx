@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme:TODO) => ({
   root: {
     margin: theme.spacing(1)
   },
@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function ButtonGenerator(props) {
+export default function ButtonGenerator(props: TODO) {
   const classes = useStyles();
   const { text, size, color, variant, onClick, ...other } = props;
   return (

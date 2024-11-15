@@ -1,3 +1,5 @@
+import { CustomerProps } from '../customer/CustomerTableRow';
+import { OrderProps } from '../order/OrderTableRow';
 import type { UserProps } from '../user/UserTableRow';
 
 // ----------------------------------------------------------------------
@@ -53,7 +55,7 @@ export function getComparator<Key extends keyof any>(
 // ----------------------------------------------------------------------
 
 type ApplyFilterProps = {
-  inputData: Array<UserProps| CustomerProps |OrderProps >;
+  inputData:  UserProps[] |  CustomerProps[] | OrderProps []; // Array<UserProps| CustomerProps |OrderProps >;
   filterName: string;
   comparator: (a: any, b: any) => number;
 };
@@ -67,12 +69,12 @@ export function applyFilter({ inputData, comparator, filterName }: ApplyFilterPr
     return a[1] - b[1];
   });
 
-  inputData = stabilizedThis.map((el) => el[0]);
+  inputData = stabilizedThis.map((el) => el[0]) as TODO;
 
   if (filterName) {
     inputData = inputData.filter(
       (user) => user.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
-    );
+    ) as TODO;
   }
 
   return inputData;

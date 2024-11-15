@@ -31,7 +31,7 @@ export function UserView() {
 
   const [filterName, setFilterName] = useState('');
 
-  const dataFiltered: UserProps[] = applyFilter({
+  const dataFiltered: TODO = applyFilter({
     inputData: _users,
     comparator: getComparator(table.order, table.orderBy),
     filterName,
@@ -97,7 +97,7 @@ export function UserView() {
                     table.page * table.rowsPerPage,
                     table.page * table.rowsPerPage + table.rowsPerPage
                   )
-                  .map((row) => (
+                  .map((row:TODO) => (
                     <UserTableRow
                       key={row.id}
                       row={row}

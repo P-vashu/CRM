@@ -10,8 +10,8 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import { AppProvider } from '@toolpad/core/react-router-dom';
 import { createTheme } from '@mui/material/styles';
 import logoSvg from '/public/assets/icons/workspaces/it-logo.svg';
-import logoMidPng from '/public/it-logo-mid.png';
-import { type Navigation } from '@toolpad/core/AppProvider';
+import logoMidPng from './assets/it-logo-mid.png';
+import { Session, type Navigation } from '@toolpad/core/AppProvider';
 import { SessionContext } from './SessionContext';
 
 
