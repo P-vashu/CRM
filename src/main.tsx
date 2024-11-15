@@ -24,7 +24,7 @@ const router = createBrowserRouter([
         Component: Layout,
         children: [
           {
-            path: '/',
+            path: '',
             Component: OverviewAnalyticsView,
           },
           {
@@ -51,6 +51,10 @@ const router = createBrowserRouter([
             path: 'user-form',
             Component: UserForm,
           },
+          {
+            path: '*',
+            Component: NotFoundView
+          }
         ],
       },
       {

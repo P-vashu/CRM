@@ -8,10 +8,12 @@ import { useSession } from '../SessionContext';
 const fakeAsyncGetSession = async (formData: any): Promise<Session> => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      if (formData.get('password') === 'password') {
+      console.log(JSON.stringify(formData))
+      // if (formData.get('password') === 'admin' ) {
+      if (formData.get('password') !=='' ) {
         resolve({
           user: {
-            name: 'Bharat Kashyap',
+            name: 'Harry Ho', 
             email: formData.get('email') || '',
             image: 'https://avatars.githubusercontent.com/u/19550456',
           },

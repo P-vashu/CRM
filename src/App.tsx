@@ -109,12 +109,13 @@ export default function App() {
   }, [navigate]);
 
   const signOut = React.useCallback(() => {
-    setSession(null);
+    // setSession(null);
     navigate('/sign-in');
   }, [navigate]);
 
   const sessionContextValue = React.useMemo(() => ({ session, setSession }), [session, setSession]);
 
+  
 
   return (
     <SessionContext.Provider value={sessionContextValue}>
