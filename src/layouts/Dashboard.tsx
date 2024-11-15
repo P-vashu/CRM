@@ -9,11 +9,11 @@ import { lightPalette as palette } from '../theme/core/palette';
 
 export default function Layout() {
   return (
-    <DashboardLayout  sx={{backgroundColor: varAlpha(palette.grey['500Channel'], 0.08)}}
+    <DashboardLayout sx={{backgroundColor: varAlpha(palette.grey['500Channel'], 0.08)}}
       slots={{
         toolbarAccount: AccountPopover}}
     >
-      <PageContainer>
+      <PageContainer title="" breadcrumbs={[]} >
         <Outlet />
       </PageContainer>
     </DashboardLayout>

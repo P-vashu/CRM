@@ -38,15 +38,14 @@ export function CustomerView() {
   const notFound = !dataFiltered.length && !!filterName;
 
   return (
-    // <DashboardContent>
     <>
       <Box display="flex" alignItems="center" mb={5}>
         <Typography variant="h4" flexGrow={1}>
-          {/* Customers */}
+          Customers
         </Typography>
         <Button
           variant="contained"
-          color="inherit"
+          color="primary"
           startIcon={<Iconify icon="mingcute:add-line" />}
         >
           New customer

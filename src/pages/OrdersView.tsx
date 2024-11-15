@@ -47,7 +47,7 @@ export default function OrdersView() {
         </Typography>
         <Button
           variant="contained"
-          color="inherit"
+           color="primary"
           startIcon={<Iconify icon="mingcute:add-line" />}
         >
           New order

@@ -1,110 +1,47 @@
-import { useState, useCallback } from 'react';
+'use client';
+import * as React from 'react';
+import { SignInPage } from '@toolpad/core/SignInPage';
+import type { Session } from '@toolpad/core/AppProvider';
+import { useNavigate } from 'react-router-dom';
+import { useSession } from '../SessionContext';
 
-import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
-import Divider from '@mui/material/Divider';
-import TextField from '@mui/material/TextField';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import LoadingButton from '@mui/lab/LoadingButton';
-import InputAdornment from '@mui/material/InputAdornment';
+const fakeAsyncGetSession = async (formData: any): Promise<Session> => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (formData.get('password') === 'password') {
+        resolve({
+          user: {
+            name: 'Bharat Kashyap',
+            email: formData.get('email') || '',
+            image: 'https://avatars.githubusercontent.com/u/19550456',
+          },
+        });
+      }
+      reject(new Error('Incorrect credentials.'));
+    }, 1000);
+  });
+};
 
-import { useRouter } from 'src/routes/hooks';
-
-import { Iconify } from '../components/iconify';
-
-// ----------------------------------------------------------------------
-
-export function SignInView() {
-  const router = useRouter();
-
-  const [showPassword, setShowPassword] = useState(false);
-
-  const handleSignIn = useCallback(() => {
-    router.push('/');
-  }, [router]);
-
-  const renderForm = (
-    <Box display="flex" flexDirection="column" alignItems="flex-end">
-      <TextField
-        fullWidth
-        name="email"
-        label="Email address"
-        defaultValue="hello@gmail.com"
-        InputLabelProps={{ shrink: true }}
-        sx={{ mb: 3 }}
-      />
-
-      <Link variant="body2" color="inherit" sx={{ mb: 1.5 }}>
-        Forgot password?
-      </Link>
-
-      <TextField
-        fullWidth
-        name="password"
-        label="Password"
-        defaultValue="@demo1234"
-        InputLabelProps={{ shrink: true }}
-        type={showPassword ? 'text' : 'password'}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                <Iconify icon={showPassword ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
-              </IconButton>
-            </InputAdornment>
-          ),
-        }}
-        sx={{ mb: 3 }}
-      />
-
-      <LoadingButton
-        fullWidth
-        size="large"
-        type="submit"
-        color="inherit"
-        variant="contained"
-        onClick={handleSignIn}
-      >
-        Sign in
-      </LoadingButton>
-    </Box>
-  );
-
+export default function SignInView() {
+  const { setSession } = useSession();
+  const navigate = useNavigate();
   return (
-    <>
-      <Box gap={1.5} display="flex" flexDirection="column" alignItems="center" sx={{ mb: 5 }}>
-        <Typography variant="h5">Sign in</Typography>
-        <Typography variant="body2" color="text.secondary">
-          Don’t have an account?
-          <Link variant="subtitle2" sx={{ ml: 0.5 }}>
-            Get started
-          </Link>
-        </Typography>
-      </Box>
-
-      {renderForm}
-
-      <Divider sx={{ my: 3, '&::before, &::after': { borderTopStyle: 'dashed' } }}>
-        <Typography
-          variant="overline"
-          sx={{ color: 'text.secondary', fontWeight: 'fontWeightMedium' }}
-        >
-          OR
-        </Typography>
-      </Divider>
-
-      <Box gap={1} display="flex" justifyContent="center">
-        <IconButton color="inherit">
-          <Iconify icon="logos:google-icon" />
-        </IconButton>
-        <IconButton color="inherit">
-          <Iconify icon="eva:github-fill" />
-        </IconButton>
-        <IconButton color="inherit">
-          <Iconify icon="ri:twitter-x-fill" />
-        </IconButton>
-      </Box>
-    </>
+    <SignInPage
+      providers={[{ id: 'credentials', name: 'Credentials' }]}
+      signIn={async (provider, formData, callbackUrl) => {
+        // Demo session
+        try {
+          const session = await fakeAsyncGetSession(formData);
+          if (session) {
+            setSession(session);
+            navigate(callbackUrl || '/', { replace: true });
+            return {};
+          }
+        } catch (error) {
+          return { error: error instanceof Error ? error.message : 'An error occurred' };
+        }
+        return {};
+      }}
+    />
   );
 }

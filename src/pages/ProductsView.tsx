@@ -90,19 +90,21 @@ function ProductsView() {
   return (
 
     <>
-      {/* <Typography variant="h4" sx={{ mb: 5 }}>
-        Products
-      </Typography> */}
+      <Box display="flex" alignItems="center" mb={5}>
+        <Typography variant="h4"  flexGrow={1} sx={{ mb: 5 }}>
+          Products
+        </Typography>
 
-      <CartIcon totalItems={8} />
-      
+
+      {/* </Box>
+
       <Box
         display="flex"
         alignItems="center"
         flexWrap="wrap-reverse"
         justifyContent="flex-end"
         sx={{ mb: 5 }}
-      >
+      > */}
         <Box gap={1} display="flex" flexShrink={0} sx={{ my: 1 }}>
           <ProductFilters
             canReset={canReset}
@@ -134,10 +136,12 @@ function ProductsView() {
         </Box>
       </Box>
 
+      <CartIcon totalItems={8} />
+
       <Grid container spacing={3}>
         {_products.map((product) => (
           // <Grid key={product.id} xs={12} sm={6} md={3}>
-          <Grid key={product.id} size={{xs:12 ,sm:6, md:3 }}> 
+          <Grid key={product.id} size={{ xs: 12, sm: 6, md: 3 }}>
             <ProductItem product={product} />
           </Grid>
         ))}

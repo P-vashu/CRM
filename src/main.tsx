@@ -12,6 +12,8 @@ import { HelmetProvider } from 'react-helmet-async';
 import { UserView } from './pages/UserView';
 import { CustomerView } from './pages/CustomerView';
 import UserForm from './pages/UserForm';
+import SignInView from './pages/SignInView';
+
 
 const router = createBrowserRouter([
   {
@@ -52,6 +54,10 @@ const router = createBrowserRouter([
         ],
       },
       {
+        path: '/sign-in',
+        Component: SignInView
+      },
+      {
         path: '*',
         Component: NotFoundView
       }
@@ -61,8 +67,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <HelmetProvider >
+    {/* <HelmetProvider > */}
       <RouterProvider router={router} />
-    </HelmetProvider>
+    {/* </HelmetProvider> */}
   </React.StrictMode>
 );

@@ -48,7 +48,7 @@ export function UserView() {
         </Typography>
         <Button
           variant="contained"
-          color="inherit"
+             color="primary"
           startIcon={<Iconify icon="mingcute:add-line" />}
           component={RouterLink} href="/user-form"
         >

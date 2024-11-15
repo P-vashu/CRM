@@ -19,6 +19,7 @@ export function OverviewAnalyticsView() {
       <>
       <Typography variant="h4" sx={{ mb: { xs: 3, md: 5 } }}>
         {/* Hi, Welcome back 👋 */}
+        Dashboard 
       </Typography>
 
       <Grid container spacing={3}>
@@ -33,7 +34,8 @@ export function OverviewAnalyticsView() {
               series: [
                 { name: '2022', data: [44, 55, 41, 64, 22] },
                 { name: '2023', data: [53, 32, 33, 52, 13] },
-              ],  
+              ],
+              
             }}
           />
         </Grid>
@@ -142,6 +144,7 @@ export function OverviewAnalyticsView() {
                 { label: 'Africa', value: 500 },
               ],
             }}
+            
           />
         </Grid>
      

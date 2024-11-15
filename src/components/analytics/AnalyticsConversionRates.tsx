@@ -35,7 +35,7 @@ export function AnalyticsConversionRates({ title, subheader, chart, ...other }: 
 
   const chartOptions = useChart({
     colors: chartColors,
-    stroke: { width: 2, colors: ['transparent'] },
+    stroke: { width: 0, colors: ['transparent'] },
     tooltip: {
       shared: true,
       intersect: false,
@@ -48,7 +48,7 @@ export function AnalyticsConversionRates({ title, subheader, chart, ...other }: 
     dataLabels: {
       enabled: true,
       offsetX: -6,
-      style: { fontSize: '10px', colors: ['#FFFFFF', theme.palette.text.primary] },
+      style: { fontSize: '12px', colors: ['#FFFFFF', theme.palette.text.primary] },
     },
     plotOptions: {
       bar: {

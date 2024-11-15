@@ -86,11 +86,13 @@ export function AnalyticsWidgetSummary({
         ...bgGradient({
           color: `135deg, ${varAlpha(palette[color].lighterChannel, 0.48)}, ${varAlpha(palette[color].lightChannel, 0.48)}`,
         }),
-        p: 3,
+        py: 1,
+        px: 3,
         boxShadow: 'none',
         position: 'relative',
         color: `${color}.darker`,
         backgroundColor: 'common.white',
+        borderRadius: '1em',
         ...sx,
       }}
       {...other}

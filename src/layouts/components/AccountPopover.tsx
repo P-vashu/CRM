@@ -15,6 +15,8 @@ import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
 import { useRouter, usePathname } from '../../routes/hooks';
 
 import { _myAccount } from '../../_mock';
+import { useSearchParams } from 'react-router-dom';
+import { useSession } from '../../SessionContext';
 
 // ----------------------------------------------------------------------
 
@@ -29,6 +31,7 @@ export type AccountPopoverProps = IconButtonProps & {
 
 export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps) {
   const router = useRouter();
+  const { setSession }= useSession();
 
   const pathname = usePathname();
 
@@ -40,6 +43,7 @@ export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps)
 
   const handleClosePopover = useCallback(() => {
     setOpenPopover(null);
+    setSession(null)
   }, []);
 
   const handleClickItem = useCallback(
@@ -129,7 +133,8 @@ export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps)
         <Divider sx={{ borderStyle: 'dashed' }} />
 
         <Box sx={{ p: 1 }}>
-          <Button fullWidth color="error" size="medium" variant="text">
+          <Button fullWidth onClick={() => handleClickItem('/sign-in')}
+            color="error" size="medium" variant="text">
             Logout
           </Button>
         </Box>
