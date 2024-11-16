@@ -11,8 +11,9 @@ import { NotFoundView } from './pages/NotFoundView';
 import { HelmetProvider } from 'react-helmet-async';
 import { UserView } from './pages/UserView';
 import { CustomerView } from './pages/CustomerView';
-import UserForm from './pages/UserForm';
+import UserForm , { loader as userLoader }from './pages/UserForm';
 import SignInView from './pages/SignInView';
+import CustomerForm  from './pages/CustomerForm';
 
 
 const router = createBrowserRouter([
@@ -52,10 +53,20 @@ const router = createBrowserRouter([
             Component: UserForm,
           },
           {
+            path: 'edit-user/:id',
+            Component: UserForm,
+            loader: userLoader
+
+          },
+          {
+            path: 'customer-form',
+            Component: CustomerForm,
+          },
+          {
             path: '*',
             Component: NotFoundView
           }
-        ],
+        ]
       },
       {
         path: '/sign-in',
@@ -68,6 +79,9 @@ const router = createBrowserRouter([
     ],
   },
 ]);
+
+
+
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

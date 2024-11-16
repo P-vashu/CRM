@@ -11,7 +11,8 @@ import {
   _productNames,
   _orderId,
   _location,
-  _emails,
+  _email,
+  _mobile,
 } from './_mock';
 
 // ----------------------------------------------------------------------
@@ -27,7 +28,11 @@ export const _myAccount = {
 export const _users = [...Array(24)].map((_, index) => ({
   id: _id(index),
   name: _fullName(index),
+  firstName: _fullName(index).split(' ')[0],
+  lastName: _fullName(index).split(' ')[1],
   company: _company(index),
+  mobile: _mobile(index),
+  email: _email(index),
   isVerified: _boolean(index),
   avatarUrl: `/assets/images/avatar/avatar-${index + 1}.webp`,
   status: index % 4 ? 'active' : 'banned',
@@ -51,7 +56,7 @@ export const _customers = [...Array(12)].map((_, index) => ({
   id: _id(index),
   name: _fullName(index),
   company: _company(index),
-  email: _emails(index),
+  email: _email(index),
   location: _location(index),
   avatarUrl: `/assets/images/customer/avatar-${index + 1}.png`,
   status: index % 4 ? 'active' : 'banned',

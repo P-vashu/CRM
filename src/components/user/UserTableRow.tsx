@@ -12,6 +12,8 @@ import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
 
 import { Label } from '../label';
 import { Iconify } from '../iconify';
+// import { Navigate, useNavigate } from 'react-router-dom';
+import { useRouter } from '../../routes/hooks/use-router';
 
 // ----------------------------------------------------------------------
 
@@ -33,14 +35,24 @@ type UserTableRowProps = {
 
 export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) {
   const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
+  const [userId, setUserId] = useState(null);
+  const router = useRouter();
 
-  const handleOpenPopover = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
-    setOpenPopover(event.currentTarget);
-  }, []);
+  const handleOpenPopover = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement> & TODO) => {
+      // const uid = event.target.value;
+      console.log(` event.currentTarget id: ${event.currentTarget}`)
+      setOpenPopover(event.currentTarget);
+      setUserId(event.currentTarget.value)
+      // router.push(`/edit-user/${uid}`)//,{replace: true})
+    }, [setOpenPopover, setUserId]);
 
   const handleClosePopover = useCallback(() => {
+    // const uid = event.target.value;
+    console.log(` openPopover id: ${userId}`)
     setOpenPopover(null);
-  }, []);
+    router.push(`/edit-user/${userId}`)//,{replace: true})
+  }, [userId, router]);
 
   return (
     <>
@@ -73,7 +85,7 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
         </TableCell>
 
         <TableCell align="right">
-          <IconButton onClick={handleOpenPopover}>
+          <IconButton onClick={handleOpenPopover} value={row.id}>
             <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
         </TableCell>
@@ -102,7 +114,7 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
             },
           }}
         >
-          <MenuItem onClick={handleClosePopover}>
+          <MenuItem onClick={handleClosePopover} value={row.id}>
             <Iconify icon="solar:pen-bold" />
             Edit
           </MenuItem>

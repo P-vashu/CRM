@@ -21,6 +21,7 @@ import { CustomerTableToolbar } from '../components/customer/CustomerTableToolba
 import { emptyRows, applyFilter, getComparator } from '../components/table/utils';
 
 import type { CustomerProps } from '../components/customer/CustomerTableRow';
+import { RouterLink } from '../routes/components/RouterLink';
 
 // ----------------------------------------------------------------------
 
@@ -29,7 +30,7 @@ export function CustomerView() {
 
   const [filterName, setFilterName] = useState('');
 
-  const dataFiltered:TODO = applyFilter({
+  const dataFiltered: TODO = applyFilter({
     inputData: _customers as TODO,
     comparator: getComparator(table.order, table.orderBy),
     filterName,
@@ -47,6 +48,7 @@ export function CustomerView() {
           variant="contained"
           color="primary"
           startIcon={<Iconify icon="mingcute:add-line" />}
+          component={RouterLink} href="/customer-form"
         >
           New customer
         </Button>
@@ -93,7 +95,7 @@ export function CustomerView() {
                     table.page * table.rowsPerPage,
                     table.page * table.rowsPerPage + table.rowsPerPage
                   )
-                  .map((row:TODO) => (
+                  .map((row: TODO) => (
                     <CustomerTableRow
                       key={row.id}
                       row={row}
@@ -123,7 +125,7 @@ export function CustomerView() {
           onRowsPerPageChange={table.onChangeRowsPerPage}
         />
       </Card>
-      </>
+    </>
     // </DashboardContent>
   );
 }

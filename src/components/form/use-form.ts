@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { makeStyles } from "@mui/styles";
 
-export function useForm(initialFieldValues: TODO) {
-  const [values, setValues] = useState(initialFieldValues);
+export function useForm(initialFieldValues: TODO, selectedData: TODO) {
+
+  const [values, setValues] = useState(selectedData?selectedData:initialFieldValues);
   const [errors, setErrors] = useState({});
   const [currentField, setcurrentField] = useState("");
 

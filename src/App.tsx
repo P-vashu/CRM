@@ -13,7 +13,7 @@ import logoSvg from '/public/assets/icons/workspaces/it-logo.svg';
 import logoMidPng from './assets/it-logo-mid.png';
 import { Session, type Navigation } from '@toolpad/core/AppProvider';
 import { SessionContext } from './SessionContext';
-
+import * as userService from "./services/userService";
 
 const CALLS_NAVIGATION: Navigation = [
   {
@@ -53,6 +53,7 @@ const NAVIGATION: Navigation = [
     title: 'Customers',
     icon: <ContactsIcon />,
   },
+  
   // {
   //   kind: 'divider',
 
@@ -114,7 +115,9 @@ export default function App() {
   }, [navigate]);
 
   const sessionContextValue = React.useMemo(() => ({ session, setSession }), [session, setSession]);
-
+ 
+  userService.init();
+  
   
 
   return (

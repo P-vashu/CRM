@@ -11,14 +11,14 @@ const KEYS = {
 };
 
 
-export function insertEmployee(data: TODO) {
-  let employees = getAllEmployees();
-  data["id"] = generateEmployeeId();
+export function addCustomer(data: TODO) {
+  let employees = getAllCustomers();
+  data["id"] = generateCustomerId();
   employees.push(data);
   localStorage.setItem(KEYS.employees, JSON.stringify(employees));
 }
 
-export function generateEmployeeId() {
+export function generateCustomerId() {
   if (localStorage.getItem(KEYS.employeeId) == null)
     localStorage.setItem(KEYS.employeeId, "0");
   const eid = localStorage.getItem(KEYS.employeeId);
@@ -27,7 +27,7 @@ export function generateEmployeeId() {
   return id;
 }
 
-export function getAllEmployees() {
+export function getAllCustomers() {
   if (localStorage.getItem(KEYS.employees) === null) {
     localStorage.setItem(KEYS.employees, JSON.stringify([]));
   }

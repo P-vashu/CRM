@@ -7,47 +7,40 @@ import { useForm } from "../components/form/use-form";
 import Input from "../components/controls/Input";
 import RadioGroupGenerator from "../components/controls/RadioGroup";
 import Select from "../components/controls/Select";
-import * as userService from "../services/userService";
+import * as customerService from "../services/customerService";
 import CheckboxGenerator from "../components/controls/Checkbox";
 import ButtonGenerator from "../components/controls/Button";
-import { Form, useNavigate , useMatch, useLoaderData } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid2";
 import { FormControl, Typography } from "@mui/material";
 
 
-
-type User = {
+type Customer = {
     id: number;
-    fullname?: string;
+    fullName?: string;
     firstName: string;
     lastName: string;
     email: string;
     mobile: string;
-    city: string;
-    state:string;
+    country?: string;
+    location?: string;
+    company: string;
     status: string;
-    departmentId?: string;
-    isVerified: false
+
 }
 
-// type UserProps = User & {
-//     match: Match
-// }
-
-const initialFieldValues: User = {
+const initialFieldValues: Customer = {
     id: 1,
-    fullname: "",
+    fullName: "",
     firstName: "",
     lastName: "",
     email: "",
     mobile: "",
-    city: "",
-    state: "",
     status: "active",
-    departmentId: "",
-    // hireDate: new Date(),
-    isVerified: false
+    company: "",
+    location: "",
+
 };
 
 const radioList = [
@@ -61,9 +54,7 @@ const checkboxList = [
     { id: "2", title: "no" }
 ];
 
-export default function UserForm() {
-    const user = useLoaderData();
-    console.log(` match => ${user}`)
+export default function CustomerForm() {
     const {
         values,
         errors,
@@ -71,21 +62,17 @@ export default function UserForm() {
         handleInputChange,
         resetForm,
         currentField
-    } = useForm(initialFieldValues, user);
-
+    } = useForm(initialFieldValues);
     const navigate = useNavigate();
 
-    
     const validateOnSubmit = () => {
         let temp: TODO = {};
         temp.firstName = values.firstName ? "" : "Mandatory Field";
         temp.lastName = values.lastName ? "" : "Mandatory Field";
         temp.email = /$^|.+@.+..+/.test(values.email) ? "" : "Email is not Valid";
         temp.mobile = values.mobile.length > 9 ? "" : "Min 10 numbers required";
-        temp.city = values.city ? "" : "Mandatory Field";
-        temp.state = values.state ? "" : "Mandatory Field";
-        temp.departmentId =
-            values.departmentId.length !== 0 ? "" : "Mandatory Field";
+        temp.location = values.location ? "" : "Mandatory Field";
+        temp.company = values.company ? "" : "Mandatory Field";
         setErrors(
             temp
         );
@@ -93,12 +80,12 @@ export default function UserForm() {
     };
 
     const handleSubmit = (e: React.SyntheticEvent) => {
-    // const handleSubmit = () => {
+        // const handleSubmit = () => {
         e.preventDefault();
         if (validateOnSubmit()) {
             window.alert("Submitting...");
-            userService.addUser(values);
-            navigate('/users',{replace: true})
+            customerService.addCustomer(values);
+            navigate('/customers', { replace: true })
         }
 
 
@@ -107,7 +94,7 @@ export default function UserForm() {
     return (
         <Paper sx={{ px: 5, py: 5 }}>
             <Typography variant="h4" sx={{ mb: { xs: 3, md: 5 } }}>
-                User Form
+                Customer Form
             </Typography>
             <Form onSubmit={handleSubmit}>
                 <Grid container spacing={3} rowSpacing={2} columnSpacing={2}>
@@ -153,19 +140,19 @@ export default function UserForm() {
                             error={(errors as TODO).mobile}
                         /></FormControl>
                     </Grid>
-                    <Grid container spacing={4} size={{ xs: 12, md: 6 }}>
+                    <Grid container spacing={4} size={{ md: 6, xs: 12 }}>
                         <FormControl><Input required
                             variant="outlined"
-                            label="city"
-                            name="city"
-                            value={values.city}
+                            label="Location"
+                            name="location"
+                            value={values.location}
                             onChange={handleInputChange}
                         /></FormControl>
                         <FormControl><Input
                             variant="outlined"
-                            label="State"
-                            name="state"
-                            value={values.state}
+                            label="Company"
+                            name="company"
+                            value={values.company}
                             onChange={handleInputChange}
                         /></FormControl>
                     </Grid>
@@ -184,7 +171,7 @@ export default function UserForm() {
                                 label="Department"
                                 value={values.departmentId}
                                 onChange={handleInputChange}
-                                options={userService.departmentArray()}
+                                options={customerService.departmentArray()}
                                 error={(errors as TODO).departmentId}
 
                             /></FormControl>
@@ -198,7 +185,6 @@ export default function UserForm() {
                                 value={values.isVerified}
                                 onChange={handleInputChange}
                                 options={checkboxList}
-
                             /></FormControl>
                     </Grid>
 
@@ -209,10 +195,3 @@ export default function UserForm() {
         </Paper >
     );
 }
-
-
-export  function loader({ params }:TODO) {
-    const user =  userService.getUserById(params.id);
-    if (!user) throw new Response("/not-found", { status: 404 });
-    return user;
-  }

@@ -9,8 +9,8 @@ import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 
-import { _users } from '../_mock';
-
+// import { _users } from '../_mock';
+import * as userService from "../services/userService";
 import { Iconify } from '../components/iconify';
 import { Scrollbar } from '../components/scrollbar';
 
@@ -28,6 +28,7 @@ import { RouterLink } from '../routes/components';
 
 export function UserView() {
   const table = useTable();
+  const _users = userService.getAllUsers();
 
   const [filterName, setFilterName] = useState('');
 
@@ -40,7 +41,6 @@ export function UserView() {
   const notFound = !dataFiltered.length && !!filterName;
 
   return (
-    // <DashboardContent>
     <>
       <Box display="flex" alignItems="center" mb={5}>
         <Typography variant="h4" flexGrow={1}>
@@ -103,6 +103,7 @@ export function UserView() {
                       row={row}
                       selected={table.selected.includes(row.id)}
                       onSelectRow={() => table.onSelectRow(row.id)}
+                      
                     />
                   ))}
 
@@ -128,7 +129,6 @@ export function UserView() {
         />
       </Card>
       </>
-    // </DashboardContent>
   );
 }
 
