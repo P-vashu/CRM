@@ -22,6 +22,7 @@ import { OrderTableToolbar } from '../components/order/OrderTableToolbar';
 import { emptyRows, applyFilter, getComparator } from '../components/table/utils';
 
 import type { OrderProps } from '../components/order/OrderTableRow';
+import { Paper } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
@@ -39,11 +40,10 @@ export default function OrdersView() {
   const notFound = !dataFiltered.length && !!filterName;
 
   return (
-    // <DashboardContent>
-    <>
+<>
       <Box display="flex" alignItems="center" mb={5}>
         <Typography variant="h4" flexGrow={1}>
-          {/* Orders */}
+          Orders
         </Typography>
         <Button
           variant="contained"
@@ -54,7 +54,7 @@ export default function OrdersView() {
         </Button>
       </Box>
 
-      <Card>
+      <Card > 
         <OrderTableToolbar
           numSelected={table.selected.length}
           filterName={filterName}
@@ -65,7 +65,7 @@ export default function OrdersView() {
         />
 
         <Scrollbar>
-          <TableContainer sx={{ overflow: 'unset' }}>
+          <TableContainer sx={{ overflow: 'unset'  }}>
             <Table sx={{ minWidth: 800 }}>
               <OrderTableHead
                 order={table.order}
@@ -125,7 +125,6 @@ export default function OrdersView() {
         />
       </Card>
       </>
-    // </DashboardContent>
   );
 }
 

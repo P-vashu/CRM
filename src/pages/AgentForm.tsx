@@ -1,13 +1,9 @@
-// import {
-//     Grid,
-//     Paper
-// } from "@mui/material";
 import React from "react";
 import { useForm } from "../components/form/use-form";
 import Input from "../components/controls/Input";
 import RadioGroupGenerator from "../components/controls/RadioGroup";
 import Select from "../components/controls/Select";
-import * as userService from "../services/userService";
+import * as agentService from "../services/agentService";
 import CheckboxGenerator from "../components/controls/Checkbox";
 import ButtonGenerator from "../components/controls/Button";
 import { Form, useNavigate , useMatch, useLoaderData } from "react-router-dom";
@@ -17,7 +13,7 @@ import { FormControl, Typography } from "@mui/material";
 
 
 
-type User = {
+type Agent = {
     id: number;
     fullname?: string;
     firstName: string;
@@ -31,11 +27,7 @@ type User = {
     isVerified: false
 }
 
-// type UserProps = User & {
-//     match: Match
-// }
-
-const initialFieldValues: User = {
+const initialFieldValues: Agent = {
     id: 1,
     fullname: "",
     firstName: "",
@@ -46,7 +38,6 @@ const initialFieldValues: User = {
     state: "",
     status: "active",
     departmentId: "",
-    // hireDate: new Date(),
     isVerified: false
 };
 
@@ -61,9 +52,9 @@ const checkboxList = [
     { id: "2", title: "no" }
 ];
 
-export default function UserForm() {
-    const user = useLoaderData();
-    console.log(` match => ${user}`)
+export default function AgentForm() {
+    const agent = useLoaderData();
+    console.log(` match => ${agent}`)
     const {
         values,
         errors,
@@ -71,7 +62,7 @@ export default function UserForm() {
         handleInputChange,
         resetForm,
         currentField
-    } = useForm(initialFieldValues, user);
+    } = useForm(initialFieldValues, agent);
 
     const navigate = useNavigate();
 
@@ -97,8 +88,8 @@ export default function UserForm() {
         e.preventDefault();
         if (validateOnSubmit()) {
             window.alert("Submitting...");
-            userService.addUser(values);
-            navigate('/users',{replace: true})
+            agentService.addAgent(values);
+            navigate('/agents',{replace: true})
         }
 
 
@@ -107,7 +98,7 @@ export default function UserForm() {
     return (
         <Paper sx={{ px: 5, py: 5 }}>
             <Typography variant="h4" sx={{ mb: { xs: 3, md: 5 } }}>
-                User Form
+                Agent Form
             </Typography>
             <Form onSubmit={handleSubmit}>
                 <Grid container spacing={3} rowSpacing={2} columnSpacing={2}>
@@ -184,7 +175,7 @@ export default function UserForm() {
                                 label="Department"
                                 value={values.departmentId}
                                 onChange={handleInputChange}
-                                options={userService.departmentArray()}
+                                options={agentService.departmentArray()}
                                 error={(errors as TODO).departmentId}
 
                             /></FormControl>
@@ -212,7 +203,7 @@ export default function UserForm() {
 
 
 export  function loader({ params }:TODO) {
-    const user =  userService.getUserById(params.id);
-    if (!user) throw new Response("/not-found", { status: 404 });
-    return user;
+    const agent =  agentService.getAgentById(params.id);
+    if (!agent) throw new Response("/not-found", { status: 404 });
+    return agent;
   }

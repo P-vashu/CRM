@@ -13,7 +13,7 @@ import logoSvg from '/public/assets/icons/workspaces/it-logo.svg';
 import logoMidPng from './assets/it-logo-mid.png';
 import { Session, type Navigation } from '@toolpad/core/AppProvider';
 import { SessionContext } from './SessionContext';
-import * as userService from "./services/userService";
+import * as agentService from "./services/agentService";
 
 const CALLS_NAVIGATION: Navigation = [
   {
@@ -22,7 +22,7 @@ const CALLS_NAVIGATION: Navigation = [
     icon: <NewspaperIcon />,
   },
   {
-    segment: 'users',
+    segment: 'agents',
     title: 'Users',
     icon: <PeopleAltIcon />,
   }
@@ -73,8 +73,8 @@ const NAVIGATION: Navigation = [
     icon: <NewspaperIcon />,
   },
   {
-    segment: 'users',
-    title: 'Users',
+    segment: 'agents',
+    title: 'Agents',
     icon: <PeopleAltIcon />,
   }
 ];
@@ -116,9 +116,7 @@ export default function App() {
 
   const sessionContextValue = React.useMemo(() => ({ session, setSession }), [session, setSession]);
  
-  userService.init();
-  
-  
+  agentService.init();
 
   return (
     <SessionContext.Provider value={sessionContextValue}>

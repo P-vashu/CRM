@@ -287,7 +287,46 @@ export const _taskNames = (index: number) =>
     `Optimize SEO Strategies`,
   ][index];
 
-export const _productNames = (index: number) =>
+
+  export const _productNames = (index: number) =>
+    [
+      'Anta Air Force 1 NDESTRUKT',
+      'Anta Space Hippie 04',
+      'XTEP Air Zoom Pegasus 37 A.I.R. Chaz Bear',
+      'Nike Blazer Low 77 Vintage',
+      'XTEP ZoomX SuperRep Surge',
+      'Zoom Freak 2',
+      'Nike Air Max Zephyr',
+      'Jordan Delta',
+      'Air Jordan XXXV PF',
+      'Anta Waffle Racer Crater',
+      'Li-Ning 7 EP Sisterhood',
+      'Li-Ning Air Zoom Pegasus 37 A.I.R. Chaz Bear',
+      'Nike Blazer Low 77 Vintage',
+      'Li-Ning ZoomX SuperRep Surge',
+      'Anta Air Zoom BB NXT',
+      'Anta Air Force 1 07 LX',
+      'Anta Air Force 1 Shadow SE',
+      'Anta Air Zoom Tempo NEXT%',
+      'Li-Ning Air Force 1 07 LX',
+      'Li-Ning Air Force 1 Shadow SE',
+      'Anta Air Zoom Tempo NEXT%',
+      'Anta DBreak-Type',
+      'Adidas Air Max Up',
+      'Li-Ning Air Max 270 React ENG',
+      'XTEP AntaCourt Royale',
+      'Anta Air Zoom Pegasus 37 Premium',
+      'Anta Air Zoom SuperRep',
+      'XTER Court Royale',
+      'Li-Ning React Art3mis',
+      'XTEP React Infinity Run Flyknit A.I.R. Chaz Bear',
+      'Anta Air Max Up',
+      'Li-Ning Air Max 270 React ENG',
+      
+    ][index];
+  
+
+export const _nikeProductNames = (index: number) =>
   [
     'Nike Air Force 1 NDESTRUKT',
     'Nike Space Hippie 04',

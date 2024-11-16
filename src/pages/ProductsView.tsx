@@ -95,16 +95,6 @@ function ProductsView() {
           Products
         </Typography>
 
-
-      {/* </Box>
-
-      <Box
-        display="flex"
-        alignItems="center"
-        flexWrap="wrap-reverse"
-        justifyContent="flex-end"
-        sx={{ mb: 5 }}
-      > */}
         <Box gap={1} display="flex" flexShrink={0} sx={{ my: 1 }}>
           <ProductFilters
             canReset={canReset}

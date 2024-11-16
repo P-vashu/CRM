@@ -30,3 +30,6 @@ build-storybook.log
 # Mac
 .DS_Store
 DS_Store
+
+# shell script
+*.sh

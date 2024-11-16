@@ -9,13 +9,13 @@ import { Iconify } from '../iconify';
 
 // ----------------------------------------------------------------------
 
-type UserTableToolbarProps = {
+type AgentTableToolbarProps = {
   numSelected: number;
   filterName: string;
   onFilterName: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export function UserTableToolbar({ numSelected, filterName, onFilterName }: UserTableToolbarProps) {
+export function AgentTableToolbar({ numSelected, filterName, onFilterName }: AgentTableToolbarProps) {
   return (
     <Toolbar
       sx={{

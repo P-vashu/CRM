@@ -9,9 +9,9 @@ import { OverviewAnalyticsView } from './pages/OverviewAnalyticsView';
 import { BlogView } from './pages/BlogView';
 import { NotFoundView } from './pages/NotFoundView';
 import { HelmetProvider } from 'react-helmet-async';
-import { UserView } from './pages/UserView';
+import { AgentView } from './pages/AgentView';
 import { CustomerView } from './pages/CustomerView';
-import UserForm , { loader as userLoader }from './pages/UserForm';
+import AgentForm , { loader as agentLoader }from './pages/AgentForm';
 import SignInView from './pages/SignInView';
 import CustomerForm  from './pages/CustomerForm';
 
@@ -45,17 +45,17 @@ const router = createBrowserRouter([
             Component: BlogView,
           },
           {
-            path: 'users',
-            Component: UserView,
+            path: 'agents',
+            Component: AgentView,
           },
           {
-            path: 'user-form',
-            Component: UserForm,
+            path: 'agent-form',
+            Component: AgentForm,
           },
           {
-            path: 'edit-user/:id',
-            Component: UserForm,
-            loader: userLoader
+            path: 'edit-agent/:id',
+            Component: AgentForm,
+            loader: agentLoader
 
           },
           {

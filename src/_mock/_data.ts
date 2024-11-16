@@ -25,7 +25,7 @@ export const _myAccount = {
 
 // ----------------------------------------------------------------------
 
-export const _users = [...Array(24)].map((_, index) => ({
+export const _agents = [...Array(24)].map((_, index) => ({
   id: _id(index),
   name: _fullName(index),
   firstName: _fullName(index).split(' ')[0],
@@ -33,9 +33,11 @@ export const _users = [...Array(24)].map((_, index) => ({
   company: _company(index),
   mobile: _mobile(index),
   email: _email(index),
+  city: _location(index).split(',')[0],
+  state: _location(index).split(',')[1],
   isVerified: _boolean(index),
   avatarUrl: `/assets/images/avatar/avatar-${index + 1}.webp`,
-  status: index % 4 ? 'active' : 'banned',
+  status: index % 8 ? 'active' : 'banned',
   role:
     [
       'Leader',
@@ -64,7 +66,7 @@ export const _customers = [...Array(12)].map((_, index) => ({
 
 // ----------------------------------------------------------------------
 
-export const _posts = [...Array(23)].map((_, index) => ({
+export const _posts = [...Array(26)].map((_, index) => ({
   id: _id(index),
   title: _postTitles(index),
   description: _description(index),
@@ -93,7 +95,7 @@ const COLORS = [
   '#FFC107',
 ];
 
-export const _products = [...Array(24)].map((_, index) => {
+export const _products = [...Array(31)].map((_, index) => {
   const setIndex = index + 1;
 
   return {

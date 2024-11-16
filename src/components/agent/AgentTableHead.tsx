@@ -9,7 +9,7 @@ import { visuallyHidden } from '../table/utils';
 
 // ----------------------------------------------------------------------
 
-type UserTableHeadProps = {
+type AgentTableHeadProps = {
   orderBy: string;
   rowCount: number;
   numSelected: number;
@@ -19,7 +19,7 @@ type UserTableHeadProps = {
   onSelectAllRows: (checked: boolean) => void;
 };
 
-export function UserTableHead({
+export function AgentTableHead({
   order,
   onSort,
   orderBy,
@@ -27,7 +27,7 @@ export function UserTableHead({
   headLabel,
   numSelected,
   onSelectAllRows,
-}: UserTableHeadProps) {
+}: AgentTableHeadProps) {
   return (
     <TableHead>
       <TableRow>

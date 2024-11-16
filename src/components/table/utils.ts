@@ -1,6 +1,6 @@
 import { CustomerProps } from '../customer/CustomerTableRow';
 import { OrderProps } from '../order/OrderTableRow';
-import type { UserProps } from '../user/UserTableRow';
+import type { UserProps } from '../agent/AgentTableRow';
 
 // ----------------------------------------------------------------------
 

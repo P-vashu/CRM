@@ -17,7 +17,7 @@ import { useRouter } from '../../routes/hooks/use-router';
 
 // ----------------------------------------------------------------------
 
-export type UserProps = {
+export type AgentProps = {
   id: string;
   name: string;
   role: string;
@@ -27,15 +27,15 @@ export type UserProps = {
   isVerified: boolean;
 };
 
-type UserTableRowProps = {
-  row: UserProps;
+type AgentTableRowProps = {
+  row: AgentProps;
   selected: boolean;
   onSelectRow: () => void;
 };
 
-export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) {
+export function AgentTableRow({ row, selected, onSelectRow }: AgentTableRowProps) {
   const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
-  const [userId, setUserId] = useState(null);
+  const [userId, setAgentId] = useState(null);
   const router = useRouter();
 
   const handleOpenPopover = useCallback(
@@ -43,15 +43,15 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
       // const uid = event.target.value;
       console.log(` event.currentTarget id: ${event.currentTarget}`)
       setOpenPopover(event.currentTarget);
-      setUserId(event.currentTarget.value)
+      setAgentId(event.currentTarget.value)
       // router.push(`/edit-user/${uid}`)//,{replace: true})
-    }, [setOpenPopover, setUserId]);
+    }, [setOpenPopover, setAgentId]);
 
   const handleClosePopover = useCallback(() => {
     // const uid = event.target.value;
     console.log(` openPopover id: ${userId}`)
     setOpenPopover(null);
-    router.push(`/edit-user/${userId}`)//,{replace: true})
+    router.push(`/edit-agent/${userId}`)//,{replace: true})
   }, [userId, router]);
 
   return (

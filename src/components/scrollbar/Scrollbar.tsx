@@ -16,23 +16,25 @@ export const Scrollbar = forwardRef<HTMLDivElement, ScrollbarProps>(
       scrollableNodeProps={{ ref }}
       clickOnTrack={false}
       className={scrollbarClasses.root}
+      place
       sx={{
         minWidth: 0,
         minHeight: 0,
         flexGrow: 1,
         display: 'flex',
         flexDirection: 'column',
-        '& .simplebar-wrapper': slotProps?.wrapper as React.CSSProperties,
-        '& .simplebar-content-wrapper': slotProps?.contentWrapper as React.CSSProperties,
-        '& .simplebar-content': {
-          ...(fillContent && {
-            minHeight: 1,
-            display: 'flex',
-            flex: '1 1 auto',
-            flexDirection: 'column',
-          }),
-          ...slotProps?.content,
-        } as React.CSSProperties,
+        '& .simplebar-placeholder': {display: 'none'},
+        // '& .simplebar-wrapper': slotProps?.wrapper as React.CSSProperties,
+        // '& .simplebar-content-wrapper': slotProps?.contentWrapper as React.CSSProperties,
+        // '& .simplebar-content': {
+        //   ...(fillContent && {
+        //     minHeight: 1,
+        //     display: 'flex',
+        //     flex: '1 1 auto',
+        //     flexDirection: 'column',
+        //   }),
+        //   ...slotProps?.content,
+        // } as React.CSSProperties,
         ...sx,
       }}
       {...other}

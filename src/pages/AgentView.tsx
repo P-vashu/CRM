@@ -9,31 +9,31 @@ import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 
-// import { _users } from '../_mock';
-import * as userService from "../services/userService";
+// import { _agents } from '../_mock';
+import * as agentService from "../services/agentService";
 import { Iconify } from '../components/iconify';
 import { Scrollbar } from '../components/scrollbar';
 
 import { TableNoData } from '../components/table/TableNoData';
-import { UserTableRow } from '../components/user/UserTableRow';
-import { UserTableHead } from '../components/user/UserTableHead';
+import { AgentTableRow } from '../components/agent/AgentTableRow';
+import { AgentTableHead } from '../components/agent/AgentTableHead';
 import { TableEmptyRows } from '../components/table/TableEmptyRows';
-import { UserTableToolbar } from '../components/user/UserTableToolbar';
+import { AgentTableToolbar } from '../components/agent/AgentTableToolbar';
 import { emptyRows, applyFilter, getComparator } from '../components/table/utils';
 
-import type { UserProps } from '../components/user/UserTableRow';
+import type { AgentProps } from '../components/agent/AgentTableRow';
 import { RouterLink } from '../routes/components';
 
 // ----------------------------------------------------------------------
 
-export function UserView() {
+export function AgentView() {
   const table = useTable();
-  const _users = userService.getAllUsers();
+  const _agents = agentService.getAllAgents();
 
   const [filterName, setFilterName] = useState('');
 
   const dataFiltered: TODO = applyFilter({
-    inputData: _users,
+    inputData: _agents,
     comparator: getComparator(table.order, table.orderBy),
     filterName,
   });
@@ -44,20 +44,20 @@ export function UserView() {
     <>
       <Box display="flex" alignItems="center" mb={5}>
         <Typography variant="h4" flexGrow={1}>
-          {/* Users */}
+          {/* Agents */}
         </Typography>
         <Button
           variant="contained"
              color="primary"
           startIcon={<Iconify icon="mingcute:add-line" />}
-          component={RouterLink} href="/user-form"
+          component={RouterLink} href="/agent-form"
         >
-          New user
+          New agent
         </Button>
       </Box>
 
       <Card>
-        <UserTableToolbar
+        <AgentTableToolbar
           numSelected={table.selected.length}
           filterName={filterName}
           onFilterName={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,16 +69,16 @@ export function UserView() {
         <Scrollbar>
           <TableContainer sx={{ overflow: 'unset' }}>
             <Table sx={{ minWidth: 800 }}>
-              <UserTableHead
+              <AgentTableHead
                 order={table.order}
                 orderBy={table.orderBy}
-                rowCount={_users.length}
+                rowCount={_agents.length}
                 numSelected={table.selected.length}
                 onSort={table.onSort}
                 onSelectAllRows={(checked) =>
                   table.onSelectAllRows(
                     checked,
-                    _users.map((user) => user.id)
+                    _agents.map((agent) => agent.id)
                   )
                 }
                 headLabel={[
@@ -98,7 +98,7 @@ export function UserView() {
                     table.page * table.rowsPerPage + table.rowsPerPage
                   )
                   .map((row:TODO) => (
-                    <UserTableRow
+                    <AgentTableRow
                       key={row.id}
                       row={row}
                       selected={table.selected.includes(row.id)}
@@ -109,7 +109,7 @@ export function UserView() {
 
                 <TableEmptyRows
                   height={68}
-                  emptyRows={emptyRows(table.page, table.rowsPerPage, _users.length)}
+                  emptyRows={emptyRows(table.page, table.rowsPerPage, _agents.length)}
                 />
 
                 {notFound && <TableNoData searchQuery={filterName} />}
@@ -121,7 +121,7 @@ export function UserView() {
         <TablePagination
           component="div"
           page={table.page}
-          count={_users.length}
+          count={_agents.length}
           rowsPerPage={table.rowsPerPage}
           onPageChange={table.onChangePage}
           rowsPerPageOptions={[5, 10, 25]}
