@@ -35,10 +35,10 @@ export function updateCustomer(data: TODO) {
 }
 
 export function getAllCustomers() {
-  if (localStorage.getItem(KEYS.agents) === null) {
-    localStorage.setItem(KEYS.agents, JSON.stringify([]));
+  if (localStorage.getItem(KEYS.customers) === null) {
+    localStorage.setItem(KEYS.customers, JSON.stringify([]));
   }
-  const es = localStorage.getItem(KEYS.agents);
+  const es = localStorage.getItem(KEYS.customers);
   return JSON.parse(es ? es : "");
 }
 
@@ -51,7 +51,7 @@ export function getCustomerById(id: string | number) {
   return ul.find((u: TODO) => u.id === id);
 }
 
-export function deleteCustomerById(id: string | number) {
+export function deleteItemById(id: string | number) {
   if (localStorage.getItem(KEYS.customers) === null) {
     localStorage.setItem(KEYS.customers, JSON.stringify([]));
   }

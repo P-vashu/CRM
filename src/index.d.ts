@@ -15,3 +15,40 @@ declare module "@emotion/styled" {
   const customStyled: CreateStyled<MyTheme>;
   export default customStyled;
 }
+
+declare type  Customer = {
+  id: string;
+  name: string;
+  email: string;
+  shippingAddress: string;
+  billingAddress: string;
+  mobile: string;
+  phone: string;
+  avatarUrl: string;
+  hasItemInShoppingCart: boolean;
+  membership: string;
+}
+
+declare type Agent = {
+  id: string;
+  name: string;
+  role: string;
+  status: string;
+  company: string;
+  email: string;
+  mobile: string;
+  avatarUrl: string;
+  isVerified: boolean;
+}
+
+declare type Order = {
+  id: string;
+  name: string;
+  amount: string;
+  status: string;
+  discount: string;
+  avatarUrl: string;
+  isDelayed: boolean;
+  shippingAddress: string;
+};
+

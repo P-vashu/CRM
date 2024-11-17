@@ -1,6 +1,6 @@
-import { CustomerProps } from '../customer/CustomerTableRow';
-import { OrderProps } from '../order/OrderTableRow';
-import type { UserProps } from '../agent/AgentTableRow';
+
+import { Order } from '../order/OrderTableRow';
+import type { Agent } from '../agent/AgentTableRow';
 import { useCallback, useState } from 'react';
 import { useDialogs } from '@toolpad/core/useDialogs';
 import { useNavigate } from 'react-router-dom';
@@ -59,7 +59,7 @@ export function getComparator<Key extends keyof any>(
 // ----------------------------------------------------------------------
 
 type ApplyFilterProps = {
-  inputData: UserProps[] | CustomerProps[] | OrderProps[]; // Array<UserProps| CustomerProps |OrderProps >;
+  inputData: Agent[] | Customer[] | Order[]; // Array<UserProps| CustomerProps |OrderProps >;
   filterName: string;
   comparator: (a: any, b: any) => number;
 };
@@ -148,21 +148,38 @@ export function useTable(props?: useTableProps) {
     [onResetPage]
   );
 
+  // const onDialogConfirm = useCallback(
+  const onDialogConfirm = async (message="") => {
+      let deleteConfirmed =false
+      await dialogs.confirm(
+        message? message:
+         "Are you sure to continue this DELETE operation?",
+      ).then( (result :TODO) => {
+        console.log(result)
+        deleteConfirmed = result;
+      }).catch(e => console.log(e));
+      return deleteConfirmed;
+
+    }
+  //   []
+  // );
+
   const onMultipleDelete = useCallback(
     async (event: React.MouseEvent<HTMLInputElement>) => {
-      const deleteConfirmed = await dialogs.confirm(
-        "Are you sure to continue this DELETE operation?",
-      ).then(result => {
-        console.log(result)
-        return result;
-      }).catch(e => console.log(e));
+      const deleteConfirmed = await onDialogConfirm();
+      // await dialogs.confirm(
+      //   "Are you sure to continue this DELETE operation?",
+      // ).then(result => {
+      //   console.log(result)
+      //   return result;
+      // }).catch(e => console.log(e));
 
       console.log(' deleteConfirmed ' + deleteConfirmed)
       if (deleteConfirmed) {
 
         if (selected.length > 0) {
           selected.map(s =>
-            service.deleteAgentById(s)
+            service.deleteItemById(s)
           )
         }
         toggleNotice(true);
@@ -189,6 +206,7 @@ export function useTable(props?: useTableProps) {
     onChangePage,
     onSelectAllRows,
     onChangeRowsPerPage,
-    onMultipleDelete
+    onMultipleDelete,
+    onDialogConfirm
   };
 }

@@ -9,7 +9,9 @@ import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 
-import { _orders } from '../_mock';
+// import { _orders } from '../_mock';
+
+import * as service from "../services/orderService";
 
 import { Iconify } from '../components/iconify';
 import { Scrollbar } from '../components/scrollbar';
@@ -19,25 +21,61 @@ import { OrderTableRow } from '../components/order/OrderTableRow';
 import { OrderTableHead } from '../components/order/OrderableHead';
 import { TableEmptyRows } from '../components/table/TableEmptyRows';
 import { OrderTableToolbar } from '../components/order/OrderTableToolbar';
-import { emptyRows, applyFilter, getComparator } from '../components/table/utils';
+import { emptyRows, applyFilter, getComparator, useTable } from '../components/table/utils';
 
-import type { OrderProps } from '../components/order/OrderTableRow';
-import { Paper } from '@mui/material';
+import { RouterLink } from '../routes/components';
+import Slide, { SlideProps } from '@mui/material/Slide';
+import Fade from '@mui/material/Fade';
+import React from 'react';
+import SnapNotice from '../components/controls/SnapNotice';
 
 // ----------------------------------------------------------------------
 
 export default function OrdersView() {
-  const table = useTable();
+  const [notice, setNotice] = React.useState<{
+    open: boolean;
+    transition: React.ComponentType<
+      TransitionProps & {
+        children: React.ReactElement<any, any>;
+      }
+    >;
+  }>({
+    open: false,
+    transition: Fade,
+  });
+
+  const toggleNotice = (open: boolean) => {
+    setNotice({
+      ...notice,
+      open,
+    });
+  }
+
+  const table = useTable({
+    postDeleteRoute: '/orders',
+    service,
+    toggleNotice
+  });
+
+  const _orders = service.getAllOrders();
 
   const [filterName, setFilterName] = useState('');
 
   const dataFiltered: TODO = applyFilter({
-    inputData: _orders as TODO,
+    inputData: _orders,
     comparator: getComparator(table.order, table.orderBy),
     filterName,
   });
 
+
   const notFound = !dataFiltered.length && !!filterName;
+
+  const handleClose = () => {
+    setNotice({
+      ...notice,
+      open: false,
+    });
+  }
 
   return (
 <>
@@ -62,6 +100,7 @@ export default function OrdersView() {
             setFilterName(event.target.value);
             table.onResetPage();
           }}
+          onMultipleDelete={table.onMultipleDelete}
         />
 
         <Scrollbar>
@@ -76,7 +115,7 @@ export default function OrdersView() {
                 onSelectAllRows={(checked) =>
                   table.onSelectAllRows(
                     checked,
-                    _orders.map((order) => order.id)
+                    _orders.map((order: Order) => order.id)
                   )
                 }
                 headLabel={[
@@ -84,6 +123,9 @@ export default function OrdersView() {
                   { id: 'name', label: 'Name' },
                   { id: 'amount', label: 'Total Amount', align: 'left' },
                   { id: 'discount', label: 'Discount', align: 'left' },
+                  { id: 'shippingAddress', label: 'Shipping To', align: 'left' },
+                  { id: 'isDelayed', label: 'Is Delayed', align: 'center' },
+
                   { id: 'status', label: 'Status' },
                   { id: '' },
                 ]}
@@ -100,6 +142,8 @@ export default function OrdersView() {
                       row={row}
                       selected={table.selected.includes(row.id)}
                       onSelectRow={() => table.onSelectRow(row.id)}
+                      toggleNotice={toggleNotice}
+                      onDialogConfirm={table.onDialogConfirm}
                     />
                   ))}
 
@@ -124,74 +168,10 @@ export default function OrdersView() {
           onRowsPerPageChange={table.onChangeRowsPerPage}
         />
       </Card>
+      <SnapNotice open={notice.open} transition={notice.transition}
+        handleClose={handleClose} />
       </>
   );
 }
 
 // ----------------------------------------------------------------------
-
-export function useTable() {
-  const [page, setPage] = useState(0);
-  const [orderBy, setOrderBy] = useState('name');
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [selected, setSelected] = useState<string[]>([]);
-  const [order, setOrder] = useState<'asc' | 'desc'>('asc');
-
-  const onSort = useCallback(
-    (id: string) => {
-      const isAsc = orderBy === id && order === 'asc';
-      setOrder(isAsc ? 'desc' : 'asc');
-      setOrderBy(id);
-    },
-    [order, orderBy]
-  );
-
-  const onSelectAllRows = useCallback((checked: boolean, newSelecteds: string[]) => {
-    if (checked) {
-      setSelected(newSelecteds);
-      return;
-    }
-    setSelected([]);
-  }, []);
-
-  const onSelectRow = useCallback(
-    (inputValue: string) => {
-      const newSelected = selected.includes(inputValue)
-        ? selected.filter((value) => value !== inputValue)
-        : [...selected, inputValue];
-
-      setSelected(newSelected);
-    },
-    [selected]
-  );
-
-  const onResetPage = useCallback(() => {
-    setPage(0);
-  }, []);
-
-  const onChangePage = useCallback((event: unknown, newPage: number) => {
-    setPage(newPage);
-  }, []);
-
-  const onChangeRowsPerPage = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      setRowsPerPage(parseInt(event.target.value, 10));
-      onResetPage();
-    },
-    [onResetPage]
-  );
-
-  return {
-    page,
-    order,
-    onSort,
-    orderBy,
-    selected,
-    rowsPerPage,
-    onSelectRow,
-    onResetPage,
-    onChangePage,
-    onSelectAllRows,
-    onChangeRowsPerPage,
-  };
-}

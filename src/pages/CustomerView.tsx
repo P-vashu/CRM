@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 
-import { _customers } from '../_mock';
+import * as service from "../services/customerService";
 import { Iconify } from '../components/iconify';
 import { Scrollbar } from '../components/scrollbar';
 
@@ -18,15 +18,45 @@ import { CustomerTableRow } from '../components/customer/CustomerTableRow';
 import { CustomerTableHead } from '../components/customer/CustomerTableHead';
 import { TableEmptyRows } from '../components/table/TableEmptyRows';
 import { CustomerTableToolbar } from '../components/customer/CustomerTableToolbar';
-import { emptyRows, applyFilter, getComparator } from '../components/table/utils';
+import { emptyRows, applyFilter, getComparator, useTable } from '../components/table/utils';
 
-import type { CustomerProps } from '../components/customer/CustomerTableRow';
+
 import { RouterLink } from '../routes/components/RouterLink';
+import Slide, { SlideProps } from '@mui/material/Slide';
+import Fade from '@mui/material/Fade';
+import React from 'react';
+import SnapNotice from '../components/controls/SnapNotice';
+import { TransitionProps } from '@mui/material/transitions';
 
 // ----------------------------------------------------------------------
 
 export function CustomerView() {
-  const table = useTable();
+  const [notice, setNotice] = React.useState<{
+    open: boolean;
+    transition: React.ComponentType<
+      TransitionProps & {
+        children: React.ReactElement<any, any>;
+      }
+    >;
+  }>({
+    open: false,
+    transition: Fade,
+  });
+
+  const toggleNotice = (open: boolean) => {
+    setNotice({
+      ...notice,
+      open,
+    });
+  }
+
+  const table = useTable({
+    postDeleteRoute: '/customers',
+    service,
+    toggleNotice
+  });
+
+  const _customers = service.getAllCustomers();
 
   const [filterName, setFilterName] = useState('');
 
@@ -37,6 +67,13 @@ export function CustomerView() {
   });
 
   const notFound = !dataFiltered.length && !!filterName;
+
+  const handleClose = () => {
+    setNotice({
+      ...notice,
+      open: false,
+    });
+  }
 
   return (
     <>
@@ -62,6 +99,7 @@ export function CustomerView() {
             setFilterName(event.target.value);
             table.onResetPage();
           }}
+          onMultipleDelete={table.onMultipleDelete}
         />
 
         <Scrollbar>
@@ -76,16 +114,17 @@ export function CustomerView() {
                 onSelectAllRows={(checked) =>
                   table.onSelectAllRows(
                     checked,
-                    _customers.map((customer) => customer.id)
+                    _customers.map((customer: TODO) => customer.id)
                   )
                 }
                 headLabel={[
                   { id: 'name', label: 'Name' },
-                  { id: 'company', label: 'Company' },
                   { id: 'email', label: 'Email' },
-                  { id: 'location', label: 'Location' },
-                  // { id: 'isVerified', label: 'Verified', align: 'center' },
-                  { id: 'status', label: 'Status' },
+                  { id: 'mobile', label: 'Mobile' },  
+                  { id: 'phone', label: 'Phone' },  
+                  { id: 'billingAddress', label: 'Billing Address' },
+                  { id: 'hasItemInShoppingCart', label: 'Cart Has Item', align: 'center' },
+                  { id: 'membership', label: 'Membership' },
                   { id: '' },
                 ]}
               />
@@ -101,6 +140,8 @@ export function CustomerView() {
                       row={row}
                       selected={table.selected.includes(row.id)}
                       onSelectRow={() => table.onSelectRow(row.id)}
+                      toggleNotice={toggleNotice}
+                      onDialogConfirm={table.onDialogConfirm}
                     />
                   ))}
 
@@ -125,75 +166,9 @@ export function CustomerView() {
           onRowsPerPageChange={table.onChangeRowsPerPage}
         />
       </Card>
+      <SnapNotice open={notice.open} transition={notice.transition}
+        handleClose={handleClose} />
     </>
     // </DashboardContent>
   );
-}
-
-// ----------------------------------------------------------------------
-
-export function useTable() {
-  const [page, setPage] = useState(0);
-  const [orderBy, setOrderBy] = useState('name');
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [selected, setSelected] = useState<string[]>([]);
-  const [order, setOrder] = useState<'asc' | 'desc'>('asc');
-
-  const onSort = useCallback(
-    (id: string) => {
-      const isAsc = orderBy === id && order === 'asc';
-      setOrder(isAsc ? 'desc' : 'asc');
-      setOrderBy(id);
-    },
-    [order, orderBy]
-  );
-
-  const onSelectAllRows = useCallback((checked: boolean, newSelecteds: string[]) => {
-    if (checked) {
-      setSelected(newSelecteds);
-      return;
-    }
-    setSelected([]);
-  }, []);
-
-  const onSelectRow = useCallback(
-    (inputValue: string) => {
-      const newSelected = selected.includes(inputValue)
-        ? selected.filter((value) => value !== inputValue)
-        : [...selected, inputValue];
-
-      setSelected(newSelected);
-    },
-    [selected]
-  );
-
-  const onResetPage = useCallback(() => {
-    setPage(0);
-  }, []);
-
-  const onChangePage = useCallback((event: unknown, newPage: number) => {
-    setPage(newPage);
-  }, []);
-
-  const onChangeRowsPerPage = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      setRowsPerPage(parseInt(event.target.value, 10));
-      onResetPage();
-    },
-    [onResetPage]
-  );
-
-  return {
-    page,
-    order,
-    onSort,
-    orderBy,
-    selected,
-    rowsPerPage,
-    onSelectRow,
-    onResetPage,
-    onChangePage,
-    onSelectAllRows,
-    onChangeRowsPerPage,
-  };
 }

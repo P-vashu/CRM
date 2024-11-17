@@ -66,7 +66,7 @@ export function getAgentById(id: string | number) {
   return ul.find((u: TODO) => u.id === id);
 }
 
-export function deleteAgentById(id: string | number) {
+export function deleteItemById(id: string | number) {
   if (localStorage.getItem(KEYS.agents) === null) {
     localStorage.setItem(KEYS.agents, JSON.stringify([]));
   }

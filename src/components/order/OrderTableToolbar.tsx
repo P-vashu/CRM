@@ -13,9 +13,11 @@ type OrderTableToolbarProps = {
   numSelected: number;
   filterName: string;
   onFilterName: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onMultipleDelete: (event: React.MouseEvent<HTMLInputElement>) => void; 
 };
 
-export function OrderTableToolbar({ numSelected, filterName, onFilterName }: OrderTableToolbarProps) {
+export function OrderTableToolbar({ 
+  numSelected, filterName, onFilterName, onMultipleDelete  }: OrderTableToolbarProps) {
   return (
     <Toolbar
       sx={{
@@ -49,7 +51,7 @@ export function OrderTableToolbar({ numSelected, filterName, onFilterName }: Ord
       )}
 
       {numSelected > 0 ? (
-        <Tooltip title="Delete">
+        <Tooltip title="Delete"  onClick={onMultipleDelete}>
           <IconButton>
             <Iconify icon="solar:trash-bin-trash-bold" />
           </IconButton>

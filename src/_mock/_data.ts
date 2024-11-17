@@ -45,14 +45,18 @@ export const _agents = [...Array(24)].map((_, index) => ({
 // ----------------------------------------------------------------------
 export const _customers = [...Array(12)].map((_, index) => ({
   id: _id(index),
-  name: _fullName(index),
-  company: _company(index),
+  name: _fullName(20-index),
+  // company: _company(index),
+  firstName: _fullName(20-index).split(' ')[0],
+  lastName: _fullName(20-index).split(' ')[1],
   email: _email(index),
   mobile: _mobile(index),
   phone: _mobile(12-index),
-  location: _location(index),
+  shippingAddress: _location(20-index),
+  billingAddress: _location(20-index),
+  hasItemInShoppingCart: index % 4 == 0? true: false,
   avatarUrl: `/assets/images/customer/avatar-${index + 1}.png`,
-  status: index % 4 ? 'active' : 'locked',
+  membership: index % 4 ? 'vip' : 'standard',
 }));
 
 // ----------------------------------------------------------------------
@@ -118,6 +122,7 @@ export const _orders = [...Array(24)].map((_, index) => {
     amount: _price(index)|| _price(index-10),
     name: _productNames(index),
     discount: setIndex % 3 ? setIndex: 0,
+    shippingAddress: _location(24-index),
     // coverUrl: `/assets/images/product/product-${setIndex}.webp`,
     colors:
       (setIndex === 1 && COLORS.slice(0, 2)) ||
@@ -127,11 +132,12 @@ export const _orders = [...Array(24)].map((_, index) => {
       (setIndex === 23 && COLORS.slice(4, 6)) ||
       (setIndex === 24 && COLORS.slice(5, 6)) ||
       COLORS,
+    isDelayed: index % 3 ==0? true: false,
     status:
-      ([1, 3, 5].includes(setIndex) && 'Pending') 
-      || ([2, 11, 14, 16, 21, 23].includes(setIndex) && 'Shipping') 
-      || ([4, 8, 12].includes(setIndex) && 'Delivered') 
-      || 'Refund',
+      ([1, 3, 5].includes(setIndex) && 'packing') 
+      || ([2, 11, 14, 16, 21, 23].includes(setIndex) && 'shipping') 
+      || ([4, 8, 12].includes(setIndex) && 'delivered') 
+      || 'refund',
   };
 });
 

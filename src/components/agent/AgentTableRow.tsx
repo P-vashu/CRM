@@ -12,44 +12,30 @@ import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
 
 import { Label } from '../label';
 import { Iconify } from '../iconify';
-import * as agentService from "../../services/agentService";
+import * as service from "../../services/agentService";
 import { useRouter } from '../../routes/hooks/use-router';
 import { useDialogs } from '@toolpad/core';
 
 // ----------------------------------------------------------------------
 
-export type AgentProps = {
-  id: string;
-  name: string;
-  role: string;
-  status: string;
-  company: string;
-  email: string;
-  mobile: string;
-  avatarUrl: string;
-  isVerified: boolean;
-};
-
 type AgentTableRowProps = {
-  row: AgentProps;
+  row: Agent;
   selected: boolean;
   onSelectRow: () => void;
   toggleNotice: (open: boolean) => void;
+  onDialogConfirm: (message?: string) => Promise<boolean>;
 };
 
-export function AgentTableRow({ row, selected, onSelectRow, toggleNotice }: AgentTableRowProps) {
+export function AgentTableRow(
+  {row, selected, onSelectRow, toggleNotice ,onDialogConfirm}: AgentTableRowProps) {
   const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
-  const [agentId, setAgentId] = useState(null);
+  const [agentId, setAgentId] = useState("");
   const router = useRouter();
-  const dialogs = useDialogs();
 
   const handleOpenPopover = useCallback(
     (event: React.MouseEvent<HTMLButtonElement> & TODO) => {
-      // const uid = event.target.value;
-      console.log(` event.currentTarget id: ${event.currentTarget}`)
       setOpenPopover(event.currentTarget);
       setAgentId(event.currentTarget.value)
-      // router.push(`/edit-agent/${uid}`)//,{replace: true})
     }, [setOpenPopover, setAgentId]);
 
   const handleEditing = useCallback(() => {
@@ -60,18 +46,11 @@ export function AgentTableRow({ row, selected, onSelectRow, toggleNotice }: Agen
 
   const handleDelete = useCallback(async () => {
     console.log(` openPopover id: ${agentId}`)
-    const deleteConfirmed = await dialogs.confirm(
-      "Are you sure to delete this data?",
-    ).then(result => {
-      console.log(result)
-      return result;
-    }).catch(e => console.log(e));
+    const deleteConfirmed = await  onDialogConfirm();
     if (deleteConfirmed) {
-
-      agentService.deleteAgentById(agentId as TODO)
+      service.deleteItemById(agentId)
 
       toggleNotice(true)
-
       setTimeout(() => {
         router.push('/agents')
         toggleNotice(false)

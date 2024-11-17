@@ -13,9 +13,11 @@ type CustomerTableToolbarProps = {
   numSelected: number;
   filterName: string;
   onFilterName: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onMultipleDelete: (event: React.MouseEvent<HTMLInputElement>) => void; 
+
 };
 
-export function CustomerTableToolbar({ numSelected, filterName, onFilterName }: CustomerTableToolbarProps) {
+export function CustomerTableToolbar({ numSelected, filterName, onFilterName,onMultipleDelete }: CustomerTableToolbarProps) {
   return (
     <Toolbar
       sx={{
@@ -49,7 +51,7 @@ export function CustomerTableToolbar({ numSelected, filterName, onFilterName }: 
       )}
 
       {numSelected > 0 ? (
-        <Tooltip title="Delete">
+        <Tooltip title="Delete" onClick={onMultipleDelete}>
           <IconButton>
             <Iconify icon="solar:trash-bin-trash-bold" />
           </IconButton>

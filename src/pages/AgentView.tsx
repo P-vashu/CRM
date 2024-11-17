@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -9,7 +9,6 @@ import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 
-// import { _agents } from '../_mock';
 import * as service from "../services/agentService";
 import { Iconify } from '../components/iconify';
 import { Scrollbar } from '../components/scrollbar';
@@ -21,35 +20,26 @@ import { TableEmptyRows } from '../components/table/TableEmptyRows';
 import { AgentTableToolbar } from '../components/agent/AgentTableToolbar';
 import { emptyRows, applyFilter, getComparator, useTable } from '../components/table/utils';
 
-import type { AgentProps } from '../components/agent/AgentTableRow';
 import { RouterLink } from '../routes/components';
-import { useRouter } from 'src/routes/hooks/use-router';
 import Slide, { SlideProps } from '@mui/material/Slide';
 import Fade from '@mui/material/Fade';
-import Snackbar from '@mui/material/Snackbar';
-import Alert from '@mui/material/Alert';
 import React from 'react';
 import SnapNotice from '../components/controls/SnapNotice';
 
 // ----------------------------------------------------------------------
-function slideTransition(props: SlideProps) {
-  return <Slide {...props} direction="up" />;
-}
 
 
 export function AgentView() {
-
-  // const [dialogOpen, setDialogOpen] = useState(false)
   const [notice, setNotice] = React.useState<{
     open: boolean;
-    Transition: React.ComponentType<
+    transition: React.ComponentType<
       TransitionProps & {
         children: React.ReactElement<any, any>;
       }
     >;
   }>({
     open: false,
-    Transition: Fade,
+    transition: Fade,
   });
 
   const toggleNotice = (open: boolean) => {
@@ -124,7 +114,7 @@ export function AgentView() {
                 onSelectAllRows={(checked) =>
                   table.onSelectAllRows(
                     checked,
-                    _agents.map((agent: TODO) => agent.id)
+                    _agents.map((agent: Agent) => agent.id)
                   )
                 }
                 headLabel={[
@@ -151,6 +141,7 @@ export function AgentView() {
                       selected={table.selected.includes(row.id)}
                       onSelectRow={() => table.onSelectRow(row.id)}
                       toggleNotice={toggleNotice}
+                      onDialogConfirm={table.onDialogConfirm}
                     />
                   ))}
 
@@ -177,23 +168,9 @@ export function AgentView() {
 
 
       </Card>
-      <SnapNotice open={notice.open} transition={notice.Transition}
+      <SnapNotice open={notice.open} transition={notice.transition}
         handleClose={handleClose} />
-      {/* <Snackbar
-          open={notice.open}
-          TransitionComponent={notice.Transition}
-          // message="Operation is done successfully"
-          key={notice.Transition.name}
-          autoHideDuration={1000} >
-          <Alert
-            onClose={handleClose}
-            severity="success"
-            variant="standard"
-            sx={{ width: '100%' }}
-          >
-            Operation is done successfully!
-          </Alert>
-        </Snackbar> */}
+    
     </>
   );
 }

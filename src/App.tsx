@@ -16,6 +16,7 @@ import { SessionContext } from './SessionContext';
 import * as agentService from "./services/agentService";
 import * as productService from "./services/productService";
 import * as customerService from "./services/customerService";
+import * as orderService from "./services/orderService";
 
 const CALLS_NAVIGATION: Navigation = [
   {
@@ -101,6 +102,7 @@ const theme = createTheme({
 agentService.init();
 customerService.init();
 productService.init();
+orderService.init();
 
 
 export default function App() {

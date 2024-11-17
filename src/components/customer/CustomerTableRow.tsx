@@ -9,39 +9,57 @@ import MenuList from '@mui/material/MenuList';
 import TableCell from '@mui/material/TableCell';
 import IconButton from '@mui/material/IconButton';
 import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
-
+import * as service from "../../services/customerService";
 import { Label } from '../label';
 import { Iconify } from '../iconify';
+import { useRouter } from '../../routes/hooks/use-router';
+import { useDialogs } from '@toolpad/core/useDialogs';
 
 // ----------------------------------------------------------------------
 
-export type CustomerProps = {
-  id: string;
-  name: string;
-  email: string;
-  location: string;
-  company: string;
-  avatarUrl: string;
-  isVerified: boolean;
-  status: string;
-};
 
 type CustomerTableRowProps = {
-  row: CustomerProps;
+  row: Customer;
   selected: boolean;
   onSelectRow: () => void;
+  toggleNotice: (open: boolean) => void;
+  onDialogConfirm: (message?: string) => Promise<boolean>;
 };
 
-export function CustomerTableRow({ row, selected, onSelectRow }: CustomerTableRowProps) {
+export function CustomerTableRow({
+   row, selected, onSelectRow, toggleNotice, onDialogConfirm }: CustomerTableRowProps) {
   const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
+  const [customerId, setCustomerId] = useState(null);
+  const router = useRouter();
 
-  const handleOpenPopover = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
-    setOpenPopover(event.currentTarget);
-  }, []);
+  const handleOpenPopover = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement> & TODO) => {
+      setOpenPopover(event.currentTarget);
+      setCustomerId(event.currentTarget.value)
+    }, [setOpenPopover, setCustomerId]);
 
-  const handleClosePopover = useCallback(() => {
+  const handleEditing = useCallback(() => {
+    console.log(` openPopover id: ${customerId}`)
     setOpenPopover(null);
-  }, []);
+    router.push(`/edit-customer/${customerId}`)//,{replace: true})
+  }, [customerId, router]);
+
+  const handleDelete = useCallback(async () => {
+    console.log(` openPopover id: ${customerId}`)
+    const deleteConfirmed = await  onDialogConfirm();
+    if (deleteConfirmed) {
+      service.deleteItemById(customerId as TODO)
+
+      toggleNotice(true)
+      setTimeout(() => {
+        router.push('/customers')
+        toggleNotice(false)
+      }, 1000);
+    }
+    setOpenPopover(null);
+
+  }, [customerId, router]);
+
 
   return (
     <>
@@ -57,13 +75,21 @@ export function CustomerTableRow({ row, selected, onSelectRow }: CustomerTableRo
           </Box>
         </TableCell>
 
-        <TableCell>{row.company}</TableCell>
+        {/* <TableCell>{row.company}</TableCell> */}
 
         <TableCell>{row.email}</TableCell>
-        <TableCell>{row.location}</TableCell>
-
+        <TableCell>{row.mobile}</TableCell>
+        <TableCell>{row.phone}</TableCell>
+        <TableCell>{row.billingAddress}</TableCell>
+        <TableCell align="center">
+          {row.hasItemInShoppingCart ? (
+            <Iconify width={22} icon="solar:check-circle-bold" sx={{ color: 'success.main' }} />
+          ) : (
+            '-'
+          )}
+        </TableCell>
         <TableCell>
-          <Label color={(row.status === 'locked' && 'error') || 'success'}>{row.status}</Label>
+          <Label color={(row.membership === 'vip' && 'warning') || 'info'}>{row.membership.toUpperCase()}</Label>
         </TableCell>
 
         <TableCell align="right">
@@ -76,7 +102,7 @@ export function CustomerTableRow({ row, selected, onSelectRow }: CustomerTableRo
       <Popover
         open={!!openPopover}
         anchorEl={openPopover}
-        onClose={handleClosePopover}
+        onClose={handleEditing}
         anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
@@ -96,12 +122,12 @@ export function CustomerTableRow({ row, selected, onSelectRow }: CustomerTableRo
             },
           }}
         >
-          <MenuItem onClick={handleClosePopover}>
+          <MenuItem onClick={handleEditing} value={row.id}>
             <Iconify icon="solar:pen-bold" />
             Edit
           </MenuItem>
 
-          <MenuItem onClick={handleClosePopover} sx={{ color: 'error.main' }}>
+          <MenuItem onClick={handleDelete} sx={{ color: 'error.main' }}>
             <Iconify icon="solar:trash-bin-trash-bold" />
             Delete
           </MenuItem>

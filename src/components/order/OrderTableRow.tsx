@@ -12,35 +12,55 @@ import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
 
 import { Label } from '../label';
 import { Iconify } from '../iconify';
-
+import * as service from "../../services/orderService";
+import { useRouter } from '../../routes/hooks/use-router';
+import { useDialogs } from '@toolpad/core';
 // ----------------------------------------------------------------------
 
-export type OrderProps = {
-  id: string;
-  name: string;
-  amount: string;
-  status: string;
-  discount: string;
-  avatarUrl: string;
-  // isVerified: boolean;
-};
 
 type OrderTableRowProps = {
-  row: OrderProps;
+  row: Order;
   selected: boolean;
   onSelectRow: () => void;
+  toggleNotice: (open: boolean) => void;
+  onDialogConfirm: (message?: string) => Promise<boolean>;
 };
 
-export function OrderTableRow({ row, selected, onSelectRow }: OrderTableRowProps) {
+export function OrderTableRow(
+  {row, selected, onSelectRow, toggleNotice ,onDialogConfirm}: OrderTableRowProps) {
   const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
+  const [orderId, setOrderId] = useState("");
+  const router = useRouter();
 
-  const handleOpenPopover = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
-    setOpenPopover(event.currentTarget);
-  }, []);
+  
+  const handleOpenPopover = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement> & TODO) => {
+      setOpenPopover(event.currentTarget);
+      setOrderId(event.currentTarget.value)
+    }, [setOpenPopover, setOrderId]);
 
-  const handleClosePopover = useCallback(() => {
+  const handleEditing = useCallback(() => {
+    console.log(` openPopover id: ${orderId}`)
     setOpenPopover(null);
-  }, []);
+    router.push(`/edit-order/${orderId}`)//,{replace: true})
+  }, [orderId, router]);
+
+  const handleDelete = useCallback(async () => {
+    console.log(` openPopover id: ${orderId}`)
+    const deleteConfirmed = await  onDialogConfirm();
+    if (deleteConfirmed) {
+      service.deleteItemById(orderId)
+
+      toggleNotice(true)
+      setTimeout(() => {
+        router.push('/orders')
+        toggleNotice(false)
+      }, 1000);
+
+    }
+    setOpenPopover(null);
+
+  }, [orderId, router]);
 
   return (
     <>
@@ -60,11 +80,19 @@ export function OrderTableRow({ row, selected, onSelectRow }: OrderTableRowProps
 
         <TableCell>$ {row.amount}</TableCell>
         <TableCell>$ {row.discount}</TableCell>
+        <TableCell> {row.shippingAddress}</TableCell>
 
+        <TableCell align="center">
+          {row.isDelayed ? (
+            <Iconify width={22} icon="solar:clock-circle-bold" sx={{ color: 'error.main' }} />
+          ) : (
+            '-'
+          )}
+        </TableCell>
         <TableCell>
-          <Label color={(row.status === 'Refund' && 'error') 
-          || ( row.status === 'Pending' && 'warning')
-          || ( row.status === 'Shipping' && 'info')   || 'success'}>{row.status}</Label>
+          <Label color={(row.status === 'refund' && 'error') 
+          || ( row.status === 'packing' && 'warning')
+          || ( row.status === 'shipping' && 'info')   || 'success'}>{row.status}</Label>
         </TableCell>
 
         <TableCell align="right">
@@ -77,7 +105,7 @@ export function OrderTableRow({ row, selected, onSelectRow }: OrderTableRowProps
       <Popover
         open={!!openPopover}
         anchorEl={openPopover}
-        onClose={handleClosePopover}
+        onClose={handleEditing}
         anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
@@ -97,12 +125,12 @@ export function OrderTableRow({ row, selected, onSelectRow }: OrderTableRowProps
             },
           }}
         >
-          <MenuItem onClick={handleClosePopover}>
+          <MenuItem onClick={handleEditing}>
             <Iconify icon="solar:pen-bold" />
             Edit
           </MenuItem>
 
-          <MenuItem onClick={handleClosePopover} sx={{ color: 'error.main' }}>
+          <MenuItem onClick={handleDelete} sx={{ color: 'error.main' }}>
             <Iconify icon="solar:trash-bin-trash-bold" />
             Delete
           </MenuItem>
