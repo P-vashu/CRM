@@ -6,7 +6,8 @@ import Grid from '@mui/material/Grid2';
 import Pagination from '@mui/material/Pagination';
 import Typography from '@mui/material/Typography';
 
-import { _products } from '../_mock';
+// import { _products } from '../_mock';
+import * as productService from "../services/productService";
 // import { DashboardContent } from 'src/layouts/dashboard';
 
 import { ProductItem } from '../components/product/ProductItem';
@@ -26,7 +27,7 @@ const GENDER_OPTIONS = [
 
 const CATEGORY_OPTIONS = [
   { value: 'all', label: 'All' },
-  { value: 'shose', label: 'Shose' },
+  { value: 'shoes', label: 'Shoes' },
   { value: 'apparel', label: 'Apparel' },
   { value: 'accessories', label: 'Accessories' },
 ];
@@ -60,16 +61,30 @@ const defaultFilters = {
 
 function ProductsView() {
   const [sortBy, setSortBy] = useState('featured');
-
   const [openFilter, setOpenFilter] = useState(false);
-
   const [filters, setFilters] = useState<FiltersProps>(defaultFilters);
+  const [page, setPage] = useState(1);
+  const _products = productService.getProductsByPageNumber(page); //productService.getAllProducts();
+  // products =    productService.getProductsByPageNumber(page);
+  const [count, setCount] = useState(_products.length);
+  const [products, setProducts] = useState(_products);
+
+
+  const handlePageChange = useCallback((
+    event: React.ChangeEvent<unknown>, page: number
+  )=>{
+    const products =    productService.getProductsByPageNumber(page);
+    setProducts(products)
+    setPage(page)
+  },[])
+
 
   const handleOpenFilter = useCallback(() => {
     setOpenFilter(true);
   }, []);
 
   const handleCloseFilter = useCallback(() => {
+    console.log(filters)
     setOpenFilter(false);
   }, []);
 
@@ -129,7 +144,7 @@ function ProductsView() {
       <CartIcon totalItems={8} />
 
       <Grid container spacing={3}>
-        {_products.map((product) => (
+        {products.map((product:TODO) => (
           // <Grid key={product.id} xs={12} sm={6} md={3}>
           <Grid key={product.id} size={{ xs: 12, sm: 6, md: 3 }}>
             <ProductItem product={product} />
@@ -137,7 +152,9 @@ function ProductsView() {
         ))}
       </Grid>
 
-      <Pagination count={10} color="primary" sx={{ mt: 8, mx: 'auto' }} />
+      <Pagination count={count} color="primary"
+       sx={{ mt: 8, mx: 'auto' }} page={page} onChange={handlePageChange}
+      />
 
     </>
   );

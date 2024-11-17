@@ -13,13 +13,14 @@ import {
   _location,
   _email,
   _mobile,
+  _roles,
 } from './_mock';
 
 // ----------------------------------------------------------------------
 
 export const _myAccount = {
-  displayName: 'Jaydon Frankie',
-  email: 'demo@minimals.cc',
+  displayName: 'Harry Ho',
+  email: 'Harry.Ho@test.com',
   photoURL: '/assets/images/avatar/avatar-25.webp',
 };
 
@@ -35,22 +36,10 @@ export const _agents = [...Array(24)].map((_, index) => ({
   email: _email(index),
   city: _location(index).split(',')[0],
   state: _location(index).split(',')[1],
-  isVerified: _boolean(index),
+  isVerified: true,
   avatarUrl: `/assets/images/avatar/avatar-${index + 1}.webp`,
-  status: index % 8 ? 'active' : 'banned',
-  role:
-    [
-      'Leader',
-      'Hr Manager',
-      'Sales Agent',
-      'Sales Operator',
-      'Sales Operator',
-      'Project Manager',
-      'Business Analyst',
-      'Product Designer',
-      'Market Manager',
-      'General Manager',
-    ][index] || 'Sales Agent',
+  status: index % 8 ? 'active' : 'locked',
+  role: _roles[index] || 'Sales Agent',
 }));
 
 // ----------------------------------------------------------------------
@@ -59,9 +48,11 @@ export const _customers = [...Array(12)].map((_, index) => ({
   name: _fullName(index),
   company: _company(index),
   email: _email(index),
+  mobile: _mobile(index),
+  phone: _mobile(12-index),
   location: _location(index),
   avatarUrl: `/assets/images/customer/avatar-${index + 1}.png`,
-  status: index % 4 ? 'active' : 'banned',
+  status: index % 4 ? 'active' : 'locked',
 }));
 
 // ----------------------------------------------------------------------
@@ -113,7 +104,9 @@ export const _products = [...Array(31)].map((_, index) => {
       (setIndex === 24 && COLORS.slice(5, 6)) ||
       COLORS,
     status:
-      ([1, 3, 5].includes(setIndex) && 'sale') || ([4, 8, 12].includes(setIndex) && 'new') || '',
+      ([1, 3, 5,10,30].includes(setIndex) && 'sale') 
+      || ([4, 8, 12, 15,17,18,20,22,28].includes(setIndex) && 'new') || '',
+    category: ''
   };
 });
 
@@ -122,7 +115,7 @@ export const _orders = [...Array(24)].map((_, index) => {
 
   return {
     id: _orderId(index),
-    amount: _price(index),
+    amount: _price(index)|| _price(index-10),
     name: _productNames(index),
     discount: setIndex % 3 ? setIndex: 0,
     // coverUrl: `/assets/images/product/product-${setIndex}.webp`,

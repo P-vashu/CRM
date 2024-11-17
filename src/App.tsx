@@ -14,6 +14,8 @@ import logoMidPng from './assets/it-logo-mid.png';
 import { Session, type Navigation } from '@toolpad/core/AppProvider';
 import { SessionContext } from './SessionContext';
 import * as agentService from "./services/agentService";
+import * as productService from "./services/productService";
+import * as customerService from "./services/customerService";
 
 const CALLS_NAVIGATION: Navigation = [
   {
@@ -30,10 +32,6 @@ const CALLS_NAVIGATION: Navigation = [
 
 
 const NAVIGATION: Navigation = [
-  // {
-  //   kind: 'header',
-  //   title: 'Main items',
-  // },
   {
     title: 'Dashboard',
     icon: <DashboardIcon />,
@@ -100,6 +98,11 @@ const theme = createTheme({
   },
 });
 
+agentService.init();
+customerService.init();
+productService.init();
+
+
 export default function App() {
 
   const [session, setSession] = React.useState<Session | null>(null);
@@ -116,7 +119,7 @@ export default function App() {
 
   const sessionContextValue = React.useMemo(() => ({ session, setSession }), [session, setSession]);
  
-  agentService.init();
+
 
   return (
     <SessionContext.Provider value={sessionContextValue}>

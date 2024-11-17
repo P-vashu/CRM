@@ -27,7 +27,7 @@ export function BlogView() {
     <>
       <Box display="flex" alignItems="center" mb={5}>
         <Typography variant="h4" flexGrow={1}>
-          {/* Blog */}
+          Blogs
         </Typography>
         <Button
           variant="contained"

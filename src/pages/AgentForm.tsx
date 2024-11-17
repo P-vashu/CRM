@@ -6,11 +6,13 @@ import Select from "../components/controls/Select";
 import * as agentService from "../services/agentService";
 import CheckboxGenerator from "../components/controls/Checkbox";
 import ButtonGenerator from "../components/controls/Button";
-import { Form, useNavigate , useMatch, useLoaderData } from "react-router-dom";
+import { Form, useNavigate, useMatch, useLoaderData } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid2";
-import { FormControl, Typography } from "@mui/material";
-
+import { Alert, Box, FormControl, FormControlLabel, Radio, Snackbar, Stack, Typography } from "@mui/material";
+import { useRouter } from "../routes/hooks/use-router";
+import Slide, { SlideProps } from '@mui/material/Slide';
+import Fade from '@mui/material/Fade';
 
 
 type Agent = {
@@ -21,7 +23,7 @@ type Agent = {
     email: string;
     mobile: string;
     city: string;
-    state:string;
+    state: string;
     status: string;
     departmentId?: string;
     isVerified: false
@@ -42,9 +44,8 @@ const initialFieldValues: Agent = {
 };
 
 const radioList = [
-    { id: "male", title: "Male" },
-    { id: "female", title: "Female" },
-    { id: "other", title: "Other" }
+    { id: "active", title: "Active" },
+    { id: "locked", title: "Locked" },
 ];
 
 const checkboxList = [
@@ -52,8 +53,24 @@ const checkboxList = [
     { id: "2", title: "no" }
 ];
 
+function slideTransition(props: SlideProps) {
+    return <Slide {...props} direction="up" />;
+}
+
 export default function AgentForm() {
     const agent = useLoaderData();
+    const router = useRouter();
+    const [notice, setNotice] = React.useState<{
+        open: boolean;
+        Transition: React.ComponentType<
+            TransitionProps & {
+                children: React.ReactElement<any, any>;
+            }
+        >;
+    }>({
+        open: false,
+        Transition: Fade,
+    });
     console.log(` match => ${agent}`)
     const {
         values,
@@ -66,11 +83,11 @@ export default function AgentForm() {
 
     const navigate = useNavigate();
 
-    
+
     const validateOnSubmit = () => {
         let temp: TODO = {};
-        temp.firstName = values.firstName ? "" : "Mandatory Field";
-        temp.lastName = values.lastName ? "" : "Mandatory Field";
+        temp.name = values.name ? "" : "Mandatory Field";
+        // temp.lastName = values.lastName ? "" : "Mandatory Field";
         temp.email = /$^|.+@.+..+/.test(values.email) ? "" : "Email is not Valid";
         temp.mobile = values.mobile.length > 9 ? "" : "Min 10 numbers required";
         temp.city = values.city ? "" : "Mandatory Field";
@@ -84,35 +101,67 @@ export default function AgentForm() {
     };
 
     const handleSubmit = (e: React.SyntheticEvent) => {
-    // const handleSubmit = () => {
+        // const handleSubmit = () => {
         e.preventDefault();
         if (validateOnSubmit()) {
             window.alert("Submitting...");
             agentService.addAgent(values);
-            navigate('/agents',{replace: true})
+            navigate('/agents', { replace: true })
         }
-
-
     };
 
+    const handleUpdate = (e: React.SyntheticEvent) => {
+
+        agentService.updateAgent(values);
+        debugger
+        setNotice({
+            open: true,
+            Transition: slideTransition
+        })
+        setTimeout(
+            () => { navigate('/agents', { replace: true }) }, 1000)
+    };
+
+    const goBack = (e: React.SyntheticEvent) => {
+        router.back();
+    };
+
+    const handleClose = () => {
+        setNotice({
+            ...notice,
+            open: false,
+        });
+    };
+debugger
     return (
         <Paper sx={{ px: 5, py: 5 }}>
             <Typography variant="h4" sx={{ mb: { xs: 3, md: 5 } }}>
                 Agent Form
             </Typography>
             <Form onSubmit={handleSubmit}>
-                <Grid container spacing={3} rowSpacing={2} columnSpacing={2}>
-                    <Grid container spacing={4} size={{ xs: 12, md: 6 }}>
-                        <FormControl>
+                <Grid container  rowSpacing={2} columnSpacing={4}>
+                    <Grid size={{ xs: 12, md: 6, lg: 6 }}>
+                        <FormControl fullWidth >
+                            <Input required
+                                label="Company"
+                                name="company"
+                                value={values.company}
+                                onChange={handleInputChange}
+                                error={(errors as TODO).company}
+                            /> </FormControl></Grid>
+                    <Grid size={{ xs: 12, md: 3, lg: 3 }}>
+
+                        <FormControl fullWidth>
                             <Input required
                                 label="First Name"
                                 name="firstName"
                                 value={values.firstName}
                                 onChange={handleInputChange}
                                 error={(errors as TODO).firstName}
-
-                            /></FormControl>
-                        <FormControl>
+                            /> </FormControl>
+                    </Grid>
+                    <Grid size={{ xs: 12, md: 3, lg: 3 }}>
+                        <FormControl fullWidth>
                             <Input required
                                 variant="outlined"
                                 label="Last Name"
@@ -120,11 +169,12 @@ export default function AgentForm() {
                                 value={values.lastName}
                                 onChange={handleInputChange}
                                 error={(errors as TODO).lastName}
-                            /></FormControl>
-
+                            /> </FormControl>
                     </Grid>
-                    <Grid container spacing={4} size={{ xs: 12, md: 6 }}>
-                        <FormControl>
+
+                    <Grid size={{ xs: 12, md: 6, lg: 3 }}>
+
+                        <FormControl fullWidth>
                             <Input
                                 required
                                 variant="outlined"
@@ -134,55 +184,64 @@ export default function AgentForm() {
                                 type="email"
                                 onChange={handleInputChange}
                                 error={(errors as TODO).email}
-                            /></FormControl>
-                        <FormControl><Input
+                            /> </FormControl>
+                    </Grid>
+                    <Grid size={{ xs: 12, md: 6, lg: 3 }}>
+                        <FormControl fullWidth><Input
                             variant="outlined"
                             label="mobile"
                             name="mobile"
                             value={values.mobile}
                             onChange={handleInputChange}
                             error={(errors as TODO).mobile}
-                        /></FormControl>
+                        /> </FormControl>
                     </Grid>
-                    <Grid container spacing={4} size={{ xs: 12, md: 6 }}>
-                        <FormControl><Input required
+                    <Grid size={{ xs: 12, md: 6, lg: 3 }}>
+
+                        <FormControl fullWidth><Input required
                             variant="outlined"
                             label="city"
                             name="city"
                             value={values.city}
                             onChange={handleInputChange}
-                        /></FormControl>
-                        <FormControl><Input
+                        /> </FormControl>
+                    </Grid>
+                    <Grid size={{ xs: 12, md: 6, lg: 3 }}>
+                        <FormControl fullWidth><Input
                             variant="outlined"
                             label="State"
                             name="state"
                             value={values.state}
                             onChange={handleInputChange}
-                        /></FormControl>
+                        /> </FormControl>
                     </Grid>
-                    <Grid container spacing={4} size={{ xs: 12, md: 6 }}>
-                        <FormControl>
-                            <RadioGroupGenerator
-                                name="gender"
-                                label="Gender"
-                                value={values.gender}
-                                onChange={handleInputChange}
-                                items={radioList}
-                            /></FormControl>
+                    <Grid size={{ xs: 12, md: 6, lg: 3 }}>
                         <FormControl style={{ minWidth: '10em' }}>
                             <Select
-                                name="departmentId"
-                                label="Department"
-                                value={values.departmentId}
+                                name="role"
+                                label="Role"
+                                value={values.role}
                                 onChange={handleInputChange}
-                                options={agentService.departmentArray()}
-                                error={(errors as TODO).departmentId}
-
-                            /></FormControl>
+                                options={agentService.roleArray()}
+                                error={(errors as TODO).role}
+                            /> </FormControl>
                     </Grid>
-                    <Grid container spacing={4} size={{ xs: 12, md: 6 }}>
+                    <Grid size={{ xs: 12, md: 6, lg: 3 }}>
+                        <FormControl fullWidth>
+                            <RadioGroupGenerator 
+                                name="status"
+                                label="Status"
+                                value={values.status}
+                                onChange={handleInputChange}
+                                items={radioList}
+                            /> 
+                                
+                            </FormControl>
+                    </Grid>
+                    
+                    <Grid size={{ xs: 12, md: 6, lg: 3 }}>
 
-                        <FormControl>
+                        <FormControl fullWidth>
                             <CheckboxGenerator
                                 name="isVerified"
                                 label="Is Verified"
@@ -190,20 +249,53 @@ export default function AgentForm() {
                                 onChange={handleInputChange}
                                 options={checkboxList}
 
-                            /></FormControl>
+                            /> </FormControl>
                     </Grid>
 
-                    <ButtonGenerator text="Submit" type="submit" />
-                    <ButtonGenerator text="Reset" color="default" onClick={resetForm} />
+
+
+
                 </Grid>
+                <Stack
+                    direction="row"
+                    spacing={2}
+                    sx={{
+                        justifyContent: "flex-end",
+                        alignItems: "flex-end",
+                        px: 10
+                    }}
+                >
+                    {agent ? <ButtonGenerator text="Update" onClick={handleUpdate} />
+                        : <ButtonGenerator text="Submit" type="submit" />
+                    }
+                    {agent ? <ButtonGenerator text="Back" color="default" onClick={goBack} />
+                        : <ButtonGenerator text="Reset" color="default" onClick={resetForm} />}
+                </Stack>
             </Form >
+            <Snackbar
+                open={notice.open}
+                // onClose={handleClose}
+                TransitionComponent={notice.Transition}
+                message="Operation is done successfully"
+                key={notice.Transition.name}
+                autoHideDuration={1000}>
+                <Alert
+                    onClose={handleClose}
+                    severity="success"
+                    variant="filled"
+                    sx={{ width: '100%' }}
+                >
+                    Operation is done successfully!
+                </Alert>
+            </Snackbar>
+
         </Paper >
     );
 }
 
 
-export  function loader({ params }:TODO) {
-    const agent =  agentService.getAgentById(params.id);
+export function loader({ params }: TODO) {
+    const agent = agentService.getAgentById(params.id);
     if (!agent) throw new Response("/not-found", { status: 404 });
     return agent;
-  }
+}

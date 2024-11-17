@@ -25,7 +25,7 @@ export default function RadioGroupGenerator(props:any) {
         onChange={onChange}
       >
         {items.map((item:TODO) => (
-          <RadioItem key={item.id} value={item.title} label={item.title} />
+          <RadioItem key={item.id} value={item.id} label={item.title} />
         ))}
       </RadioGroup>
     </FormControl>

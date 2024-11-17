@@ -13,9 +13,13 @@ type AgentTableToolbarProps = {
   numSelected: number;
   filterName: string;
   onFilterName: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onMultipleDelete: (event: React.MouseEvent<HTMLInputElement>) => void; 
+
 };
 
-export function AgentTableToolbar({ numSelected, filterName, onFilterName }: AgentTableToolbarProps) {
+export function AgentTableToolbar({ 
+  numSelected, filterName, onFilterName, onMultipleDelete }
+  : AgentTableToolbarProps) {
   return (
     <Toolbar
       sx={{
@@ -49,8 +53,8 @@ export function AgentTableToolbar({ numSelected, filterName, onFilterName }: Age
       )}
 
       {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton>
+        <Tooltip title="Delete" onClick={onMultipleDelete}>
+          <IconButton >
             <Iconify icon="solar:trash-bin-trash-bold" />
           </IconButton>
         </Tooltip>

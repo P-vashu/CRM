@@ -12,8 +12,9 @@ import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
 
 import { Label } from '../label';
 import { Iconify } from '../iconify';
-// import { Navigate, useNavigate } from 'react-router-dom';
+import * as agentService from "../../services/agentService";
 import { useRouter } from '../../routes/hooks/use-router';
+import { useDialogs } from '@toolpad/core';
 
 // ----------------------------------------------------------------------
 
@@ -23,6 +24,8 @@ export type AgentProps = {
   role: string;
   status: string;
   company: string;
+  email: string;
+  mobile: string;
   avatarUrl: string;
   isVerified: boolean;
 };
@@ -31,12 +34,14 @@ type AgentTableRowProps = {
   row: AgentProps;
   selected: boolean;
   onSelectRow: () => void;
+  toggleNotice: (open: boolean) => void;
 };
 
-export function AgentTableRow({ row, selected, onSelectRow }: AgentTableRowProps) {
+export function AgentTableRow({ row, selected, onSelectRow, toggleNotice }: AgentTableRowProps) {
   const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
-  const [userId, setAgentId] = useState(null);
+  const [agentId, setAgentId] = useState(null);
   const router = useRouter();
+  const dialogs = useDialogs();
 
   const handleOpenPopover = useCallback(
     (event: React.MouseEvent<HTMLButtonElement> & TODO) => {
@@ -44,15 +49,38 @@ export function AgentTableRow({ row, selected, onSelectRow }: AgentTableRowProps
       console.log(` event.currentTarget id: ${event.currentTarget}`)
       setOpenPopover(event.currentTarget);
       setAgentId(event.currentTarget.value)
-      // router.push(`/edit-user/${uid}`)//,{replace: true})
+      // router.push(`/edit-agent/${uid}`)//,{replace: true})
     }, [setOpenPopover, setAgentId]);
 
-  const handleClosePopover = useCallback(() => {
-    // const uid = event.target.value;
-    console.log(` openPopover id: ${userId}`)
+  const handleEditing = useCallback(() => {
+    console.log(` openPopover id: ${agentId}`)
     setOpenPopover(null);
-    router.push(`/edit-agent/${userId}`)//,{replace: true})
-  }, [userId, router]);
+    router.push(`/edit-agent/${agentId}`)//,{replace: true})
+  }, [agentId, router]);
+
+  const handleDelete = useCallback(async () => {
+    console.log(` openPopover id: ${agentId}`)
+    const deleteConfirmed = await dialogs.confirm(
+      "Are you sure to delete this data?",
+    ).then(result => {
+      console.log(result)
+      return result;
+    }).catch(e => console.log(e));
+    if (deleteConfirmed) {
+
+      agentService.deleteAgentById(agentId as TODO)
+
+      toggleNotice(true)
+
+      setTimeout(() => {
+        router.push('/agents')
+        toggleNotice(false)
+      }, 1000);
+
+    }
+    setOpenPopover(null);
+
+  }, [agentId, router]);
 
   return (
     <>
@@ -71,7 +99,8 @@ export function AgentTableRow({ row, selected, onSelectRow }: AgentTableRowProps
         <TableCell>{row.company}</TableCell>
 
         <TableCell>{row.role}</TableCell>
-
+        <TableCell>{row.email}</TableCell>
+        <TableCell>{row.mobile}</TableCell>
         <TableCell align="center">
           {row.isVerified ? (
             <Iconify width={22} icon="solar:check-circle-bold" sx={{ color: 'success.main' }} />
@@ -81,7 +110,7 @@ export function AgentTableRow({ row, selected, onSelectRow }: AgentTableRowProps
         </TableCell>
 
         <TableCell>
-          <Label color={(row.status === 'banned' && 'error') || 'success'}>{row.status}</Label>
+          <Label color={(row.status === 'locked' && 'error') || 'success'}>{row.status}</Label>
         </TableCell>
 
         <TableCell align="right">
@@ -94,7 +123,7 @@ export function AgentTableRow({ row, selected, onSelectRow }: AgentTableRowProps
       <Popover
         open={!!openPopover}
         anchorEl={openPopover}
-        onClose={handleClosePopover}
+        onClose={handleEditing}
         anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
@@ -114,12 +143,12 @@ export function AgentTableRow({ row, selected, onSelectRow }: AgentTableRowProps
             },
           }}
         >
-          <MenuItem onClick={handleClosePopover} value={row.id}>
+          <MenuItem onClick={handleEditing} value={row.id}>
             <Iconify icon="solar:pen-bold" />
             Edit
           </MenuItem>
 
-          <MenuItem onClick={handleClosePopover} sx={{ color: 'error.main' }}>
+          <MenuItem onClick={handleDelete} sx={{ color: 'error.main' }}>
             <Iconify icon="solar:trash-bin-trash-bold" />
             Delete
           </MenuItem>

@@ -1,6 +1,10 @@
 import { CustomerProps } from '../customer/CustomerTableRow';
 import { OrderProps } from '../order/OrderTableRow';
 import type { UserProps } from '../agent/AgentTableRow';
+import { useCallback, useState } from 'react';
+import { useDialogs } from '@toolpad/core/useDialogs';
+import { useNavigate } from 'react-router-dom';
+import { enableCache } from '@iconify/react';
 
 // ----------------------------------------------------------------------
 
@@ -55,7 +59,7 @@ export function getComparator<Key extends keyof any>(
 // ----------------------------------------------------------------------
 
 type ApplyFilterProps = {
-  inputData:  UserProps[] |  CustomerProps[] | OrderProps []; // Array<UserProps| CustomerProps |OrderProps >;
+  inputData: UserProps[] | CustomerProps[] | OrderProps[]; // Array<UserProps| CustomerProps |OrderProps >;
   filterName: string;
   comparator: (a: any, b: any) => number;
 };
@@ -78,4 +82,113 @@ export function applyFilter({ inputData, comparator, filterName }: ApplyFilterPr
   }
 
   return inputData;
+}
+
+//-------------------------------------------------------------
+
+
+export type useTableProps = {
+  postDeleteRoute: string | undefined
+  service: TODO,
+  toggleNotice: TODO,
+}
+
+export function useTable(props?: useTableProps) {
+  const [page, setPage] = useState(0);
+  const [orderBy, setOrderBy] = useState('name');
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [selected, setSelected] = useState<string[]>([]);
+  const [order, setOrder] = useState<'asc' | 'desc'>('asc');
+  const dialogs = useDialogs();
+  const navigate = useNavigate();
+  const { postDeleteRoute, service, toggleNotice } = props || {};
+  // const { handleDialogOpen } = props;
+
+  const onSort = useCallback(
+    (id: string) => {
+      const isAsc = orderBy === id && order === 'asc';
+      setOrder(isAsc ? 'desc' : 'asc');
+      setOrderBy(id);
+    },
+    [order, orderBy]
+  );
+
+  const onSelectAllRows = useCallback((checked: boolean, newSelecteds: string[]) => {
+    if (checked) {
+      setSelected(newSelecteds);
+      return;
+    }
+    setSelected([]);
+  }, []);
+
+  const onSelectRow = useCallback(
+    (inputValue: string) => {
+      const newSelected = selected.includes(inputValue)
+        ? selected.filter((value) => value !== inputValue)
+        : [...selected, inputValue];
+
+      setSelected(newSelected);
+    },
+    [selected]
+  );
+
+  const onResetPage = useCallback(() => {
+    setPage(0);
+  }, []);
+
+  const onChangePage = useCallback((event: unknown, newPage: number) => {
+    setPage(newPage);
+  }, []);
+
+  const onChangeRowsPerPage = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setRowsPerPage(parseInt(event.target.value, 10));
+      onResetPage();
+    },
+    [onResetPage]
+  );
+
+  const onMultipleDelete = useCallback(
+    async (event: React.MouseEvent<HTMLInputElement>) => {
+      const deleteConfirmed = await dialogs.confirm(
+        "Are you sure to continue this DELETE operation?",
+      ).then(result => {
+        console.log(result)
+        return result;
+      }).catch(e => console.log(e));
+
+      console.log(' deleteConfirmed ' + deleteConfirmed)
+      if (deleteConfirmed) {
+
+        if (selected.length > 0) {
+          selected.map(s =>
+            service.deleteAgentById(s)
+          )
+        }
+        toggleNotice(true);
+        setTimeout(() => {
+          navigate(postDeleteRoute ? postDeleteRoute : '/', { replace: true })
+          toggleNotice(false);
+        }, 1000)
+
+      }
+
+    },
+    [selected, setPage]
+  );
+
+  return {
+    page,
+    order,
+    onSort,
+    orderBy,
+    selected,
+    rowsPerPage,
+    onSelectRow,
+    onResetPage,
+    onChangePage,
+    onSelectAllRows,
+    onChangeRowsPerPage,
+    onMultipleDelete
+  };
 }

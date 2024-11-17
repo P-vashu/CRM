@@ -63,7 +63,7 @@ export function CustomerTableRow({ row, selected, onSelectRow }: CustomerTableRo
         <TableCell>{row.location}</TableCell>
 
         <TableCell>
-          <Label color={(row.status === 'banned' && 'error') || 'success'}>{row.status}</Label>
+          <Label color={(row.status === 'locked' && 'error') || 'success'}>{row.status}</Label>
         </TableCell>
 
         <TableCell align="right">

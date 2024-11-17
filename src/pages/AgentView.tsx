@@ -10,7 +10,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 
 // import { _agents } from '../_mock';
-import * as agentService from "../services/agentService";
+import * as service from "../services/agentService";
 import { Iconify } from '../components/iconify';
 import { Scrollbar } from '../components/scrollbar';
 
@@ -19,16 +19,53 @@ import { AgentTableRow } from '../components/agent/AgentTableRow';
 import { AgentTableHead } from '../components/agent/AgentTableHead';
 import { TableEmptyRows } from '../components/table/TableEmptyRows';
 import { AgentTableToolbar } from '../components/agent/AgentTableToolbar';
-import { emptyRows, applyFilter, getComparator } from '../components/table/utils';
+import { emptyRows, applyFilter, getComparator, useTable } from '../components/table/utils';
 
 import type { AgentProps } from '../components/agent/AgentTableRow';
 import { RouterLink } from '../routes/components';
+import { useRouter } from 'src/routes/hooks/use-router';
+import Slide, { SlideProps } from '@mui/material/Slide';
+import Fade from '@mui/material/Fade';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
+import React from 'react';
+import SnapNotice from '../components/controls/SnapNotice';
 
 // ----------------------------------------------------------------------
+function slideTransition(props: SlideProps) {
+  return <Slide {...props} direction="up" />;
+}
+
 
 export function AgentView() {
-  const table = useTable();
-  const _agents = agentService.getAllAgents();
+
+  // const [dialogOpen, setDialogOpen] = useState(false)
+  const [notice, setNotice] = React.useState<{
+    open: boolean;
+    Transition: React.ComponentType<
+      TransitionProps & {
+        children: React.ReactElement<any, any>;
+      }
+    >;
+  }>({
+    open: false,
+    Transition: Fade,
+  });
+
+  const toggleNotice = (open: boolean) => {
+    setNotice({
+      ...notice,
+      open,
+    });
+  }
+
+  const table = useTable({
+    postDeleteRoute: '/agents',
+    service,
+    toggleNotice
+  });
+
+  const _agents = service.getAllAgents();
 
   const [filterName, setFilterName] = useState('');
 
@@ -38,17 +75,25 @@ export function AgentView() {
     filterName,
   });
 
+
   const notFound = !dataFiltered.length && !!filterName;
+
+  const handleClose = () => {
+    setNotice({
+      ...notice,
+      open: false,
+    });
+  }
 
   return (
     <>
       <Box display="flex" alignItems="center" mb={5}>
         <Typography variant="h4" flexGrow={1}>
-          {/* Agents */}
+          Agents
         </Typography>
         <Button
           variant="contained"
-             color="primary"
+          color="primary"
           startIcon={<Iconify icon="mingcute:add-line" />}
           component={RouterLink} href="/agent-form"
         >
@@ -64,6 +109,7 @@ export function AgentView() {
             setFilterName(event.target.value);
             table.onResetPage();
           }}
+          onMultipleDelete={table.onMultipleDelete}
         />
 
         <Scrollbar>
@@ -78,14 +124,15 @@ export function AgentView() {
                 onSelectAllRows={(checked) =>
                   table.onSelectAllRows(
                     checked,
-                    _agents.map((agent) => agent.id)
+                    _agents.map((agent: TODO) => agent.id)
                   )
                 }
                 headLabel={[
                   { id: 'name', label: 'Name' },
                   { id: 'company', label: 'Company' },
                   { id: 'role', label: 'Role' },
-                  // { id: 'location', label: 'Location' },
+                  { id: 'email', label: 'E-mail' },
+                  { id: 'mobile', label: 'Mobile' },
                   { id: 'isVerified', label: 'Verified', align: 'center' },
                   { id: 'status', label: 'Status' },
                   { id: '' },
@@ -97,13 +144,13 @@ export function AgentView() {
                     table.page * table.rowsPerPage,
                     table.page * table.rowsPerPage + table.rowsPerPage
                   )
-                  .map((row:TODO) => (
+                  .map((row: TODO) => (
                     <AgentTableRow
                       key={row.id}
                       row={row}
                       selected={table.selected.includes(row.id)}
                       onSelectRow={() => table.onSelectRow(row.id)}
-                      
+                      toggleNotice={toggleNotice}
                     />
                   ))}
 
@@ -127,75 +174,28 @@ export function AgentView() {
           rowsPerPageOptions={[5, 10, 25]}
           onRowsPerPageChange={table.onChangeRowsPerPage}
         />
+
+
       </Card>
-      </>
+      <SnapNotice open={notice.open} transition={notice.Transition}
+        handleClose={handleClose} />
+      {/* <Snackbar
+          open={notice.open}
+          TransitionComponent={notice.Transition}
+          // message="Operation is done successfully"
+          key={notice.Transition.name}
+          autoHideDuration={1000} >
+          <Alert
+            onClose={handleClose}
+            severity="success"
+            variant="standard"
+            sx={{ width: '100%' }}
+          >
+            Operation is done successfully!
+          </Alert>
+        </Snackbar> */}
+    </>
   );
 }
 
 // ----------------------------------------------------------------------
-
-export function useTable() {
-  const [page, setPage] = useState(0);
-  const [orderBy, setOrderBy] = useState('name');
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [selected, setSelected] = useState<string[]>([]);
-  const [order, setOrder] = useState<'asc' | 'desc'>('asc');
-
-  const onSort = useCallback(
-    (id: string) => {
-      const isAsc = orderBy === id && order === 'asc';
-      setOrder(isAsc ? 'desc' : 'asc');
-      setOrderBy(id);
-    },
-    [order, orderBy]
-  );
-
-  const onSelectAllRows = useCallback((checked: boolean, newSelecteds: string[]) => {
-    if (checked) {
-      setSelected(newSelecteds);
-      return;
-    }
-    setSelected([]);
-  }, []);
-
-  const onSelectRow = useCallback(
-    (inputValue: string) => {
-      const newSelected = selected.includes(inputValue)
-        ? selected.filter((value) => value !== inputValue)
-        : [...selected, inputValue];
-
-      setSelected(newSelected);
-    },
-    [selected]
-  );
-
-  const onResetPage = useCallback(() => {
-    setPage(0);
-  }, []);
-
-  const onChangePage = useCallback((event: unknown, newPage: number) => {
-    setPage(newPage);
-  }, []);
-
-  const onChangeRowsPerPage = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      setRowsPerPage(parseInt(event.target.value, 10));
-      onResetPage();
-    },
-    [onResetPage]
-  );
-
-  return {
-    page,
-    order,
-    onSort,
-    orderBy,
-    selected,
-    rowsPerPage,
-    onSelectRow,
-    onResetPage,
-    onChangePage,
-    onSelectAllRows,
-    onChangeRowsPerPage,
-  };
-}

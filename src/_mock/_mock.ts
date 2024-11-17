@@ -80,7 +80,16 @@ export const _mobile = (index: number) =>
     , '(517) 881-9458 x333'
     , '247.432.4654 x317'
     , '1-684-465-4948'
-    , '318.565.8579 x97568'
+    , '318.565.8579 x97568',
+    '880-677-5873 x54656',
+    '1-958-665-8195 x63513',
+    '(942) 208-5834 x1417',
+    '1-480-203-9915 x8597',
+    '(699) 709-6843 x510',
+    '212.488.0156 x105',
+    '1-491-432-1111',
+    '481-591-4607 x30730'
+
   ][index];
 
 export const _email = (index: number) =>
@@ -172,7 +181,11 @@ export const _location = (index: number) =>
     'Queensland, NSW, AU',
     'Carson City, Nevada, USA',
     'Ottawa, Ontario, CA',
-    ''
+    'Rio de Janeiro, Sate of Rio de Janeiro, Brazil',
+    'São Paulo, State of São Paulo, Brazil',
+    'Jakarta, Special Capital Region, Indonesia',
+    'Manila,  Metro Manila, Philippines',
+    'Kuala Lumpur, Federal Territory of Kuala, Malaysia'
   ][index];
 
 export const _boolean = (index: number) =>
@@ -324,32 +337,57 @@ export const _taskNames = (index: number) =>
       'Li-Ning Air Max 270 React ENG',
       
     ][index];
-  
 
-export const _nikeProductNames = (index: number) =>
-  [
-    'Nike Air Force 1 NDESTRUKT',
-    'Nike Space Hippie 04',
-    'Nike Air Zoom Pegasus 37 A.I.R. Chaz Bear',
-    'Nike Blazer Low 77 Vintage',
-    'Nike ZoomX SuperRep Surge',
-    'Zoom Freak 2',
-    'Nike Air Max Zephyr',
-    'Jordan Delta',
-    'Air Jordan XXXV PF',
-    'Nike Waffle Racer Crater',
-    'Kyrie 7 EP Sisterhood',
-    'Nike Air Zoom BB NXT',
-    'Nike Air Force 1 07 LX',
-    'Nike Air Force 1 Shadow SE',
-    'Nike Air Zoom Tempo NEXT%',
-    'Nike DBreak-Type',
-    'Nike Air Max Up',
-    'Nike Air Max 270 React ENG',
-    'NikeCourt Royale',
-    'Nike Air Zoom Pegasus 37 Premium',
-    'Nike Air Zoom SuperRep',
-    'NikeCourt Royale',
-    'Nike React Art3mis',
-    'Nike React Infinity Run Flyknit A.I.R. Chaz Bear',
-  ][index];
+export const _roles =[
+  'Sales Leader',
+  'Hr Manager',
+  'Sales Agent',
+  'Sales Operator',
+  'Sales Manager',
+  'Project Manager',
+  'Business Analyst',
+  'Product Designer',
+  'Market Manager',
+  'General Manager',
+]
+
+// export const _role = (index: number) => [
+//     'Sales Leader',
+//     'Hr Manager',
+//     'Sales Agent',
+//     'Sales Operator',
+//     'Sales Manager',
+//     'Project Manager',
+//     'Business Analyst',
+//     'Product Designer',
+//     'Market Manager',
+//     'General Manager',
+//   ][index]
+
+// export const _nikeProductNames = (index: number) =>
+//   [
+//     'Nike Air Force 1 NDESTRUKT',
+//     'Nike Space Hippie 04',
+//     'Nike Air Zoom Pegasus 37 A.I.R. Chaz Bear',
+//     'Nike Blazer Low 77 Vintage',
+//     'Nike ZoomX SuperRep Surge',
+//     'Zoom Freak 2',
+//     'Nike Air Max Zephyr',
+//     'Jordan Delta',
+//     'Air Jordan XXXV PF',
+//     'Nike Waffle Racer Crater',
+//     'Kyrie 7 EP Sisterhood',
+//     'Nike Air Zoom BB NXT',
+//     'Nike Air Force 1 07 LX',
+//     'Nike Air Force 1 Shadow SE',
+//     'Nike Air Zoom Tempo NEXT%',
+//     'Nike DBreak-Type',
+//     'Nike Air Max Up',
+//     'Nike Air Max 270 React ENG',
+//     'NikeCourt Royale',
+//     'Nike Air Zoom Pegasus 37 Premium',
+//     'Nike Air Zoom SuperRep',
+//     'NikeCourt Royale',
+//     'Nike React Art3mis',
+//     'Nike React Infinity Run Flyknit A.I.R. Chaz Bear',
+//   ][index];
