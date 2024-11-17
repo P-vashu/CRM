@@ -122,7 +122,7 @@ export function AgentTableRow(
             },
           }}
         >
-          <MenuItem onClick={handleEditing} value={row.id}>
+          <MenuItem onClick={handleEditing} >
             <Iconify icon="solar:pen-bold" />
             Edit
           </MenuItem>

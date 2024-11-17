@@ -57,7 +57,7 @@ export default function OrdersView() {
     toggleNotice
   });
 
-  const _orders = service.getAllOrders();
+  const _orders = service.getAllItems();
 
   const [filterName, setFilterName] = useState('');
 

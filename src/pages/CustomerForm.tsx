@@ -3,46 +3,39 @@ import { useForm } from "../components/form/use-form";
 import Input from "../components/controls/Input";
 import RadioGroupGenerator from "../components/controls/RadioGroup";
 import Select from "../components/controls/Select";
-import * as customerService from "../services/customerService";
+import * as service from "../services/customerService";
 import CheckboxGenerator from "../components/controls/Checkbox";
 import ButtonGenerator from "../components/controls/Button";
-import { Form, useNavigate } from "react-router-dom";
+import { Form, useLoaderData, useNavigate } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid2";
-import { FormControl, Typography } from "@mui/material";
+import { Alert, FormControl, Snackbar, Stack, Typography } from "@mui/material";
+import { useRouter } from "../routes/hooks/use-router";
+import Slide, { SlideProps } from '@mui/material/Slide';
+import Fade from '@mui/material/Fade';
 
-
-type Customer = {
-    id: number;
-    fullName?: string;
-    firstName: string;
-    lastName: string;
-    email: string;
-    mobile: string;
-    country?: string;
-    location?: string;
-    company: string;
-    status: string;
-
-}
 
 const initialFieldValues: Customer = {
-    id: 1,
-    fullName: "",
+    id: "",
+    name: "",
     firstName: "",
     lastName: "",
     email: "",
     mobile: "",
-    status: "active",
-    company: "",
-    location: "",
+    phone: "",
+    billingAddress: "",
+    membership: "",
+    city:"",
+    state: "",
+    country: "",
+    hasItemInShoppingCart: false
+
 
 };
 
-const radioList = [
-    { id: "male", title: "Male" },
-    { id: "female", title: "Female" },
-    { id: "other", title: "Other" }
+const membershipArray = [
+    { id: "vip", title: "VIP" },
+    { id: "standard", title: "Standard" },
 ];
 
 const checkboxList = [
@@ -50,7 +43,25 @@ const checkboxList = [
     { id: "2", title: "no" }
 ];
 
+function slideTransition(props: SlideProps) {
+    return <Slide {...props} direction="up" />;
+}
+
 export default function CustomerForm() {
+    const customer = useLoaderData();
+    const router = useRouter();
+    const [notice, setNotice] = React.useState<{
+        open: boolean;
+        Transition: React.ComponentType<
+            TransitionProps & {
+                children: React.ReactElement<any, any>;
+            }
+        >;
+    }>({
+        open: false,
+        Transition: Fade,
+    });
+    console.log(` editing  => ${customer}`)
     const {
         values,
         errors,
@@ -58,8 +69,10 @@ export default function CustomerForm() {
         handleInputChange,
         resetForm,
         currentField
-    } = useForm(initialFieldValues);
+    } = useForm(initialFieldValues, customer);
+
     const navigate = useNavigate();
+
 
     const validateOnSubmit = () => {
         let temp: TODO = {};
@@ -67,8 +80,12 @@ export default function CustomerForm() {
         temp.lastName = values.lastName ? "" : "Mandatory Field";
         temp.email = /$^|.+@.+..+/.test(values.email) ? "" : "Email is not Valid";
         temp.mobile = values.mobile.length > 9 ? "" : "Min 10 numbers required";
-        temp.location = values.location ? "" : "Mandatory Field";
-        temp.company = values.company ? "" : "Mandatory Field";
+        temp.city = values.city ? "" : "Mandatory Field";
+        temp.state = values.state ? "" : "Mandatory Field";
+        temp.country = values.country ? "" : "Mandatory Field";
+        temp.membership = values.membership ? "" : "Mandatory Field";
+        // temp.status = values.status ? "" : "Mandatory Field";
+
         setErrors(
             temp
         );
@@ -79,32 +96,60 @@ export default function CustomerForm() {
         // const handleSubmit = () => {
         e.preventDefault();
         if (validateOnSubmit()) {
-            window.alert("Submitting...");
-            customerService.addCustomer(values);
+            values.name = `${values.firstName} ${values.lastName}`
+            values.location = `${values.city} ${values.state}`
+
+            // window.alert("Submitting...");
+            console.log(values)
+            service.addItem(values);
             navigate('/customers', { replace: true })
         }
-
-
     };
 
+    const handleUpdate = (e: React.SyntheticEvent) => {
+
+        service.updateItem(values);
+        debugger
+        setNotice({
+            open: true,
+            Transition: slideTransition
+        })
+        setTimeout(
+            () => { navigate('/customers', { replace: true }) }, 1000)
+    };
+
+    const goBack = (e: React.SyntheticEvent) => {
+        router.back();
+    };
+
+    const handleClose = () => {
+        setNotice({
+            ...notice,
+            open: false,
+        });
+    };
+    debugger
     return (
         <Paper sx={{ px: 5, py: 5 }}>
             <Typography variant="h4" sx={{ mb: { xs: 3, md: 5 } }}>
                 Customer Form
             </Typography>
             <Form onSubmit={handleSubmit}>
-                <Grid container spacing={3} rowSpacing={2} columnSpacing={2}>
-                    <Grid container spacing={4} size={{ xs: 12, md: 6 }}>
-                        <FormControl>
+                <Grid container rowSpacing={2} columnSpacing={4}>
+                  
+                    <Grid size={{ xs: 12, md: 6, lg: 3 }}>
+
+                        <FormControl fullWidth>
                             <Input required
                                 label="First Name"
                                 name="firstName"
                                 value={values.firstName}
                                 onChange={handleInputChange}
                                 error={(errors as TODO).firstName}
-
-                            /></FormControl>
-                        <FormControl>
+                            /> </FormControl>
+                    </Grid>
+                    <Grid size={{ xs: 12, md: 6, lg: 3 }}>
+                        <FormControl fullWidth>
                             <Input required
                                 variant="outlined"
                                 label="Last Name"
@@ -112,11 +157,12 @@ export default function CustomerForm() {
                                 value={values.lastName}
                                 onChange={handleInputChange}
                                 error={(errors as TODO).lastName}
-                            /></FormControl>
-
+                            /> </FormControl>
                     </Grid>
-                    <Grid container spacing={4} size={{ xs: 12, md: 6 }}>
-                        <FormControl>
+
+                    <Grid size={{ xs: 12, md: 6, lg: 3 }}>
+
+                        <FormControl fullWidth>
                             <Input
                                 required
                                 variant="outlined"
@@ -126,68 +172,136 @@ export default function CustomerForm() {
                                 type="email"
                                 onChange={handleInputChange}
                                 error={(errors as TODO).email}
-                            /></FormControl>
-                        <FormControl><Input
+                            /> </FormControl>
+                    </Grid>
+                    <Grid size={{ xs: 12, md: 6, lg: 3 }}>
+                        <FormControl fullWidth><Input
                             variant="outlined"
                             label="mobile"
                             name="mobile"
                             value={values.mobile}
                             onChange={handleInputChange}
                             error={(errors as TODO).mobile}
-                        /></FormControl>
+                        /> </FormControl>
                     </Grid>
-                    <Grid container spacing={4} size={{ md: 6, xs: 12 }}>
-                        <FormControl><Input required
-                            variant="outlined"
-                            label="Location"
-                            name="location"
-                            value={values.location}
-                            onChange={handleInputChange}
-                        /></FormControl>
-                        <FormControl><Input
-                            variant="outlined"
-                            label="Company"
-                            name="company"
-                            value={values.company}
-                            onChange={handleInputChange}
-                        /></FormControl>
-                    </Grid>
-                    <Grid container spacing={4} size={{ xs: 12, md: 6 }}>
-                        <FormControl>
-                            <RadioGroupGenerator
-                                name="gender"
-                                label="Gender"
-                                value={values.gender}
+                    {/* <Grid size={{ xs: 12, md: 6, lg: 3 }}>
+                        <FormControl fullWidth >
+                            <Input required
+                                label="Phone"
+                                name="phone"
+                                value={values.phone}
                                 onChange={handleInputChange}
-                                items={radioList}
-                            /></FormControl>
+                                error={(errors as TODO).phone}
+                            /> </FormControl>
+                    </Grid> */}
+                    <Grid size={{ xs: 12, md: 6, lg: 3 }}>
+
+                        <FormControl fullWidth><Input required
+                            variant="outlined"
+                            label="city"
+                            name="city"
+                            value={values.city}
+                            onChange={handleInputChange}
+                        /> </FormControl>
+                    </Grid>
+                    <Grid size={{ xs: 12, md: 6, lg: 3 }}>
+                        <FormControl fullWidth><Input
+                            variant="outlined"
+                            label="State"
+                            name="state"
+                            value={values.state}
+                            onChange={handleInputChange}
+                        /> </FormControl>
+                    </Grid>
+                    <Grid size={{ xs: 12, md: 6, lg: 3 }}>
+                        <FormControl fullWidth><Input
+                            variant="outlined"
+                            label="Country"
+                            name="country"
+                            value={values.country}
+                            onChange={handleInputChange}
+                        /> </FormControl>
+                    </Grid>
+                    {/* <Grid size={{ xs: 12, md: 6, lg: 3 }}>
                         <FormControl style={{ minWidth: '10em' }}>
                             <Select
-                                name="departmentId"
-                                label="Department"
-                                value={values.departmentId}
+                                name="role"
+                                label="Role"
+                                value={values.membership}
                                 onChange={handleInputChange}
-                                options={customerService.departmentArray()}
-                                error={(errors as TODO).departmentId}
+                                options={membershipArray}
+                                error={(errors as TODO).role}
+                            /> </FormControl>
+                    </Grid> */}
+                    <Grid size={{ xs: 12, md: 6, lg: 3 }}>
+                        <FormControl fullWidth>
+                            <RadioGroupGenerator
+                                name="status"
+                                label="Status"
+                                value={values.membership}
+                                onChange={handleInputChange}
+                                items={membershipArray}
+                            />
 
-                            /></FormControl>
+                        </FormControl>
                     </Grid>
-                    <Grid container spacing={4} size={{ xs: 12, md: 6 }}>
 
-                        <FormControl>
+                    <Grid size={{ xs: 12, md: 6, lg: 3 }}>
+
+                        <FormControl fullWidth>
                             <CheckboxGenerator
-                                name="isVerified"
-                                label="Is Verified"
-                                value={values.isVerified}
+                                name="hasItemInShoppingCart"
+                                label="Has item in shopping cart"
+                                value={values.hasItemInShoppingCart}
                                 onChange={handleInputChange}
-                                options={checkboxList}
-                            /></FormControl>
+
+                            /> </FormControl>
                     </Grid>
 
-                    <ButtonGenerator text="Submit" type="submit" />
-                    <ButtonGenerator text="Reset" color="default" onClick={resetForm} />
+
+
+
                 </Grid>
+                <Stack
+                    direction="row"
+                    spacing={2}
+                    sx={{
+                        justifyContent: "flex-end",
+                        alignItems: "flex-end",
+                        px: 10
+                    }}
+                >
+                    {customer ? <ButtonGenerator text="Update" onClick={handleUpdate} />
+                        : <ButtonGenerator text="Submit" type="submit" />
+                    }
+                    {customer ? <ButtonGenerator text="Back" color="default" onClick={goBack} />
+                        : <ButtonGenerator text="Reset" color="default" onClick={resetForm} />}
+                </Stack>
             </Form >
+            <Snackbar
+                open={notice.open}
+                // onClose={handleClose}
+                TransitionComponent={notice.Transition}
+                message="Operation is done successfully"
+                key={notice.Transition.name}
+                autoHideDuration={1000}>
+                <Alert
+                    onClose={handleClose}
+                    severity="success"
+                    variant="filled"
+                    sx={{ width: '100%' }}
+                >
+                    Operation is done successfully!
+                </Alert>
+            </Snackbar>
+
         </Paper >
     );
+}
+
+
+export function customerLoader({ params }: TODO) {
+    const customer = service.getItemById(params.id);
+    if (!customer) throw new Response("/not-found", { status: 404 });
+    return customer;
 }

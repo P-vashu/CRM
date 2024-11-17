@@ -56,7 +56,7 @@ export function CustomerView() {
     toggleNotice
   });
 
-  const _customers = service.getAllCustomers();
+  const _customers = service.getAllItems();
 
   const [filterName, setFilterName] = useState('');
 

@@ -96,7 +96,7 @@ export function OrderTableRow(
         </TableCell>
 
         <TableCell align="right">
-          <IconButton onClick={handleOpenPopover}>
+          <IconButton onClick={handleOpenPopover} value={row.id}>
             <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
         </TableCell>

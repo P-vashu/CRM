@@ -11,9 +11,9 @@ import { NotFoundView } from './pages/NotFoundView';
 import { HelmetProvider } from 'react-helmet-async';
 import { AgentView } from './pages/AgentView';
 import { CustomerView } from './pages/CustomerView';
-import AgentForm , { loader as agentLoader }from './pages/AgentForm';
+import AgentForm , { agentLoader  }from './pages/AgentForm';
 import SignInView from './pages/SignInView';
-import CustomerForm  from './pages/CustomerForm';
+import CustomerForm , { customerLoader  } from './pages/CustomerForm';
 
 
 const router = createBrowserRouter([
@@ -61,6 +61,12 @@ const router = createBrowserRouter([
           {
             path: 'customer-form',
             Component: CustomerForm,
+          },
+          {
+            path: 'edit-customer/:id',
+            Component: CustomerForm,
+            loader: customerLoader
+
           },
           {
             path: '*',

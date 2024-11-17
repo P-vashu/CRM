@@ -1,77 +1,76 @@
-import { _products, _roles } from '../_mock';
+import { _guid, _products, _roles } from '../_mock';
 
 
 const KEYS = {
-  products: "products",
-  productId: "productId"
+  items: "products",
+  itemId: "productId"
 };
 
 export function init() {
-  localStorage.setItem(KEYS.products, JSON.stringify(_products));
+  localStorage.setItem(KEYS.items, JSON.stringify(_products));
 }
 
 
 
-export function addProduct(data: TODO) {
-  let products = getAllProducts();
-  data["id"] = generateProductId();
-  products.push(data);
-  localStorage.setItem(KEYS.products, JSON.stringify(products));
+export function addItem(data: TODO) {
+  let items = getAllItems();
+  data["id"] = generateItemId(items.length);
+  items.push(data);
+  localStorage.setItem(KEYS.items, JSON.stringify(items));
 }
 
-export function updateProduct(data: TODO) {
-  let products = getAllProducts() as TODO;
-  let index = products.findIndex((a: TODO) => a.id === data.id);
-  products[index] = data;
-  localStorage.setItem(KEYS.products, JSON.stringify(products));
+export function generateItemId(totalCount: number) {
+  return `${_guid}${(totalCount+1)}`;
+}
+
+export function updateItem(data: TODO) {
+  let items = getAllItems() as TODO;
+  let index = items.findIndex((a: TODO) => a.id === data.id);
+  items[index] = data;
+  localStorage.setItem(KEYS.items, JSON.stringify(items));
 }
 
 
-export function generateProductId() {
-  if (localStorage.getItem(KEYS.productId) == null)
-    localStorage.setItem(KEYS.productId, "0");
-  const eid = localStorage.getItem(KEYS.productId);
-  var id = parseInt(eid ? eid : "-1");
-  localStorage.setItem(KEYS.productId, (++id).toString());
-  return id;
-}
 
-export function getAllProducts() {
-  if (localStorage.getItem(KEYS.products) === null) {
-    localStorage.setItem(KEYS.products, JSON.stringify([]));
+
+export function getAllItems() {
+  if (localStorage.getItem(KEYS.items) === null) {
+    localStorage.setItem(KEYS.items, JSON.stringify([]));
   }
-  const es = localStorage.getItem(KEYS.products);
+  const es = localStorage.getItem(KEYS.items);
   return JSON.parse(es ? es : "");
 }
 
 
-export function getProductById(id: string | number) {
-  if (localStorage.getItem(KEYS.products) === null) {
-    localStorage.setItem(KEYS.products, JSON.stringify([]));
+export function getItemById(id: string | number) {
+  if (localStorage.getItem(KEYS.items) === null) {
+    localStorage.setItem(KEYS.items, JSON.stringify([]));
   }
-  const us = localStorage.getItem(KEYS.products);
+  const us = localStorage.getItem(KEYS.items);
   const ul = JSON.parse(us ? us : "");
   return ul.find((u: TODO) => u.id === id);
 }
 
-export function deleteProductById(id: string | number) {
-  if (localStorage.getItem(KEYS.products) === null) {
-    localStorage.setItem(KEYS.products, JSON.stringify([]));
+export function deleteItemById(id: string | number) {
+  if (localStorage.getItem(KEYS.items) === null) {
+    localStorage.setItem(KEYS.items, JSON.stringify([]));
   }
-  const _products = localStorage.getItem(KEYS.products);
-  const products = JSON.parse(_products ? _products : "");
-  const index = products.findIndex((u: TODO) => u.id === id);
-  products.splice(index,1)
-  localStorage.setItem(KEYS.products, JSON.stringify(products));
+  const _items = localStorage.getItem(KEYS.items);
+  const items = JSON.parse(_items ? _items : "");
+  const index = items.findIndex((u: TODO) => u.id === id);
+  items.splice(index,1)
+  localStorage.setItem(KEYS.items, JSON.stringify(items));
 }
 
 
-export function getProductsByPageNumber(
+
+
+export function getItemsByPageNumber(
   pageNumber: number, pageSize: number = 10 ) {
-  if (localStorage.getItem(KEYS.products) === null) {
-    localStorage.setItem(KEYS.products, JSON.stringify([]));
+  if (localStorage.getItem(KEYS.items) === null) {
+    localStorage.setItem(KEYS.items, JSON.stringify([]));
   }
-  const es = localStorage.getItem(KEYS.products);
+  const es = localStorage.getItem(KEYS.items);
   const products = JSON.parse(es ? es : "");
 
   console.log( ` pageNumber ${pageNumber} `)

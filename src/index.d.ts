@@ -19,12 +19,17 @@ declare module "@emotion/styled" {
 declare type  Customer = {
   id: string;
   name: string;
+  firstName?: string;
+  lastName?: string;
   email: string;
-  shippingAddress: string;
+  shippingAddress?: string;
   billingAddress: string;
+  city?: string;
+  state?: string;
+  country?: string;
   mobile: string;
   phone: string;
-  avatarUrl: string;
+  avatarUrl?: string;
   hasItemInShoppingCart: boolean;
   membership: string;
 }
@@ -32,13 +37,18 @@ declare type  Customer = {
 declare type Agent = {
   id: string;
   name: string;
+  firstName?: string;
+  lastName?: string;
   role: string;
   status: string;
   company: string;
   email: string;
   mobile: string;
-  avatarUrl: string;
+  avatarUrl?: string;
   isVerified: boolean;
+  city?: string;
+  state?: string;
+
 }
 
 declare type Order = {

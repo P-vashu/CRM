@@ -55,7 +55,7 @@ export function AgentView() {
     toggleNotice
   });
 
-  const _agents = service.getAllAgents();
+  const _agents = service.getAllItems();
 
   const [filterName, setFilterName] = useState('');
 

@@ -3,7 +3,7 @@ import { useForm } from "../components/form/use-form";
 import Input from "../components/controls/Input";
 import RadioGroupGenerator from "../components/controls/RadioGroup";
 import Select from "../components/controls/Select";
-import * as agentService from "../services/agentService";
+import * as service from "../services/agentService";
 import CheckboxGenerator from "../components/controls/Checkbox";
 import ButtonGenerator from "../components/controls/Button";
 import { Form, useNavigate, useLoaderData } from "react-router-dom";
@@ -15,31 +15,19 @@ import Slide, { SlideProps } from '@mui/material/Slide';
 import Fade from '@mui/material/Fade';
 
 
-type Agent = {
-    id: number;
-    fullname?: string;
-    firstName: string;
-    lastName: string;
-    email: string;
-    mobile: string;
-    city: string;
-    state: string;
-    status: string;
-    departmentId?: string;
-    isVerified: false
-}
-
 const initialFieldValues: Agent = {
-    id: 1,
-    fullname: "",
+    id: "",
+    name: "",
     firstName: "",
     lastName: "",
     email: "",
     mobile: "",
     city: "",
     state: "",
-    status: "active",
-    departmentId: "",
+    status: "",
+    avatarUrl: "",
+    role: "",
+    company: "",
     isVerified: false
 };
 
@@ -86,14 +74,15 @@ export default function AgentForm() {
 
     const validateOnSubmit = () => {
         let temp: TODO = {};
-        temp.name = values.name ? "" : "Mandatory Field";
-        // temp.lastName = values.lastName ? "" : "Mandatory Field";
+        temp.firstName = values.firstName ? "" : "Mandatory Field";
+        temp.lastName = values.lastName ? "" : "Mandatory Field";
         temp.email = /$^|.+@.+..+/.test(values.email) ? "" : "Email is not Valid";
         temp.mobile = values.mobile.length > 9 ? "" : "Min 10 numbers required";
         temp.city = values.city ? "" : "Mandatory Field";
         temp.state = values.state ? "" : "Mandatory Field";
-        temp.departmentId =
-            values.departmentId.length !== 0 ? "" : "Mandatory Field";
+        temp.role = values.role? "" : "Mandatory Field";
+        temp.status = values.status? "" : "Mandatory Field";
+
         setErrors(
             temp
         );
@@ -104,15 +93,19 @@ export default function AgentForm() {
         // const handleSubmit = () => {
         e.preventDefault();
         if (validateOnSubmit()) {
-            window.alert("Submitting...");
-            agentService.addAgent(values);
+            values.name = `${values.firstName} ${values.lastName}`
+            values.location = `${values.city} ${values.state}`
+
+            // window.alert("Submitting...");
+            console.log(values)
+            service.addItem(values);
             navigate('/agents', { replace: true })
         }
     };
 
     const handleUpdate = (e: React.SyntheticEvent) => {
 
-        agentService.updateAgent(values);
+        service.updateItem(values);
         debugger
         setNotice({
             open: true,
@@ -222,7 +215,7 @@ debugger
                                 label="Role"
                                 value={values.role}
                                 onChange={handleInputChange}
-                                options={agentService.roleArray()}
+                                options={service.roleArray()}
                                 error={(errors as TODO).role}
                             /> </FormControl>
                     </Grid>
@@ -294,8 +287,8 @@ debugger
 }
 
 
-export function loader({ params }: TODO) {
-    const agent = agentService.getAgentById(params.id);
+export function agentLoader({ params }: TODO) {
+    const agent = service.getItemById(params.id);
     if (!agent) throw new Response("/not-found", { status: 404 });
     return agent;
 }

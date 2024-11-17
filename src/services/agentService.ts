@@ -1,4 +1,4 @@
-import { _agents, _roles } from '../_mock';
+import { _agents, _roles , _guid} from '../_mock';
 
 export const roleArray = () => [
   { id: "1", title: 'Sales Leader' },
@@ -15,77 +15,77 @@ export const roleArray = () => [
 
 
 const KEYS = {
-  agents: "agents",
-  agentId: "agentId"
+  items: "agents",
+  itemId: "agentId"
 };
 
 export function init() {
-  localStorage.setItem(KEYS.agents, JSON.stringify(_agents));
+  localStorage.setItem(KEYS.items, JSON.stringify(_agents));
 }
 
 
-export function addAgent(data: TODO) {
-  let agents = getAllAgents();
-  data["id"] = generateAgentId();
-  agents.push(data);
-  localStorage.setItem(KEYS.agents, JSON.stringify(agents));
+export function addItem(data: TODO) {
+  let items = getAllItems();
+  data["id"] = generateItemId(items.length);
+  items.push(data);
+  localStorage.setItem(KEYS.items, JSON.stringify(items));
 }
 
-export function updateAgent(data: TODO) {
-  let agents = getAllAgents() as TODO;
-  let index = agents.findIndex((a: TODO) => a.id === data.id);
-  agents[index] = data;
-  localStorage.setItem(KEYS.agents, JSON.stringify(agents));
+export function generateItemId(totalCount: number) {
+  return `${_guid}${(totalCount+1)}`;
+}
+
+export function updateItem(data: TODO) {
+  let items = getAllItems() as TODO;
+  let index = items.findIndex((a: TODO) => a.id === data.id);
+  items[index] = data;
+  localStorage.setItem(KEYS.items, JSON.stringify(items));
 }
 
 
-export function generateAgentId() {
-  if (localStorage.getItem(KEYS.agentId) == null)
-    localStorage.setItem(KEYS.agentId, "0");
-  const eid = localStorage.getItem(KEYS.agentId);
-  var id = parseInt(eid ? eid : "-1");
-  localStorage.setItem(KEYS.agentId, (++id).toString());
-  return id;
-}
 
-export function getAllAgents() {
-  if (localStorage.getItem(KEYS.agents) === null) {
-    localStorage.setItem(KEYS.agents, JSON.stringify([]));
+
+export function getAllItems() {
+  if (localStorage.getItem(KEYS.items) === null) {
+    localStorage.setItem(KEYS.items, JSON.stringify([]));
   }
-  const es = localStorage.getItem(KEYS.agents);
+  const es = localStorage.getItem(KEYS.items);
   return JSON.parse(es ? es : "");
 }
 
 
-export function getAgentById(id: string | number) {
-  if (localStorage.getItem(KEYS.agents) === null) {
-    localStorage.setItem(KEYS.agents, JSON.stringify([]));
+export function getItemById(id: string | number) {
+  if (localStorage.getItem(KEYS.items) === null) {
+    localStorage.setItem(KEYS.items, JSON.stringify([]));
   }
-  const us = localStorage.getItem(KEYS.agents);
+  const us = localStorage.getItem(KEYS.items);
   const ul = JSON.parse(us ? us : "");
   return ul.find((u: TODO) => u.id === id);
 }
 
 export function deleteItemById(id: string | number) {
-  if (localStorage.getItem(KEYS.agents) === null) {
-    localStorage.setItem(KEYS.agents, JSON.stringify([]));
+  if (localStorage.getItem(KEYS.items) === null) {
+    localStorage.setItem(KEYS.items, JSON.stringify([]));
   }
-  const _agents = localStorage.getItem(KEYS.agents);
-  const agents = JSON.parse(_agents ? _agents : "");
-  const index = agents.findIndex((u: TODO) => u.id === id);
-  agents.splice(index,1)
-  localStorage.setItem(KEYS.agents, JSON.stringify(agents));
+  const _items = localStorage.getItem(KEYS.items);
+  const items = JSON.parse(_items ? _items : "");
+  const index = items.findIndex((u: TODO) => u.id === id);
+  items.splice(index,1)
+  localStorage.setItem(KEYS.items, JSON.stringify(items));
 }
 
 
-export function getAgentsByPageNumber(
-  pageNumber: number, pageSize: number) {
-  if (localStorage.getItem(KEYS.agents) === null) {
-    localStorage.setItem(KEYS.agents, JSON.stringify([]));
-  }
-  const es = localStorage.getItem(KEYS.agents);
-  const agents = JSON.parse(es ? es : "");
 
-  const size = pageSize > 0 ? pageSize: 10;
-  return agents.slice( pageNumber -1, pageSize);
+export function getItemsByPageNumber(
+  pageNumber: number, pageSize: number = 10 ) {
+  if (localStorage.getItem(KEYS.items) === null) {
+    localStorage.setItem(KEYS.items, JSON.stringify([]));
+  }
+  const es = localStorage.getItem(KEYS.items);
+  const products = JSON.parse(es ? es : "");
+
+  console.log( ` pageNumber ${pageNumber} `)
+  const start = (pageNumber -1)* pageSize;
+  const end = start + pageSize
+  return products.slice( start, end);
 }

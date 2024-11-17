@@ -1,4 +1,6 @@
-export const _id = (index: number) => `e99f09a7-dd88-49d5-b1c8-1daf80c2d7b${index}`;
+export const _guid = '82a7c7d2-ebe1-453e-9a22-cb5b204850b0';
+
+export const _id = (index: number) => `82a7c7d2-ebe1-453e-9a22-cb5b204850b0${index}`;
 
 
 export const _orderId = (index: number) => `ORD-${index}`;

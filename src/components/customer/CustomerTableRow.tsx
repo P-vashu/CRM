@@ -29,7 +29,7 @@ type CustomerTableRowProps = {
 export function CustomerTableRow({
    row, selected, onSelectRow, toggleNotice, onDialogConfirm }: CustomerTableRowProps) {
   const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
-  const [customerId, setCustomerId] = useState(null);
+  const [customerId, setCustomerId] = useState("");
   const router = useRouter();
 
   const handleOpenPopover = useCallback(
@@ -93,7 +93,7 @@ export function CustomerTableRow({
         </TableCell>
 
         <TableCell align="right">
-          <IconButton onClick={handleOpenPopover}>
+          <IconButton onClick={handleOpenPopover} value={row.id}>
             <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
         </TableCell>
@@ -122,7 +122,7 @@ export function CustomerTableRow({
             },
           }}
         >
-          <MenuItem onClick={handleEditing} value={row.id}>
+          <MenuItem onClick={handleEditing}>
             <Iconify icon="solar:pen-bold" />
             Edit
           </MenuItem>

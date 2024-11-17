@@ -64,7 +64,7 @@ function ProductsView() {
   const [openFilter, setOpenFilter] = useState(false);
   const [filters, setFilters] = useState<FiltersProps>(defaultFilters);
   const [page, setPage] = useState(1);
-  const _products = productService.getProductsByPageNumber(page); //productService.getAllProducts();
+  const _products = productService.getItemsByPageNumber(page); //productService.getAllProducts();
   // products =    productService.getProductsByPageNumber(page);
   const [count, setCount] = useState(_products.length);
   const [products, setProducts] = useState(_products);
@@ -73,7 +73,7 @@ function ProductsView() {
   const handlePageChange = useCallback((
     event: React.ChangeEvent<unknown>, page: number
   )=>{
-    const products =    productService.getProductsByPageNumber(page);
+    const products =    productService.getItemsByPageNumber(page);
     setProducts(products)
     setPage(page)
   },[])
