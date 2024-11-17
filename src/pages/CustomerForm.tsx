@@ -107,9 +107,7 @@ export default function CustomerForm() {
     };
 
     const handleUpdate = (e: React.SyntheticEvent) => {
-
         service.updateItem(values);
-        debugger
         setNotice({
             open: true,
             Transition: slideTransition
@@ -128,7 +126,7 @@ export default function CustomerForm() {
             open: false,
         });
     };
-    debugger
+
     return (
         <Paper sx={{ px: 5, py: 5 }}>
             <Typography variant="h4" sx={{ mb: { xs: 3, md: 5 } }}>

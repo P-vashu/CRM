@@ -80,7 +80,7 @@ export function CustomerTableRow({
         <TableCell>{row.email}</TableCell>
         <TableCell>{row.mobile}</TableCell>
         <TableCell>{row.phone}</TableCell>
-        <TableCell>{row.billingAddress}</TableCell>
+        {/* <TableCell>{row.billingAddress}</TableCell> */}
         <TableCell align="center">
           {row.hasItemInShoppingCart ? (
             <Iconify width={22} icon="solar:check-circle-bold" sx={{ color: 'success.main' }} />

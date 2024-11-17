@@ -14,6 +14,7 @@ import { CustomerView } from './pages/CustomerView';
 import AgentForm , { agentLoader  }from './pages/AgentForm';
 import SignInView from './pages/SignInView';
 import CustomerForm , { customerLoader  } from './pages/CustomerForm';
+import OrderForm , {orderLoader} from './pages/OrderForm';
 
 
 const router = createBrowserRouter([
@@ -68,6 +69,16 @@ const router = createBrowserRouter([
             loader: customerLoader
 
           },
+          {
+            path: 'order-form',
+            Component: OrderForm,
+          },
+          {
+            path: 'edit-order/:id',
+            Component: OrderForm,
+            loader: orderLoader
+
+          },         
           {
             path: '*',
             Component: NotFoundView

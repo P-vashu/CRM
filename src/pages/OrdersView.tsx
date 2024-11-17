@@ -31,6 +31,8 @@ import SnapNotice from '../components/controls/SnapNotice';
 
 // ----------------------------------------------------------------------
 
+
+
 export default function OrdersView() {
   const [notice, setNotice] = React.useState<{
     open: boolean;
@@ -87,6 +89,7 @@ export default function OrdersView() {
           variant="contained"
            color="primary"
           startIcon={<Iconify icon="mingcute:add-line" />}
+             component={RouterLink} href="/order-form"
         >
           New order
         </Button>
@@ -120,10 +123,11 @@ export default function OrdersView() {
                 }
                 headLabel={[
                   { id: 'id', label: 'Order Number' },
-                  { id: 'name', label: 'Name' },
-                  { id: 'amount', label: 'Total Amount', align: 'left' },
-                  { id: 'discount', label: 'Discount', align: 'left' },
-                  { id: 'shippingAddress', label: 'Shipping To', align: 'left' },
+                  { id: 'item', label: 'Item' },
+                  { id: 'amount', label: 'Total Amount', align: 'right' },
+                  // { id: 'discount', label: 'Discount', align: 'right' },
+                  { id: 'promoCode', label: 'Promote Code', align: 'center' },
+                  { id: 'customer', label: 'Customer', align: 'left' },
                   { id: 'isDelayed', label: 'Is Delayed', align: 'center' },
 
                   { id: 'status', label: 'Status' },

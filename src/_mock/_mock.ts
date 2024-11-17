@@ -5,6 +5,13 @@ export const _id = (index: number) => `82a7c7d2-ebe1-453e-9a22-cb5b204850b0${ind
 
 export const _orderId = (index: number) => `ORD-${index}`;
 
+function getRandomIntInclusive(min:number, max:number) {
+  const minCeiled = Math.ceil(min);
+  const maxFloored = Math.floor(max);
+  return Math.floor(Math.random() * (maxFloored - minCeiled + 1) + minCeiled); // The maximum is inclusive and the minimum is inclusive
+}
+
+
 export const _times = (index: number) =>
   // 'MM/DD/YYYY'
   [
@@ -190,6 +197,25 @@ export const _location = (index: number) =>
     'Kuala Lumpur, Federal Territory of Kuala, Malaysia'
   ][index];
 
+const _streetData = (index: number)=> [
+'64-70 Avenue Emile Zola',
+'129 Elm Grove',
+'Viale Padania, 6',
+'Carretera de Ses Salines a Colonia Sant Jordi, Km 11',
+'205 1st Ave W',
+'Am Muhlholz 31',
+'3314 Cessna Rd',
+'Grigoriou Zaliki 6',
+'Eyrarbraut 3a'
+
+]
+
+export const _address= () =>{
+  const ra = getRandomIntInclusive(1,8)
+  const rl = getRandomIntInclusive(1,20)
+  return `${_streetData(ra)} ${_location(rl)}`
+}
+
 export const _boolean = (index: number) =>
   [
     true,
@@ -353,43 +379,12 @@ export const _roles =[
   'General Manager',
 ]
 
-// export const _role = (index: number) => [
-//     'Sales Leader',
-//     'Hr Manager',
-//     'Sales Agent',
-//     'Sales Operator',
-//     'Sales Manager',
-//     'Project Manager',
-//     'Business Analyst',
-//     'Product Designer',
-//     'Market Manager',
-//     'General Manager',
-//   ][index]
+const _alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
-// export const _nikeProductNames = (index: number) =>
-//   [
-//     'Nike Air Force 1 NDESTRUKT',
-//     'Nike Space Hippie 04',
-//     'Nike Air Zoom Pegasus 37 A.I.R. Chaz Bear',
-//     'Nike Blazer Low 77 Vintage',
-//     'Nike ZoomX SuperRep Surge',
-//     'Zoom Freak 2',
-//     'Nike Air Max Zephyr',
-//     'Jordan Delta',
-//     'Air Jordan XXXV PF',
-//     'Nike Waffle Racer Crater',
-//     'Kyrie 7 EP Sisterhood',
-//     'Nike Air Zoom BB NXT',
-//     'Nike Air Force 1 07 LX',
-//     'Nike Air Force 1 Shadow SE',
-//     'Nike Air Zoom Tempo NEXT%',
-//     'Nike DBreak-Type',
-//     'Nike Air Max Up',
-//     'Nike Air Max 270 React ENG',
-//     'NikeCourt Royale',
-//     'Nike Air Zoom Pegasus 37 Premium',
-//     'Nike Air Zoom SuperRep',
-//     'NikeCourt Royale',
-//     'Nike React Art3mis',
-//     'Nike React Infinity Run Flyknit A.I.R. Chaz Bear',
-//   ][index];
+
+
+export const _promoCode = () => {
+  const r1 = getRandomIntInclusive(1,26)-1; 
+  const r2 = getRandomIntInclusive(1,26)-1; 
+  return `PROMO-${_alphabet[r1].toUpperCase()}${_alphabet[r2].toUpperCase()}`
+}

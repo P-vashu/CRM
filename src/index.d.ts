@@ -23,12 +23,13 @@ declare type  Customer = {
   lastName?: string;
   email: string;
   shippingAddress?: string;
-  billingAddress: string;
+  billingAddress?: string;
   city?: string;
   state?: string;
   country?: string;
   mobile: string;
   phone: string;
+  credit?: string;
   avatarUrl?: string;
   hasItemInShoppingCart: boolean;
   membership: string;
@@ -53,12 +54,18 @@ declare type Agent = {
 
 declare type Order = {
   id: string;
-  name: string;
-  amount: string;
+  orderId: string;
+  itemSummary: string;
+  customer: string;
+  totalPrice: string;
   status: string;
   discount: string;
-  avatarUrl: string;
+  promoteCode? : string;
+  couponCode?: string;
+
+  avatarUrl?: string;
   isDelayed: boolean;
   shippingAddress: string;
+  billingAddress?: string;
 };
 

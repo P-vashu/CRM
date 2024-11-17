@@ -122,7 +122,7 @@ export function CustomerView() {
                   { id: 'email', label: 'Email' },
                   { id: 'mobile', label: 'Mobile' },  
                   { id: 'phone', label: 'Phone' },  
-                  { id: 'billingAddress', label: 'Billing Address' },
+                  // { id: 'billingAddress', label: 'Billing Address' },
                   { id: 'hasItemInShoppingCart', label: 'Cart Has Item', align: 'center' },
                   { id: 'membership', label: 'Membership' },
                   { id: '' },

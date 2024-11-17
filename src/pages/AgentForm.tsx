@@ -106,7 +106,7 @@ export default function AgentForm() {
     const handleUpdate = (e: React.SyntheticEvent) => {
 
         service.updateItem(values);
-        debugger
+    
         setNotice({
             open: true,
             Transition: slideTransition
@@ -125,7 +125,6 @@ export default function AgentForm() {
             open: false,
         });
     };
-debugger
     return (
         <Paper sx={{ px: 5, py: 5 }}>
             <Typography variant="h4" sx={{ mb: { xs: 3, md: 5 } }}>
@@ -244,10 +243,6 @@ debugger
 
                             /> </FormControl>
                     </Grid>
-
-
-
-
                 </Grid>
                 <Stack
                     direction="row"

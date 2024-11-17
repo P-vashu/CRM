@@ -17,6 +17,12 @@ import { useRouter } from '../../routes/hooks/use-router';
 import { useDialogs } from '@toolpad/core';
 // ----------------------------------------------------------------------
 
+const OrderStatus: {[k:string]: string}= {
+  "packing": "Packing",
+  "shipping": "Shipping",
+  "customs-clearance": "Customs Clearance",
+  "delivered":  "Delivered"
+}
 
 type OrderTableRowProps = {
   row: Order;
@@ -72,15 +78,17 @@ export function OrderTableRow(
         <TableCell component="th" scope="row">
           <Box gap={2} display="flex" alignItems="center">
             {/* <Avatar alt={row.id} src={row.avatarUrl} /> */}
-            {row.id}
+            {row.orderId}
           </Box>
         </TableCell>
 
-        <TableCell>{row.name}</TableCell>
+        <TableCell>{row.itemSummary}</TableCell>
 
-        <TableCell>$ {row.amount}</TableCell>
-        <TableCell>$ {row.discount}</TableCell>
-        <TableCell> {row.shippingAddress}</TableCell>
+        <TableCell>$ {row.totalPrice}</TableCell>
+        {/* <TableCell>$ {row.discount}</TableCell> */}
+
+        <TableCell> {row.promoteCode}</TableCell>
+        <TableCell> {row.customer}</TableCell>
 
         <TableCell align="center">
           {row.isDelayed ? (
@@ -90,9 +98,10 @@ export function OrderTableRow(
           )}
         </TableCell>
         <TableCell>
-          <Label color={(row.status === 'refund' && 'error') 
+          <Label color={(row.status === 'customs-clearance' && 'error') 
           || ( row.status === 'packing' && 'warning')
-          || ( row.status === 'shipping' && 'info')   || 'success'}>{row.status}</Label>
+          || ( row.status === 'shipping' && 'info')   || 'success'}>
+            {OrderStatus[row.status]}</Label>
         </TableCell>
 
         <TableCell align="right">
