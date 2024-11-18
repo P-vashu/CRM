@@ -236,7 +236,7 @@ export default function OrderForm() {
                         <FormControl fullWidth>
                             <CheckboxGenerator
                                 item="isDelayed"
-                                label="Is delivery delayed"
+                                label="Is delayed"
                                 value={values.isDelayed}
                                 name="isDelayed"
                                 onChange={handleInputChange}

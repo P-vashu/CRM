@@ -1,6 +1,5 @@
 
-import { Order } from '../order/OrderTableRow';
-import type { Agent } from '../agent/AgentTableRow';
+
 import { useCallback, useState } from 'react';
 import { useDialogs } from '@toolpad/core/useDialogs';
 import { useNavigate } from 'react-router-dom';
@@ -77,7 +76,7 @@ export function applyFilter({ inputData, comparator, filterName }: ApplyFilterPr
 
   if (filterName) {
     inputData = inputData.filter(
-      (user) => user.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
+      (user:TODO) => user.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
     ) as TODO;
   }
 

@@ -1,6 +1,7 @@
 import { HorizontalRule } from "@mui/icons-material";
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
+import { TransitionProps } from "@mui/material/transitions/transition";
 
 export type SnapNoticeProps = {
     open: boolean,
@@ -20,9 +21,9 @@ export default function SnapNotice(
         TransitionComponent={transition}
         message="Operation is done successfully"
         key={transition.name}
-        autoHideDuration={1000} 
+        autoHideDuration={1000}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-        >
+    >
         <Alert
             onClose={handleClose}
             severity="success"

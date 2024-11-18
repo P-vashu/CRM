@@ -28,6 +28,7 @@ import Slide, { SlideProps } from '@mui/material/Slide';
 import Fade from '@mui/material/Fade';
 import React from 'react';
 import SnapNotice from '../components/controls/SnapNotice';
+import { TransitionProps } from '@mui/material/transitions';
 
 // ----------------------------------------------------------------------
 
