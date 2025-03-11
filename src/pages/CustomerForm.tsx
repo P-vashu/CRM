@@ -2,7 +2,6 @@ import React from "react";
 import { useForm } from "../components/form/use-form";
 import Input from "../components/controls/Input";
 import RadioGroupGenerator from "../components/controls/RadioGroup";
-import Select from "../components/controls/Select";
 import * as service from "../services/customerService";
 import CheckboxGenerator from "../components/controls/Checkbox";
 import ButtonGenerator from "../components/controls/Button";
@@ -84,8 +83,6 @@ export default function CustomerForm() {
         temp.state = values.state ? "" : "Mandatory Field";
         temp.country = values.country ? "" : "Mandatory Field";
         temp.membership = values.membership ? "" : "Mandatory Field";
-        // temp.status = values.status ? "" : "Mandatory Field";
-
         setErrors(
             temp
         );

@@ -4,12 +4,10 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import Inventory2Icon from '@mui/icons-material/Inventory2';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
-import StorefrontIcon from '@mui/icons-material/Storefront';
 import ContactsIcon from '@mui/icons-material/Contacts';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { AppProvider } from '@toolpad/core/react-router-dom';
 import { createTheme } from '@mui/material/styles';
-import logoSvg from '/public/assets/icons/workspaces/it-logo.svg';
 import logoMidPng from './assets/it-logo-mid.png';
 import { Session, type Navigation } from '@toolpad/core/AppProvider';
 import { SessionContext } from './SessionContext';
@@ -17,20 +15,6 @@ import * as agentService from "./services/agentService";
 import * as productService from "./services/productService";
 import * as customerService from "./services/customerService";
 import * as orderService from "./services/orderService";
-
-const CALLS_NAVIGATION: Navigation = [
-  {
-    segment: 'blogs',
-    title: 'Blogs',
-    icon: <NewspaperIcon />,
-  },
-  {
-    segment: 'agents',
-    title: 'Users',
-    icon: <PeopleAltIcon />,
-  }
-];
-
 
 const NAVIGATION: Navigation = [
   {

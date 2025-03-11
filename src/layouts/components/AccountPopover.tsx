@@ -10,12 +10,12 @@ import Divider from '@mui/material/Divider';
 import MenuList from '@mui/material/MenuList';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
+import GitHubIcon from '@mui/icons-material/GitHub';
 import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
 
 import { useRouter, usePathname } from '../../routes/hooks';
 
 import { _myAccount } from '../../_mock';
-import { useSearchParams } from 'react-router-dom';
 import { useSession } from '../../SessionContext';
 
 // ----------------------------------------------------------------------
@@ -31,7 +31,7 @@ export type AccountPopoverProps = IconButtonProps & {
 
 export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps) {
   const router = useRouter();
-  const { setSession }= useSession();
+  const { setSession } = useSession();
 
   const pathname = usePathname();
 
@@ -54,6 +54,10 @@ export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps)
     [handleClosePopover, router]
   );
 
+  const handleNewTab = (path: string) =>
+    path && window.open(path, '_blank')
+
+
   return (
     <>
       <IconButton
@@ -71,6 +75,23 @@ export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps)
         <Avatar src={_myAccount.photoURL} alt={_myAccount.displayName} sx={{ width: 1, height: 1 }}>
           {_myAccount.displayName.charAt(0).toUpperCase()}
         </Avatar>
+      </IconButton>
+
+      <IconButton
+        onClick={() => handleNewTab('https://github.com/harryho/react-demo')}
+        sx={{
+          p: '1px',
+          width: 40,
+          height: 40,
+          background: (theme) =>
+            `${theme.vars.palette.primary.light}`,
+
+          ...sx,
+        }}
+        {...other}
+      >
+        <GitHubIcon >
+        </GitHubIcon>
       </IconButton>
 
       <Popover
@@ -138,6 +159,7 @@ export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps)
             Logout
           </Button>
         </Box>
+
       </Popover>
     </>
   );

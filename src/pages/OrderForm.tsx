@@ -97,17 +97,9 @@ export default function OrderForm() {
         let temp: TODO = {};
         temp.itemSummary = values.itemSummary ? "" : "Mandatory Field";
         temp.totalPrice = values.totalPrice ? "" : "Mandatory Field";
-        // temp.promoteCode =  "" : "Email is not Valid";
-        // // temp.mobile = values.mobile.length > 9 ? "" : "Min 10 numbers required";
         temp.customer = values.customer ? "" : "Mandatory Field";
         temp.shippingAddress = values.shippingAddress ? "" : "Mandatory Field";
-        // // temp.country = values.country ? "" : "Mandatory Field";
-        // // temp.membership = values.membership ? "" : "Mandatory Field";
-        // // temp.status = values.status ? "" : "Mandatory Field";
-
-        // setErrors(
-        //     temp
-        // );
+    
         return Object.values(temp).every((x) => x === "");
     };
 
