@@ -1,5 +1,5 @@
 <h1 align="center">
-  React Demo v6
+  React MUI Demo v6
 </h1>
 
 This react demo is built on the top of my customized React boilerplate with Storybook. 
